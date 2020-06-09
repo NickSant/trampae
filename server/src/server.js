@@ -1,12 +1,12 @@
 import express from 'express';//microframework - controla rotas da aplicação
 
-import cors from 'cors';
+
 
 import routes from './routes';
 
 const app = express();
 
-app.use(cors);
+
 app.use(express.json());
 app.use(express.urlencoded());
 
