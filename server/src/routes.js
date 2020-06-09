@@ -1,11 +1,13 @@
-import express from 'express';
+import express from "express";
+import crypto from "crypto";
+
+import UserController from "./controllers/UserController";
+import ServiceController from "./controllers/ServiceController";
 
 const routes = express.Router();
 
-routes.get('/', (request, response) =>{
-    return response.json({
-        nome:"TRAMPAÊ"
-    });
-});
+//listar usuários
+routes.get("/user", UserController.index);
+routes.post('/user', UserController.create);
 
 export default routes;
