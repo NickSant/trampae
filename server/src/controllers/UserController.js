@@ -5,7 +5,7 @@ import connection from "../database/connection";
 export default {
   //list users
   async index(request, response) {
-    const user = await connection("user").select("*");
+    const user = await connection("users").select("*");
 
     return response.json(user);
   },
@@ -14,10 +14,10 @@ export default {
     const { name, email, whatsapp, city, uf, password } = request.body;
     const data = request.body;
 
-    const user_id = crypto.randomBytes(4).toString("HEX");
+    const id = crypto.randomBytes(4).toString("HEX");
 
-    await connection("user").insert({
-      user_id,
+    await connection("users").insert({
+      id,
       name,
       email,
       whatsapp,
