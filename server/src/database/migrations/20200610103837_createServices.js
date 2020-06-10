@@ -3,6 +3,7 @@ exports.up = function(knex) {
         table.string('id').primary();
         table.decimal('price').notNullable();
         table.string('title').notNullable();
+        table.string('description').notNullable();
         table.integer('number_participants').notNullable();
         
 
