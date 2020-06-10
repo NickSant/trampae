@@ -6,11 +6,10 @@ export default {
 
     const user_id = request.headers.authorization;
 
-    const [id] = await connection("services").insert({
+    await connection("services").insert({
       title,
       description,
       value,
-      user_id,
     });
   },
 };

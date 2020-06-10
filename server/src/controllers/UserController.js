@@ -1,7 +1,6 @@
 import crypto from "crypto";
 
-//conncetion file missing
-//import connection from "../database/connection.js";
+import connection from "../database/connection";
 
 export default {
   //list users
@@ -12,14 +11,22 @@ export default {
   },
   //create user
   async create(request, response) {
-    const { name, email, whatsapp, cidade, uf } = request.body;
+    const { name, email, whatsapp, city, uf, password } = request.body;
+    const data = request.body;
 
-    const id = crypto.randomBytes(4).toString("HEX");
+    const user_id = crypto.randomBytes(4).toString("HEX");
 
+    await connection("user").insert({
+      user_id,
+      name,
+      email,
+      whatsapp,
+      city,
+      uf,
+      password,
+    });
 
-    // DB connection and insert data missing
-
-    
+    console.log(data);
     return response.json({ id });
   },
 };
