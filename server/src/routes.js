@@ -5,7 +5,7 @@ const routes = express.Router();
 import knex from './database/connection';
 
 routes.get('/', async (request, response) =>{
-    const teste = await knex('user').select('*');
+    const teste = await knex('users').select('*');
     
     return response.json(response.json(teste));
 });
