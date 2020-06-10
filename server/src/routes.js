@@ -4,14 +4,21 @@ import crypto from "crypto";
 import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
 
-import knex from './database/connection';
+import connection from './database/connection';
+
 
 const routes = express.Router();
 
 //listar usuários
-routes.get("/user", UserController.index);
+routes.get('/user', UserController.index);
 routes.post('/user', UserController.create);
 
+
+routes.get('/', async (request, response) =>{
+    const teste = await connection('users').select('*');
+    
+    return response.json(response.json(teste));
+});
 
 
 export default routes;
