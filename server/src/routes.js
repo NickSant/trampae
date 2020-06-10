@@ -10,7 +10,11 @@ const routes = express.Router();
 
 //listar usuários
 routes.get("/user", UserController.index);
+
 routes.post("/user", UserController.create);
+
+//SignIn rota
+routes.get('/login', UserController.login);
 
 routes.post("/services", ServiceController.create);
 routes.get("/services", ServiceController.index);
