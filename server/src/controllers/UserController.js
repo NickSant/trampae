@@ -6,6 +6,7 @@ import * as jwt from '../setup/jwt';
 
 import argon2 from 'argon2';//algoritmo de hash
 
+
 export default {
   //list users
   async index(request, response) {
@@ -51,6 +52,8 @@ export default {
 
       const result = await connection('users').select('*').where('email', email).first();
       console.log(result);
+
+      //falta fazer validação com email e senha! - argon2.verify()
 
       if(result === undefined){ 
         res.status(401,{error: 'Operation not permited!'});
