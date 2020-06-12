@@ -1,6 +1,8 @@
 import connection from "../database/connection";
 import crypto from "crypto";
 
+import * as jwt from '../setup/jwt';
+
 export default {
   async index(request, response) {
     const services = await connection("services").select("*");
@@ -36,7 +38,7 @@ export default {
     const data = request.body;
     console.log(data);
 
-    const user_id = request.headers.authorization;
+    const user_id = request.headers.id_user;
     const id = crypto.randomBytes(4).toString("HEX");
 
     await connection("services").insert({
