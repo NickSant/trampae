@@ -16,8 +16,18 @@ routes.post("/user", UserController.create);
 //SignIn rota
 routes.get('/login', UserController.login);
 
-//ROTAS EM QUE É NECESSÁRIO AUTH
+//ROTAS EM QUE É NECESSÁRIO AUTH-----------------------------------------------------------------------------
+
 routes.use(authMiddleware); //authenticator
+//pra todas as próximas rotas, o servidor vai passar por esse middleware pra verificar se o token do usuário, passado pelo Bearer da requisição é válido
+// logo, em todas preciso passar no header da req, um authorization do tipo Bearer!!!!
+
+
+routes.get('/me' ,(req, res) =>{
+    //rota para usar no client, que busca qual usuário foi autenticado. (ver arquivo auth.js)
+    //de acordo com o bearer token
+    res.send(req.auth);//esse parâmetro é setado em auth.js
+});
 
 //listar usuários
 routes.get("/user", UserController.index);
