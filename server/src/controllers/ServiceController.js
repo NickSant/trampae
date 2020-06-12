@@ -12,7 +12,7 @@ export default {
   async delete(request, response) {
 
     const { id } = request.params;
-    const user_id = request.headers.authorization;
+    const user_id = request.headers.id_user;
 
     const service = await connection("services")
       .where("id", id)
