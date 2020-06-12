@@ -37,7 +37,7 @@ routes.get("/user", UserController.index);
 
 routes.post("/services", ServiceController.create);
 routes.get("/services", ServiceController.index);
-routes.delete("/services:id", ServiceController.delete); 
+routes.delete("/services/:id", ServiceController.delete); 
 
 
 export default routes;
