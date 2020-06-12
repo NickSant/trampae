@@ -33,7 +33,8 @@ export default {
   
   async create(request, response) {
 
-    const { title, description, price, number_participants, id_category } = request.body;
+
+    const { title, description, price, number_participants, id_category, city, uf } = request.body;
 
     const data = request.body;
     console.log(data);
@@ -47,6 +48,8 @@ export default {
       description,
       price,
       number_participants,
+      city,
+      uf,
       user_id,
       id_category,
     });
