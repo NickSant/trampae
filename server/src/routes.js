@@ -10,8 +10,10 @@ import authMiddleware from './setup/auth';
 
 const routes = express.Router();
 
-//SignOn rota
+//SignUp rota
 routes.post("/user", UserController.create);
+
+
 
 //SignIn rota
 routes.get('/login', UserController.login);
@@ -31,6 +33,7 @@ routes.get('/me' ,(req, res) =>{
 
 //listar usuários
 routes.get("/user", UserController.index);
+
 
 routes.post("/services", ServiceController.create);
 routes.get("/services", ServiceController.index);

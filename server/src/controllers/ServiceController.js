@@ -36,7 +36,7 @@ export default {
     const data = request.body;
     console.log(data);
 
-    const user_id = request.headers.authorization;
+    const user_id = request.headers.id_user;
     const id = crypto.randomBytes(4).toString("HEX");
 
     await connection("services").insert({
