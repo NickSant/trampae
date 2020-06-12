@@ -8,6 +8,7 @@ export default {
     return response.json(services);
   },
   async delete(request, response) {
+
     const { id } = request.params;
     const user_id = request.headers.authorization;
 
@@ -26,16 +27,17 @@ export default {
 
     return response.status(204).send();
   },
+
+  
   async create(request, response) {
-    const { title, description, price, number_participants } = request.body;
+
+    const { title, description, price, number_participants, id_category } = request.body;
 
     const data = request.body;
     console.log(data);
 
     const user_id = request.headers.authorization;
     const id = crypto.randomBytes(4).toString("HEX");
-
-    const id_category = 1; // testing value
 
     await connection("services").insert({
       id,
