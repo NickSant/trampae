@@ -18,8 +18,6 @@ export default {
       .where("id", id)
       .select("user_id")
       .first();
-
-    console.log(service);
     
     if ((service.user_id =! user_id)) {
       return response.status(401).json({ error: "Operation not permited" });

@@ -10,7 +10,6 @@ import argon2 from 'argon2';//algoritmo de hash
 export default {
   //list users
   async index(request, response) {
-    console.log('PASSOU NA AUTHS')
     const user = await connection("users").select("*");
     
     return response.json(user);
