@@ -7,6 +7,7 @@ import ServiceController from "./controllers/ServiceController";
 import connection from "./database/connection";
 
 import authMiddleware from './setup/auth';
+import SearchController from "./controllers/SearchController";
 
 const routes = express.Router();
 
@@ -34,6 +35,9 @@ routes.get('/me' ,(req, res) =>{
 //listar usuários
 routes.get("/user", UserController.index);
 
+//searches
+routes.get("/search/:uf/:city", SearchController.SearchByLocation);
+routes.get("/search/:cat_id", SearchController.SearchByCategory)
 
 routes.post("/services", ServiceController.create);
 routes.get("/services", ServiceController.index);

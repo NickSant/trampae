@@ -18,7 +18,7 @@ module.exports = async function authMiddleware(req, res, next){
         console.log(`ID: ${id_user}`);//esse parâmetro user.id é gerado no momento do login ou cadastro!!!
 
         if(!id_user){
-            console.log('VOCÊ NÃO É AUTORIZADO AQUI SEU BOSTA')
+            console.log('VOCÊ NÃO É AUTORIZADO AQUI')
             res.status(401, {error: 'Não autorizado'});
             res.json({Erro:'Unauthorized!'});
         }
