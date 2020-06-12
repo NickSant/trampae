@@ -38,5 +38,4 @@ module.exports = async function authMiddleware(req, res, next){
         console.log(`ERRO: ${err.name}`)
         res.status(401).send(err.message).toString();
     }
-
-}
+  }
