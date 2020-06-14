@@ -32,12 +32,12 @@ routes.get('/me' ,(req, res) =>{
     res.send(req.auth);//esse parâmetro é setado em auth.js
 });
 
-//listar usuários
+//listar usuários - development
 routes.get("/user", UserController.index);
 
 //searches
-routes.get("/search/:uf/:city", SearchController.SearchByLocation);
-routes.get("/search/:cat_id", SearchController.SearchByCategory)
+routes.get("/search/:uf/:city/:cat_id", SearchController.SearchServices);
+routes.get("/search/:name", SearchController.SearchUsers);
 
 routes.post("/services", ServiceController.create);
 routes.get("/services", ServiceController.index);
