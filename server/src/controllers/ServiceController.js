@@ -19,13 +19,16 @@ export default {
       .select("user_id")
       .first();
     
-    if ((service.user_id =! user_id)) {
+    if (service.user_id != user_id) {
       return response.status(401).json({ error: "Operation not permited" });
     }
 
-    await connection("services").where("id", id).delete();
+      await connection("services").where("id", id).delete();
 
-    return response.status(204).send();
+      return response.status(204).send();
+    
+
+    
   },
 
   
