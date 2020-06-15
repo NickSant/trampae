@@ -1,7 +1,8 @@
 import connection from "../database/connection";
 import crypto from "crypto";
 
-import * as jwt from '../setup/jwt';
+import * as jwt from "../setup/jwt";
+import validation from "../validations/serviceValidator";
 
 export default {
   async index(request, response) {
@@ -10,7 +11,6 @@ export default {
     return response.json(services);
   },
   async delete(request, response) {
-
     const { id } = request.params;
     const user_id = request.headers.id_user;
 
@@ -18,24 +18,33 @@ export default {
       .where("id", id)
       .select("user_id")
       .first();
-    
+
     if (service.user_id != user_id) {
       return response.status(401).json({ error: "Operation not permited" });
     }
 
-      await connection("services").where("id", id).delete();
+    await connection("services").where("id", id).delete();
 
-      return response.status(204).send();
-    
-
-    
+    return response.status(204).send();
   },
 
-  
   async create(request, response) {
+    const {
+      title,
+      description,
+      price,
+      number_participants,
+      id_category,
+      city,
+      uf,
+    } = request.body;
 
-
-    const { title, description, price, number_participants, id_category, city, uf } = request.body;
+    //validation
+    const errors = await validation.ServiceValidator(request);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return response.status(422).json({ errors: errors.array() });
+    }
 
     const data = request.body;
     console.log(data);
