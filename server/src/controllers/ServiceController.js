@@ -6,18 +6,26 @@ import validation from "../validations/serviceValidator";
 
 export default {
   async index(request, response) {
-    const services = await connection("services").select("*");
+    try{
+      const services = await connection("services").select("*");
+    }catch(e){
+      response.json({db_error: `erro: ${e}`});
+    }
 
     return response.json(services);
   },
   async delete(request, response) {
     const { id } = request.params;
     const user_id = request.headers.id_user;
-
-    const service = await connection("services")
-      .where("id", id)
-      .select("user_id")
-      .first();
+    try{
+      const service = await connection("services")
+        .where("id", id)
+        .select("user_id")
+        .first();
+    }catch(e){
+      response.json({db_error: `erro: ${e}`});
+    }
+      
 
     if (service.user_id != user_id) {
       return response.status(401).json({ error: "Operation not permited" });
@@ -51,18 +59,22 @@ export default {
 
     const user_id = request.headers.id_user;
     const id = crypto.randomBytes(4).toString("HEX");
-
-    await connection("services").insert({
-      id,
-      title,
-      description,
-      price,
-      number_participants,
-      city,
-      uf,
-      user_id,
-      id_category,
-    });
+    try{
+      await connection("services").insert({
+        id,
+        title,
+        description,
+        price,
+        number_participants,
+        city,
+        uf,
+        user_id,
+        id_category,
+      });
+    }catch(e){
+      response.json({db_error: `erro: ${e}`});
+    }
+      
 
     return response.json({ id });
   },

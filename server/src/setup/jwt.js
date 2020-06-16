@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 const secret = 'ce8ae065063ea7763a8116a4d0973920';
 //payload = dado que vai ser criptografado
@@ -9,4 +9,8 @@ export function generateToken(payload){
 }
 export function decodeToken(token){
     return jwt.verify(token, secret);
+}
+export function destroyToken(token){
+    const obj = new TokenExpiredError();
+    console.log(obj);
 }
