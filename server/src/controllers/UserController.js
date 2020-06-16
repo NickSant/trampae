@@ -1,11 +1,12 @@
 import crypto from "crypto";
 
 import connection from "../database/connection";
+
 import validator from "../validations/userValidator";
 
 import * as jwt from "../setup/jwt";
 
-import argon2, { argon2i } from "argon2"; //algoritmo de hash
+import argon2 from "argon2"; //algoritmo de hash
 
 export default {
   //list users
@@ -31,20 +32,36 @@ export default {
 
     const id = await crypto.randomBytes(4).toString("HEX");
 
-    const token = await jwt.generateToken({ user_id: id });
+    const token = await jwt.generateToken({ user_id: id });//gerando token para auth
 
-    await connection("users").insert({
-      id,
-      name,
-      email,
-      whatsapp,
-      city,
-      uf,
-      password: hashed_pass,
-    });
+    try{
+      await connection("users").insert({
+        id,
+        name,
+        email,
+        whatsapp,
+        city,
+        uf,
+        password: hashed_pass,
+      });
 
-    console.log(data);
+      console.log(data);
+    }catch(e){
+      if(e.sqlMessage.includes('users_email_unique')){
 
+        response.status(406);
+        return response.json({err:'Duplicated email'})
+
+      }else if(e.sqlMessage.includes('users_whatsapp_unique')){
+
+        response.status(406);
+        return response.json({err:'Duplicated Whatsapp'});
+
+      }
+      console.log(e)
+      return response.json({Error:`Database Error: ${e}`})
+    }
+      
     return response.json({ id, token });
   },
 
@@ -52,7 +69,7 @@ export default {
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-
+   
     try {
       if (
         !email.includes("@") ||
@@ -65,11 +82,16 @@ export default {
         res.status(401, { error: "Malformated Elements" });
         return res.json({ Error: "Malformated Elements" });
       }
-
-      const result = await connection("users")
+      try{
+        const result = await connection("users")
         .select("*")
         .where("email", email)
         .first();
+      }catch(e){
+        res.status(401);
+        return res.json({err:e})
+      }
+      
 
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
@@ -99,7 +121,9 @@ export default {
 
       res.json({ user: user, token: token });
     } catch (err) {
-      res.status(401, { error: "Database Error" });
+      res.status(401, { error: err });
     }
   },
+
+  
 };

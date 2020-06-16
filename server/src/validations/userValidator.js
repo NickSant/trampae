@@ -23,8 +23,6 @@ export default {
       .isEmpty()
       .run(req);
 
-    
-
     const result = validationResult(req);
     return result;
   }

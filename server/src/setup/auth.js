@@ -27,6 +27,7 @@ module.exports = async function authMiddleware(req, res, next){
         const result = await connection('users').select('*').where('id', id_user).first();
         
         console.log('PASSANDO PELO MIDDLEWARE.....');
+        
         console.log(`Usuário validado: ${result.name}`);
 
         delete result.password;//retira o índice password do objeto retornado
