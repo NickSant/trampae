@@ -6,10 +6,26 @@ import validation from "../validations/serviceValidator";
 
 export default {
   async index(request, response) {
+    //valor default de paginação -> page = 1
+    const { page = 1 } = request.query;
+
     try{
-      const services = await connection("services").select("*");
+
+      const [count] = await connection('services').count();//retorna um array com a quantidade de services
+
+      console.log(`Total de services cadastrados: ${count['count(*)']}`);
+
+      const services = await connection("services")
+      .select("*")
+      .limit(12)
+      .offset((page - 1) * 12);//pula as páginas retornadas, em função da query
+      
+      return response.json(services);
+
     }catch(e){
+
       response.json({db_error: `erro: ${e}`});
+
     }
 
     return response.json(services);
@@ -49,6 +65,7 @@ export default {
 
     //validation
     const errors = await validation.ServiceValidator(request);
+
     console.log(errors);
     if (!errors.isEmpty()) {
       return response.status(422).json({ errors: errors.array() });
