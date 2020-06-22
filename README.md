@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Trampaê
 <img src="https://i.imgur.com/3Tsit3O.png" width="500" align="center">
 
@@ -37,3 +38,11 @@ O backend de nossa aplicação foi feito utilizando o **Node.js**, um ambiente d
 |  [<img src="https://avatars0.githubusercontent.com/u/60119543?s=460&u=09214c01e7ab88ecf78eeefcaa8bc6cfc63a3386&v=4" width=115><br><sub>@NickSant</sub>](https://github.com/NickSant) | [<img src="https://avatars0.githubusercontent.com/u/56204477?s=460&u=c28c1517802d462612ae345b0c992cbf4f825637&v=4" width=115><br><sub>@viniolimpio3</sub>](https://github.com/viniolimpio3) | [<img src="https://avatars3.githubusercontent.com/u/62610767?s=460&u=f56c1ddf7e562aa7bfb395e9349200902e682113&v=4" width=115><br><sub>@PhOmena</sub>](https://github.com/PhOmena) | [<img src="https://avatars1.githubusercontent.com/u/64490162?s=460&v=4" width=115><br><sub>@bielzinho007</sub>](https://github.com/bielzinho007)
 | :---: | :---: | :--: | :--: |
 
+=======
+# TrampaÊ
+Um sistema que liga pessoas que querem um serviço, com aqueles que o oferecem, criado com Node.js, React.js e React Native.
+Projeto de TCC do curso de Desenvolvimento de Sistemas.
+
+Caso você baixe o projeto em sua máquina local, instale os módulos da node_modules em sua máquina, com o comando 
+# npm install  ||  yarn install
+>>>>>>> 9959a9b5e8008e5bc2192f3268331bfc226462a4
