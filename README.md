@@ -1,5 +1,5 @@
 # Trampaê
-<img src="https://i.imgur.com/3Tsit3O.png" width="500" align="center">
+<h1 align="center"> <img src="https://i.imgur.com/3Tsit3O.png" width="500" align="center"> </h1>
 
 
 ## Descrição
