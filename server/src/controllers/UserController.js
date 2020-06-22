@@ -69,7 +69,7 @@ export default {
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-   
+    console.log('inicio de login');
     try {
       if (
         !email.includes("@") ||
@@ -82,22 +82,23 @@ export default {
         res.status(401, { error: "Malformated Elements" });
         return res.json({ Error: "Malformated Elements" });
       }
-      try{
-        const result = await connection("users")
-        .select("*")
-        .where("email", email)
-        .first();
-      }catch(e){
-        res.status(401);
-        return res.json({err:e})
-      }
+      console.log('passou validação')
       
-
+      const result = await connection("users")
+      .select("*")
+      .where("email", email)
+      .first();
+      console.log(result)
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
+      console.log('decodificou buffer');
+
       //argon2.verify (HASHED_PASS, plainTextPassword)
-      if (!(await argon2.verify(pass_bd, password)))
+      if (!(await argon2.verify(pass_bd, password))){
         console.log("senhas diferentes");
+        return res.status(401).json({Error: 'Senhas diferentes'});
+      }
+        
 
       if (email !== result.email || !(await argon2.verify(pass_bd, password))) {
         res.status(401, { error: "Incorrect username or password" });
@@ -120,8 +121,11 @@ export default {
       };
 
       res.json({ user: user, token: token });
+
     } catch (err) {
+
       res.status(401, { error: err });
+
     }
   },
 

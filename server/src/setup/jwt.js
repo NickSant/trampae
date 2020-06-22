@@ -10,7 +10,3 @@ export function generateToken(payload){
 export function decodeToken(token){
     return jwt.verify(token, secret);
 }
-export function destroyToken(token){
-    const obj = new TokenExpiredError();
-    console.log(obj);
-}
