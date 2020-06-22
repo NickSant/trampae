@@ -23,7 +23,7 @@ Em temos atualmente as seguintes etapas completas:
 ## Desenvolvimento
 
 ### Backend
-O backend de nossa aplicação foi feito utilizando o **Node.js**, um ambiente de execução JavaScript server-side, além de diversas outras dependências que nos auxiliaram na execução deste projeto, assim como o **Express** para criação de rotas na aplicação,** Babel** para interpretação do código em ES6, **Knex** para uma fácil criação e manipulação de nosso banco de dados **mySQL** com o uso das *migrations*, entre outras.
+O backend de nossa aplicação foi feito utilizando o **Node.js**, um ambiente de execução JavaScript server-side, além de diversas outras dependências que nos auxiliaram na execução deste projeto, assim como o **Express** para criação de rotas na aplicação,o **Babel** para interpretação do código em ES6, **Knex** para uma fácil criação e manipulação de nosso banco de dados **mySQL** com o uso das *migrations*, entre outras.
 
 ### Frontend
 *Em desenvolvimento*
