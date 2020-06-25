@@ -2,8 +2,6 @@ import crypto from "crypto";
 
 import connection from "../database/connection";
 
-import validator from "../validations/userValidator";
-
 import * as jwt from "../setup/jwt";
 
 import argon2 from "argon2"; //algoritmo de hash
@@ -17,17 +15,10 @@ export default {
   },
   //create user
   async create(request, response) {
-    const { name, email, whatsapp, city, uf, password } = request.body;
-
-    //validation
-    const errors = await validator.checkRegister(request);
-    if (!errors.isEmpty()) {
-      return response.status(422).json({ errors: errors.array() });
-    }
-
+    const { name, email, whatsapp, city, uf, password } = request.value.body;
     const hashed_pass = await argon2.hash(password);
 
-    const data = request.body;
+    const data = request.value.body;
     delete data.password;
 
     const id = await crypto.randomBytes(4).toString("HEX");
@@ -47,6 +38,7 @@ export default {
 
       console.log(data);
     }catch(e){
+      console.log(e.sqlMessage);
       if(e.sqlMessage.includes('users_email_unique')){
 
         response.status(406);
