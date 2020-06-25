@@ -2,7 +2,6 @@ import connection from "../database/connection";
 import crypto from "crypto";
 
 import * as jwt from "../setup/jwt";
-import validation from "../validations/serviceValidator";
 
 export default {
   async index(request, response) {
@@ -62,14 +61,6 @@ export default {
       city,
       uf,
     } = request.body;
-
-    //validation
-    const errors = await validation.ServiceValidator(request);
-
-    console.log(errors);
-    if (!errors.isEmpty()) {
-      return response.status(422).json({ errors: errors.array() });
-    }
 
     const data = request.body;
     console.log(data);
