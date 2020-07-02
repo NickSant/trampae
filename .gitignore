@@ -5,14 +5,4 @@ web-client/node_modules
 
 mobile/node_modules
 mobile/.expo/*
-mobile/npm-debug.*
-mobile/*.jks
-mobile/*.p8
-mobile/*.p12
-mobile/*.key
-mobile/*.mobileprovision
-mobile/*.orig.*
-mobile/web-build/
 
-mobile/# macOS
-mobile/.DS_Store
