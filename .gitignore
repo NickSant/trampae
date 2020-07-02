@@ -4,5 +4,5 @@ server/.env
 web-client/node_modules
 
 mobile/node_modules
-mobile/.expo/*
+
 
