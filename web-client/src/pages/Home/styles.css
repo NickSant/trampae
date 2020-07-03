@@ -1,0 +1,11 @@
+.Home-container{
+    background-color: #f5f5f5;
+    width: 2000px;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 100px 100px 100px 100px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
