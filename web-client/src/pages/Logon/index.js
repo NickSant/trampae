@@ -12,7 +12,9 @@ export default function Logon() {
         <div className="logon-container">
             <section className="form">
                 <nav>
-                    <a href="/home">Quem Somos</a>
+                <Link className="rota-link" to="/aboutus">
+                    Quem Somos
+                </Link>
                 </nav>
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
@@ -27,7 +29,7 @@ export default function Logon() {
                     <Link className="back-link" to="/register">
                         <FiLogIn size={16} color="#14b3b0" />
                     Não tenho cadastro
-                </Link>
+                    </Link>
                 </form>
             </section>
             <div className="img">
