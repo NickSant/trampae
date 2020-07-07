@@ -1,5 +1,5 @@
 import knex from 'knex';
-
+require('dotenv').config();
 const connection = knex({
     client:'mysql',
     version:process.env.DB_VERSION,//OBS -> Versão no package.json!!
