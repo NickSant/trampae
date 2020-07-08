@@ -1,11 +1,44 @@
-.Home-container{
-    background-color: #f5f5f5;
-    width: 2000px;
-    max-width: 1120px;
+
+.Home-contaneir{
+    display: grid;
     height: 100vh;
-    margin: 100px 100px 100px 100px;
-    border-radius: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 11vh 80vh 10vh;
+    background: #f5f5f5;
+}
+.header{
+    background: #f5f5f5;
+    width:100%;
+    height: 60px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.navbar{
+    width: 100%;;
+    height: 60px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+}
+.principal{
+    background: rgb(223, 213, 213);
+    width: 95%;
+    height: 650px;
+
+}
+.serviços{
+    background: rgb(223, 213, 213);
+    width: 100%;
+    height: 350px;
+}
+.paginas{
+    background: rgb(223, 213, 213);
+    width: 95%;
+    height: 300px;
+}
+img{
+    width: 60px;
+    margin: 0px 0px 0px 40px;
 }

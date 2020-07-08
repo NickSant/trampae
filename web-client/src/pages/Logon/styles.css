@@ -28,7 +28,7 @@
 
 .logon-container section nav a{
     color: #14b3b0;
-    font-size: 25px;
+    font-size: 22px;
     text-align: center;
     font-weight: bold;
     text-decoration: none;
@@ -64,12 +64,15 @@ width: 350px;
 .logon-container section.form form button:hover{
     background-color:#17d4d2;
 }
-.rota-link{
+
+nav .rota-link{
     display: flex;
     align-items: center;
-    margin-top: 40px;
-    margin-left: 700px;
+    margin-top: 20px;
+    margin-left: 770px;
     margin-bottom: 50px;
     text-decoration: none;
     transition: opacity 0.2s;
 }
+
+

@@ -68,6 +68,9 @@ export default function Register() {
                     <button className="button" onClick={submitRegister}>Cadastar</button>
                 </form>
 
+                 
+              
+
                 
                 <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
                     <div>

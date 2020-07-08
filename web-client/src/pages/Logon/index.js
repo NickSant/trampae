@@ -9,11 +9,9 @@ export default function Logon() {
     return (
         <div className="logon-container">
             <section className="form">
-                <nav>
-                <Link className="rota-link" to="/aboutus">
-                    Quem Somos
-                </Link>
-                </nav>
+            <nav>
+            <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
+            </nav>
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
                     <h1>Faça seu Login</h1>
@@ -27,9 +25,10 @@ export default function Logon() {
                     <Link className="back-link" to="/register">
                         <FiLogIn size={16} color="#14b3b0" />
                     Não tenho cadastro
-                    </Link>
+                </Link>
                 </form>
             </section>
+            <div />
             <div className="img">
             <img src={logonImg} alt="trabalhador" />
             </div>
