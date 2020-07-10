@@ -45,7 +45,7 @@ routes.get("/me", (req, res) => {
 //o name do campo que enviar a imagem, deve ser exatamente igual ao do .single()
 routes.post('/upload-image', multer.single('img_perfil'), UserController.uploadImage);
 
-routes.get('/profile/:id', UserController.profile);
+routes.get('/user/:id', UserController.profile);
 
 //searches
 routes.get("/search/:uf/:city/:cat_id", SearchController.SearchServices);
