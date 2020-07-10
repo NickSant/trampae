@@ -1,12 +1,15 @@
 import * as jwt from './jwt';
 import connection from '../database/connection';
+
 module.exports = async function authMiddleware(req, res, next){
+    
     const [hashType, token] = req.headers.authorization.split(' ');//Bearer Authorization
 
     try{
         console.log(token)
-        if(token === undefined){
-            res.status(400);
+        if(token === undefined || !token){
+            res.status(401);
+            console.log('Token não existe');
             return res.json({error:'Token Undefined'});
         }
         
@@ -36,7 +39,7 @@ module.exports = async function authMiddleware(req, res, next){
 
         next();//FUNÇÃO QUE PERMITE ACESSAR AS PRÓXIMAS ROTAS!!
     }catch(err){
-        console.log(`ERRO: ${err.name}`)
+        console.log(`(auth.js)ERRO: ${err.name}`)
         res.status(401).send(err.message).toString();
     }
   }
