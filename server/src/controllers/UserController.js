@@ -8,6 +8,9 @@ import argon2 from "argon2"; //algoritmo de hash
 import fs from 'fs';
 
 import { profile } from "console";
+import Util from "../helpers/Util";
+
+const util = new Util();
 
 export default {
   //list users
@@ -96,7 +99,9 @@ export default {
       .select("*")
       .where("email", email)
       .first();
+
       console.log(result)
+
       if(!result || result === undefined){
         return res.status(400).json({Error:'User not found'})
       }
@@ -145,7 +150,7 @@ export default {
     
     const { id } = req.params;
     
-    const { id:req_id } = req.auth;
+    const { id:req_id } = req.auth;//id do user autenticado e logado
     
     const exists = await connection('users').select('*')
     .where('id',id)
@@ -162,9 +167,12 @@ export default {
     if(id === req_id){
       //ĺógica para a possibilidade de editar os dados!!
       console.log('USER ENTROU NO PRÓPRIO PERFIL');
+
+
     }else{
       //dados são somente visíveis ao user 'requisitante'
       console.log('USER ENTROU NO PERFIL DE OUTRO');
+
     }
     
     
@@ -175,12 +183,10 @@ export default {
   },
   async uploadImage(req, res){
     console.log('uploadController')
-    try{
-
-    
+    try{      
       const [,tipoImg] = req.file.mimetype.split('/');
       
-      const { name:name_user, id } = req.auth;
+      const { name:original_name, id } = req.auth;
       if(!id || id === undefined || id === '')  
         return res.json({Error:'User not valid'})
       
@@ -188,8 +194,12 @@ export default {
         return res.json({Error:'Archive not exists'});
       
 
-      //setando o nome do arquivo
-      //renomeando os arquivos!
+      const name_user = util.clearString(original_name);
+      console.log(name_user);
+      
+
+
+
       fs.rename(`./uploads/${req.file.originalname}`,//nome antigo
         `./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
         (err) =>{//catch
