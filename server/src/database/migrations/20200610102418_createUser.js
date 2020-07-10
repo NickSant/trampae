@@ -5,6 +5,8 @@ exports.up = function(knex) {
         table.string('name').notNullable();
         table.string('email').notNullable();
         table.unique('email');
+        table.string('image_url');
+        table.unique('image_url');
         table.binary('password', 16535).notNullable();
         table.string('whatsapp').notNullable();
         table.string('city').notNullable();
