@@ -5,6 +5,7 @@ exports.up = function(knex) {
         table.string('name').notNullable();
         table.string('email').notNullable();
         table.unique('email');
+        table.string('image_url').defaultTo('uploads/default.png');
         table.binary('password', 16535).notNullable();
         table.string('whatsapp').notNullable();
         table.string('city').notNullable();

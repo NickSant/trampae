@@ -16,11 +16,13 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "joi": "^14.3.1",
     "joi-phone-number": "^4.1.0",
     "joi-phone-validator": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
+    "multer": "^1.4.2",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
