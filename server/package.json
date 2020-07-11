@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon -w src/server.js --exec \"babel-node src/server.js --presets env\"",
+    "server": "nodemon -w src --exec \"babel-node src/server.js --presets env\"",
     "build": "babel src -s -D -d dist --presets env",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js" 
   },
   "keywords": [],
   "author": "",
