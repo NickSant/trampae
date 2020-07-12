@@ -65,7 +65,7 @@ width: 350px;
     background-color:#17d4d2;
 }
 
-nav .rota-link{
+.logon-container section.form nav .rota-link{
     display: flex;
     align-items: center;
     margin-top: 20px;

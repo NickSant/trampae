@@ -7,13 +7,13 @@ import logoImg from '../../assets/logo.png';
 
 export default function Register() {
 
-    const styles ={
-        p:{
+    const styles = {
+        p: {
             color: '#cff8f9',
             fontSize: '26px',
         },
-        cursorPointer:{
-            cursor:'pointer',
+        cursorPointer: {
+            cursor: 'pointer',
         }
     }
     const refDiv = React.createRef();
@@ -23,21 +23,21 @@ export default function Register() {
         e.preventDefault();
         refDiv.current.style.display = 'flex';
         console.log(refDiv.current)
-        setTimeout(() =>{
+        setTimeout(() => {
             goToHome();
-        },1500)
-        
+        }, 1500)
+
     }
-    function goToHome(){
+    function goToHome() {
         window.location = '/'
     }
-    
+
 
     return (
         <div className="Register-container">
             <div className="content">
                 <section>
-                    
+
                     <img className="logo" src={logoImg} alt='Trampâe' />
                     <h1>Cadastro</h1>
                     <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
@@ -68,16 +68,13 @@ export default function Register() {
                     <button className="button" onClick={submitRegister}>Cadastar</button>
                 </form>
 
-                 
-              
 
-                
                 <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
                     <div>
                         <FiCheckSquare size={100} />
                         <div>
                             <h1>Cadastro Concluído com Sucesso!</h1>
-                            <p style={styles.p}>Aguarde para ser redirecionado</p>   
+                            <p style={styles.p}>Aguarde para ser redirecionado</p>
                         </div>
                     </div>
                 </div>

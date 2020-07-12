@@ -1,4 +1,4 @@
-.Register-container{
+.new-service-container{
     background-color: #f5f5f5;
     width: 2000px;
     max-width: 1120px;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.Register-container .content{
+.new-service-container .content{
     width: 100%;
     padding: 96px;
     background: #f5f5f5;
@@ -21,51 +21,45 @@
     align-items: center;
 
 }
-.Register-container .content section{
+.new-service-container .content section{
     width: 100%;
     max-width: 380px;
     max-height: 500px;
     margin-bottom: 110px;
 
 }
-.Register-container .content section h1{
+.new-service-container .content section h1{
     margin: 10px 0 20px;
     font-size: 32px;
 }
-.Register-container .content section p{
+.new-service-container .content section p{
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 
 }
-.Register-container .content form{
+.new-service-container .content form{
     width: 100%;
     max-width: 450px;
 
 }
 
-.Register-container form input:focus{
+.new-service-container form input:focus{
     border-left-width: 7px;
     border-left-color:#14b3b0;
 }
-
-.Register-container .content form button{
+.new-service-container form textarea{
+    margin-top: 5px;
+}
+.new-service-container .content form button{
     font-size: 19px;
 }
 
-.Register-container form button:hover{
+.new-service-container form button:hover{
     background-color:#17d4d2;
 }
 
-.Register-container .content form .input-group{
-    display: flex;
-}
-.Register-container .content form .input-group input + input{
-    margin-left: 8px;
-    
-}
-
-.Register-container .content .hide {
+.new-service-container .content .hide {
     background-color:  #14b4bfa4;
     height: 100vh;
     width: 160vw;
@@ -79,7 +73,7 @@
     transition: 400ms;
 }
 
-.Register-container .content .hide h1{
+.new-service-container .content .hide h1{
     color: black;
     font-size: 36px;
     line-height: 42px;

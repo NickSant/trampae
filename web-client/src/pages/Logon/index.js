@@ -9,17 +9,17 @@ export default function Logon() {
     return (
         <div className="logon-container">
             <section className="form">
-            <nav>
-            <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
-            </nav>
+                <nav>
+                    <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
+                </nav>
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
                     <h1>Faça seu Login</h1>
                     <input type="email" placeholder="E-mail" />
                     <input type="password" placeholder="Senha" />
-                    
+
                     <Link className="back-link" to="/home">
-                    <button className="button" type="submit">Entrar</button>
+                        <button className="button" type="submit">Entrar</button>
                     </Link>
 
                     <Link className="back-link" to="/register">
@@ -30,7 +30,7 @@ export default function Logon() {
             </section>
             <div />
             <div className="img">
-            <img src={logonImg} alt="trabalhador" />
+                <img src={logonImg} alt="trabalhador" />
             </div>
         </div>
     );

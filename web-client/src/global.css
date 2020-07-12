@@ -29,6 +29,17 @@ form input{
     border-radius: 10px;
     padding: 0 24px;
 }
+form textarea{
+    width: 100%;
+    resize: vertical;
+    min-height: 230px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 10px;
+    padding: 16px 24px;
+    line-height: 24px;
+    
+}
 
 .button{
     width: 100%;
