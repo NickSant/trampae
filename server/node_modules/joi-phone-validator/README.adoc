@@ -1,0 +1,72 @@
+= joi-phone-validator
+
+A https://github.com/hapijs/joi[joi] extension used to validate/parse phone numbers.
+
+Internally it is using Google's library https://github.com/googlei18n/libphonenumber[libphonenmber].
+
+== Requirements
+
+* nodejs >= 4
+* npm >= 2
+
+== Install
+
+[source,shell]
+.Add the dependency to your package.json
+----
+npm install joi-phone-validator --save
+----
+
+== Usage
+=== Importing the lib
+
+[source,javascript]
+.Require the lib if using ES5
+----
+var phoneValidator = require('joi-phone-validator');
+----
+
+[source,javascript]
+.Import the module if using ES6
+----
+import phoneValidator from 'joi-phone-validator'
+----
+
+=== Using the lib
+
+[source,javascript]
+.Validate phone number format
+----
+var schema = phoneValidator.phone().validate()
+var result = Joi.validate('+33123456789', schema)
+// result.error -> null
+// result.value -> '+33123456789'
+----
+
+[source,javascript]
+.Validate phone number is mobile
+----
+var schema = phoneValidator.phone().mobile()
+var result = Joi.validate('+33623456789', schema)
+// result.error -> null
+// result.value -> '+33623456789'
+----
+
+[source,javascript]
+.Functions are composable
+----
+var schema = phoneValidator.phone().validate().mobile()
+----
+
+For others use cases, you can look at the tests in the `test` directory.
+
+== Run tests
+
+[source,shell]
+----
+npm test
+----
+
+== Licence
+
+link:LICENCE[MIT]
