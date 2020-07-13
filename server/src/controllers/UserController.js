@@ -5,7 +5,7 @@ import connection from "../database/connection";
 import * as jwt from "../setup/jwt";
 
 import argon2 from "argon2"; //algoritmo de hash
-import fs from "fs";
+import fs from 'fs';
 
 import { profile } from "console";
 import Util from "../helpers/Util";
@@ -15,19 +15,21 @@ const util = new Util();
 export default {
   //list users
   async index(request, response) {
+
     const { page = 1 } = request.query;
 
-    const user = await connection("users")
-      .select("*")
-      .limit(12)
-      .offset((page - 1) * 12);
+    const user = await connection('users')
+    .select("*")
+    .limit(12)
+    .offset( (page - 1) * 12);
 
-    const res_user = user.map((item) => {
+    const res_user = user.map( item => {
       //deletando senha do objeto de retornos
       delete item.password;
       return item;
     });
-
+    
+    
     return response.json(res_user);
   },
   //create user
@@ -95,14 +97,14 @@ export default {
       console.log("passou validação");
 
       const result = await connection("users")
-        .select("*")
-        .where("email", email)
-        .first();
+      .select("*")
+      .where("email", email)
+      .first();
 
-      console.log(result);
+      console.log(result)
 
-      if (!result || result === undefined) {
-        return res.status(400).json({ Error: "User not found" });
+      if(!result || result === undefined){
+        return res.status(400).json({Error:'User not found'})
       }
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
@@ -112,7 +114,7 @@ export default {
       if (!(await argon2.verify(pass_bd, password))) {
         console.log("senhas diferentes");
         res.status(400);
-        return res.json({ Error: "Senhas Incorreta" });
+        return res.json({Error:'Senhas Incorreta'});
       }
 
       if (email !== result.email || !(await argon2.verify(pass_bd, password))) {
@@ -137,64 +139,74 @@ export default {
 
       res.json({ user: user, token: token });
     } catch (err) {
-      console.log("Deu pau..");
+      console.log('Deu pau..');
       res.status(401, { error: err });
     }
   },
 
-  async profile(req, res) {
+  async profile(req, res){
+    
     const { id } = req.params;
+    
+    const { id:req_id } = req.auth;//id do user autenticado e logado
+    
+    const exists = await connection('users').select('*')
+    .where('id',id)
+    .first();
 
-    const { id: req_id } = req.auth; //id do user autenticado e logado
-
-    const exists = await connection("users")
-      .select("*")
-      .where("id", id)
-      .first();
-
-    if (!exists || exists === undefined || exists === "") {
+    if(!exists || exists === undefined || exists === '') {
       console.log(`User ${id} not exists`);
       res.status(401, { error: "User not Found" });
       return res.json({ Error: "User not Found" });
     }
     delete exists.password;
+      
 
-    if (id === req_id) {
+    if(id === req_id){
       //ĺógica para a possibilidade de editar os dados!!
-      console.log("USER ENTROU NO PRÓPRIO PERFIL");
-    } else {
+      console.log('USER ENTROU NO PRÓPRIO PERFIL');
+
+
+    }else{
       //dados são somente visíveis ao user 'requisitante'
-      console.log("USER ENTROU NO PERFIL DE OUTRO");
+      console.log('USER ENTROU NO PERFIL DE OUTRO');
+
     }
-
+    
+    
     return res.json(exists);
+    
+
+
   },
-  async uploadImage(req, res) {
-    console.log("uploadController");
-    try {
-      const [, tipoImg] = req.file.mimetype.split("/");
-
-      const { name: original_name, id } = req.auth;
-      if (!id || id === undefined || id === "")
-        return res.json({ Error: "User not valid" });
-
-      if (req.file === undefined || !req.file)
-        return res.json({ Error: "Archive not exists" });
+  async uploadImage(req, res){
+    console.log('uploadController')
+    try{      
+      const [,tipoImg] = req.file.mimetype.split('/');
+      
+      const { name:original_name, id } = req.auth;
+      if(!id || id === undefined || id === '')  
+        return res.json({Error:'User not valid'})
+      
+      if(req.file === undefined || !req.file)
+        return res.json({Error:'Archive not exists'});
+      
 
       const name_user = util.clearString(original_name);
       console.log(name_user);
+      
 
-      fs.rename(
-        `./uploads/${req.file.originalname}`, //nome antigo
+
+
+      fs.rename(`./uploads/${req.file.originalname}`,//nome antigo
         `./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
-        (err) => {
-          //catch
-          if (err) {
-            console.error(err);
-            res.status(400);
-            return res.json({ Error: "Erro" });
+        (err) =>{//catch
+          if(err){
+              console.error(err);
+              res.status(400);
+              return res.json({Error:'Erro'});
           }
-          console.log("Arquivo renomeado");
+          console.log('Arquivo renomeado')
         }
       );
       //NOME_USER-ID_USER.TIPO
@@ -202,19 +214,22 @@ export default {
       req.file.filename = `${name_user}-${id}.${tipoImg}`;
       //caminho da imagem
       req.file.path = `uploads/${req.file.filename}`;
+      
+      await connection('users').update({
+        image_url: req.file.path
+      }).where('id',id);
+      console.log('inseriu path image no banco');
 
-      await connection("users")
-        .update({
-          image_url: req.file.path,
-        })
-        .where("id", id);
-      console.log("inseriu path image no banco");
+      return res.json({image: req.file});
 
-      return res.json({ image: req.file });
-    } catch (e) {
+    }catch(e){
       console.log(e);
       res.status(400);
-      return res.json({ Error: e });
+      return res.json({Error:e})
     }
+
   },
+
+
+  
 };
