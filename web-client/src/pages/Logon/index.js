@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi'
 import './styles.css';
 import script from "./scripts";
-
 import logoImg from '../../assets/logo.png';
 import logonImg from '../../assets/logonImg.png';
 

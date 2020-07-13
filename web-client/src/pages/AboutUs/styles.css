@@ -37,34 +37,41 @@
     display: flex;
     justify-content: last baseline;
 }
-.block1{
+.Quem-somos{
     width: 80%;
+    height: 550px;
     text-align: center;
     background-color: #14b3b0;
-    padding: 20px;
     margin-left: 130px;
     border-radius: 20px;
   
 }
-.block2{
+.Nossas-mot{
     width: 80%;
-    justify-content: center;
-    align-content: center;
+    height: 400px;
     text-align: center;
     background-color: #f5f5f5;
     margin-left: 130px;
-    padding: 30px;
+    border-radius: 20px;
 }
-
-h3{
+.Nossos-Obj{
+    width: 80%;
+    height: 550px;
+    text-align: center;
+    background-color: #14b3b0;
+    margin-left: 130px;
+    border-radius: 20px;
+}
+.h3{
     padding-top: 20px;
     margin-bottom: 30px;
     font-size: 2rem;
     color:#1C1C1C;
 }
-p{
-
-    padding: 30px;
+.p{
+    padding-left: 250px;
+    padding-right: 250px;
+    margin-bottom: 50px;
     color: #222222;
     font-size: 18px;
     line-height: 32px; 
