@@ -6,6 +6,7 @@ module.exports = async function authMiddleware(req, res, next){
     const [hashType, token] = req.headers.authorization.split(' ');//Bearer Authorization
 
     try{
+        console.log('PASSANDO PELO MIDDLEWARE.....');
         console.log(token)
         if(token === undefined || !token){
             res.status(401);
@@ -29,7 +30,7 @@ module.exports = async function authMiddleware(req, res, next){
  
         const result = await connection('users').select('*').where('id', id_user).first();
         
-        console.log('PASSANDO PELO MIDDLEWARE.....');
+        
         
         console.log(`Usuário validado: ${result.name}`);
 
@@ -40,6 +41,6 @@ module.exports = async function authMiddleware(req, res, next){
         next();//FUNÇÃO QUE PERMITE ACESSAR AS PRÓXIMAS ROTAS!!
     }catch(err){
         console.log(`(auth.js)ERRO: ${err.name}`)
-        res.status(401).send(err.message).toString();
+        return res.status(401).send(err.message).toString();
     }
   }

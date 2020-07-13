@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 import connection from "../database/connection";
-import validator from "../validations/userValidator";
+//import validator from "../validations/userValidator";
 
 import * as jwt from "../setup/jwt";
 
@@ -11,7 +11,18 @@ import fs from 'fs';
 import { profile } from "console";
 import Util from "../helpers/Util";
 
+
 const util = new Util();
+
+const userDefault = [
+  'id',
+  'name',
+  'email',
+  'whatsapp',
+  'city',
+  'uf',
+  'password'
+]
 
 export default {
   //list users
@@ -28,9 +39,9 @@ export default {
       //deletando senha do objeto de retornos
       delete item.password;
       return item;
+
     });
-    
-    
+
     return response.json(res_user);
   },
   //create user
@@ -77,12 +88,11 @@ export default {
     const token = await jwt.generateToken({ user_id });
     res.status(200).json({ token });
   },
-
   async login(req, res) {
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-    console.log("inicio de login");
+    console.log("inicio da função login");
     try {
       if (
         !email.includes("@") ||
@@ -95,6 +105,7 @@ export default {
         res.status(401, { error: "Malformated Elements" });
         return res.json({ Error: "Malformated Elements" });
       }
+
       console.log("passou validação");
 
       const result = await connection("users")
@@ -105,7 +116,8 @@ export default {
       console.log(result)
 
       if(!result || result === undefined){
-        return res.status(400).json({Error:'User not found'})
+        res.status(400);
+        return res.json({Error:'User not found'})
       }
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
@@ -166,14 +178,13 @@ export default {
     if(id === req_id){
       //ĺógica para a possibilidade de editar os dados!!
       console.log('USER ENTROU NO PRÓPRIO PERFIL');
-
+      exists.changePermission = true;
 
     }else{
       //dados são somente visíveis ao user 'requisitante'
       console.log('USER ENTROU NO PERFIL DE OUTRO');
-
-    }
-    
+      exists.changePermission =  false;
+    }  
     
     return res.json(exists);
     
@@ -196,9 +207,6 @@ export default {
       const name_user = util.clearString(original_name);
       console.log(name_user);
       
-
-
-
       fs.rename(`./uploads/${req.file.originalname}`,//nome antigo
         `./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
         (err) =>{//catch
@@ -230,6 +238,60 @@ export default {
     }
 
   },
+  async updateData(req, res){
+    const { id:user_id } = req.auth;
+    const { newValue } = req.body;
+    const { type } = req.params;
+
+    let typeExists = false;
+    if( newValue === undefined || newValue === null || newValue === ''){
+      res.status(400);
+      return res.json({Error:'New Value does not exists'});
+    }
+      
+    typeExists = userDefault.filter( (field, index) =>{
+
+      if(field === type) 
+        return true;
+
+    }); 
+
+    if(typeExists){
+      try{
+
+        const result = await connection('users')
+        .update(type, newValue)
+        .where({
+          id: user_id
+        });
+
+        if(result !== undefined && result !== ''){
+          const newUser = await connection('users')
+          .select('*')
+          .where({
+            id:user_id
+          })
+          .first();
+          
+          delete newUser.password;
+          console.log('Succefully Update!');
+          res.status(200);
+          return res.json(newUser);
+        }
+
+      }catch(e){
+        console.error('Erro no banco');
+        res.status(400);
+        return res.json({Error:`Database Error: ${e}`});
+      }
+    
+    }else{
+      console.log('Tipo indicado na url não existe.');
+      res.status(400);
+      return res.json({ Error:`Type ${type} doesn't exists.` });
+    }
+  },
+
 
 
   
