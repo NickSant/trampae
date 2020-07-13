@@ -42,9 +42,9 @@ export default {
 
     const id = await crypto.randomBytes(4).toString("HEX");
 
-    const token = await jwt.generateToken({ user_id: id });//gerando token para auth
+    const token = await jwt.generateToken({ user_id: id }); //gerando token para auth
 
-    try{
+    try {
       await connection("users").insert({
         id,
         name,
@@ -56,31 +56,32 @@ export default {
       });
 
       console.log(data);
-    }catch(e){
+    } catch (e) {
       console.log(e.sqlMessage);
-      if(e.sqlMessage.includes('users_email_unique')){
-
+      if (e.sqlMessage.includes("users_email_unique")) {
         response.status(406);
-        return response.json({err:'Duplicated email'})
-
-      }else if(e.sqlMessage.includes('users_whatsapp_unique')){
-
+        return response.json({ err: "Duplicated email" });
+      } else if (e.sqlMessage.includes("users_whatsapp_unique")) {
         response.status(406);
-        return response.json({err:'Duplicated Whatsapp'});
-
+        return response.json({ err: "Duplicated Whatsapp" });
       }
-      console.log(e)
-      return response.json({Error:`Database Error: ${e}`})
+      console.log(e);
+      return response.json({ Error: `Database Error: ${e}` });
     }
-      
+
     return response.json({ id, token });
+  },
+  async GoogleOAuth(req, res) {
+    const user_id = req.user[0].id;
+    const token = await jwt.generateToken({ user_id });
+    res.status(200).json({ token });
   },
 
   async login(req, res) {
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-    console.log('inicio de login');
+    console.log("inicio de login");
     try {
       if (
         !email.includes("@") ||
@@ -93,8 +94,8 @@ export default {
         res.status(401, { error: "Malformated Elements" });
         return res.json({ Error: "Malformated Elements" });
       }
-      console.log('passou validação')
-      
+      console.log("passou validação");
+
       const result = await connection("users")
       .select("*")
       .where("email", email)
@@ -107,15 +108,14 @@ export default {
       }
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
-      console.log('decodificou buffer');
+      console.log("decodificou buffer");
 
       //argon2.verify (HASHED_PASS, plainTextPassword)
-      if (!(await argon2.verify(pass_bd, password))){
+      if (!(await argon2.verify(pass_bd, password))) {
         console.log("senhas diferentes");
         res.status(400);
         return res.json({Error:'Senhas Incorreta'});
       }
-        
 
       if (email !== result.email || !(await argon2.verify(pass_bd, password))) {
         res.status(401, { error: "Incorrect username or password" });
@@ -138,11 +138,9 @@ export default {
       };
 
       res.json({ user: user, token: token });
-
     } catch (err) {
       console.log('Deu pau..');
       res.status(401, { error: err });
-
     }
   },
 

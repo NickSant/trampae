@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 
 import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
@@ -9,16 +10,26 @@ import multer from './multer';
 import authMiddleware from "./setup/auth";
 import SearchController from "./controllers/SearchController";
 
-
+import passportConf from "./passport";
 
 const routes = express.Router();
 
 //SignUp rota
-routes.post("/user",validateBody(schemas.signUpSchema), UserController.create);
+routes.post(
+  "/signup",
+  validateBody(schemas.signUpSchema),
+  UserController.create
+);
+
+//GoogleOAuth
+routes.post(
+  "/oauth/google",
+  passport.authenticate("googleToken", { session: false }),
+  UserController.GoogleOAuth
+);
 
 //SignIn rota
-routes.get("/login", UserController.login);
-
+routes.post("/login", UserController.login);
 
 //listar usuários - development
 routes.get("/user", UserController.index);
@@ -51,7 +62,11 @@ routes.get('/user/:id', UserController.profile);
 routes.get("/search/:uf/:city/:cat_id", SearchController.SearchServices);
 routes.get("/search/:name", SearchController.SearchUsers);
 
-routes.post("/services", validateBody(schemas.serviceSchema), ServiceController.create);
+routes.post(
+  "/services",
+  validateBody(schemas.serviceSchema),
+  ServiceController.create
+);
 routes.delete("/services/:id", ServiceController.delete);
 
 export default routes;

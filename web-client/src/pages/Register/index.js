@@ -37,6 +37,7 @@ export default function Register() {
         <div className="Register-container">
             <div className="content">
                 <section>
+                    
                     <img className="logo" src={logoImg} alt='Trampâe' />
                     <h1>Cadastro</h1>
                     <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
