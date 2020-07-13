@@ -1,6 +1,6 @@
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
-const secret = 'ce8ae065063ea7763a8116a4d0973920';
+const secret = process.env.SECRET_JWT;
 //payload = dado que vai ser criptografado
 export function generateToken(payload){
     return jwt.sign(payload, secret, {

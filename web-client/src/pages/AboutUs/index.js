@@ -9,6 +9,9 @@ import dardo from '../../assets/dardo.png';
 import prancheta from '../../assets/prancheta.png';
 import maos from '../../assets/maos.png';
 
+import { FiLogIn } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
+import { FiClipboard } from "react-icons/fi";
 
 export default function AboutUs() {
     return (

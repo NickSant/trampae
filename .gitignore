@@ -1,2 +1,8 @@
 server/node_modules
+server/.env
+
 web-client/node_modules
+
+mobile/node_modules
+
+
