@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 const secret = 'ce8ae065063ea7763a8116a4d0973920';
 //payload = dado que vai ser criptografado

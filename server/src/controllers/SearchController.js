@@ -1,23 +1,29 @@
 import connection from "../database/connection";
 
 export default {
-  async SearchByLocation(request, response) {
-    const { uf, city } = request.params;
+  async SearchServices(request, response) {
+
+    const { page = 1 } = request.query;
+
+    const { uf, city, cat_id } = request.params;
 
     const services = await connection("services")
       .where("uf", uf)
       .where("city", city)
-      .select("*");
+      .where("id_category", cat_id)
+      .select("*")
+      .limit(12)
+      .offset( (page -1) * 12 );
 
     return response.json(services);
   },
-  async SearchByCategory(request, response) {
-    const { cat_id } = request.params;
+  async SearchUsers(request, response) {
+    const { name } = request.params;
 
-    const services = await connection("services")
-      .where("id_category", cat_id)
+    const users = await connection("users")
+      .where("name", "like", `%${name}%`)
       .select("*");
 
-    return response.json(services);
+    return response.json(users);
   },
 };
