@@ -280,9 +280,7 @@ export default {
         }
 
       }catch(e){
-        console.error('Erro no banco');
-        res.status(400);
-        return res.json({Error:`Database Error: ${e}`});
+        return util.handleError(res, 400, e)
       }
     
     }else{
