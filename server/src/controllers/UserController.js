@@ -72,7 +72,6 @@ export default {
   async GoogleOAuth(req, res) {
     const user_id = req.user[0].id;
     const token = await jwt.generateToken({ user_id });
-
     res.status(200).json({ token });
   },
 
