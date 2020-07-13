@@ -1,13 +1,13 @@
 import knex from 'knex';
-
+require('dotenv').config();
 const connection = knex({
     client:'mysql',
-    version:'2.18',//OBS -> Versão no package.json!!
+    version:process.env.DB_VERSION,//OBS -> Versão no package.json!!
     connection:{
-        host:'localhost',
-        user:'root',
-        password:'',
-        database:'trampae_db'
+        host: process.env.HOST,
+        user: process.env.USER_DB,
+        password: process.env.PASS_DB,
+        database: process.env.DATABASE
     }
 });
 export default connection;
