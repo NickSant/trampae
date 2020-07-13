@@ -38,5 +38,11 @@ class Util {
         console.log(this.removedSpaces);
         return this.removedSpaces;
     }
+
+    handleError(res, status, message){
+        console.error(message);
+        res.status(status);
+        return res.json({Error:message});
+    }
 }
 export default Util;
