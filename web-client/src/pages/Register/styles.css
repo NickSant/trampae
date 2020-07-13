@@ -1,6 +1,6 @@
-.register-container{
+.Register-container{
     background-color: #f5f5f5;
-    width: 100;
+    width: 2000px;
     max-width: 1120px;
     height: 100vh;
     margin: 100px 100px 100px 100px;
@@ -9,7 +9,8 @@
     align-items: center;
     justify-content: center;
 }
-.register-container .content{
+
+.Register-container .content{
     width: 100%;
     padding: 96px;
     background: #f5f5f5;
@@ -20,36 +21,66 @@
     align-items: center;
 
 }
-.register-container .content section{
+.Register-container .content section{
     width: 100%;
     max-width: 380px;
     max-height: 500px;
     margin-bottom: 110px;
 
 }
-.register-container .content section h1{
+.Register-container .content section h1{
     margin: 10px 0 20px;
     font-size: 32px;
 }
-.register-container .content section p{
+.Register-container .content section p{
     font-size: 18px;
     color: #737380;
     line-height: 32px;
 
 }
-.register-container .content form{
+.Register-container .content form{
     width: 100%;
     max-width: 450px;
 
 }
-.register-container .content form input{
-    margin-top: 8px;
 
+.Register-container form input:focus{
+    border-left-width: 7px;
+    border-left-color:#14b3b0;
 }
-.register-container .content form .input-group{
+
+.Register-container .content form button{
+    font-size: 19px;
+}
+
+.Register-container form button:hover{
+    background-color:#17d4d2;
+}
+
+.Register-container .content form .input-group{
     display: flex;
 }
-.register-container .content form .input-group input + input{
+.Register-container .content form .input-group input + input{
     margin-left: 8px;
     
+}
+
+.Register-container .content .hide {
+    background-color:  #14b4bfa4;
+    height: 100vh;
+    width: 160vw;
+    position: fixed;
+    top: 0;
+    left: -440px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 400ms;
+}
+
+.Register-container .content .hide h1{
+    color: black;
+    font-size: 36px;
+    line-height: 42px;
 }

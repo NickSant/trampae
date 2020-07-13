@@ -3,13 +3,15 @@ import express from "express";
 import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
 
+import { validateBody, schemas} from "./helpers/validation"
+
 import authMiddleware from "./setup/auth";
 import SearchController from "./controllers/SearchController";
 
 const routes = express.Router();
 
 //SignUp rota
-routes.post("/user", UserController.create);
+routes.post("/user",validateBody(schemas.signUpSchema), UserController.create);
 
 //SignIn rota
 routes.get("/login", UserController.login);
@@ -36,7 +38,7 @@ routes.get("/me", (req, res) => {
 routes.get("/search/:uf/:city/:cat_id", SearchController.SearchServices);
 routes.get("/search/:name", SearchController.SearchUsers);
 
-routes.post("/services", ServiceController.create);
+routes.post("/services", validateBody(schemas.serviceSchema), ServiceController.create);
 routes.delete("/services/:id", ServiceController.delete);
 
 export default routes;

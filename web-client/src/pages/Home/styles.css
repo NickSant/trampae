@@ -1,0 +1,271 @@
+.Home-container{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 10vh 80vh 10vh;
+    background: #c8c8c8c7;
+}
+.Home-container .header{
+    background: #FFF;
+    width:100%;
+    height: 60px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.Home-container .header .navbar{
+    width: 100%;;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+img{
+    width: 60px;
+    margin: 0px 0px 0px 40px;
+}
+.Home-container .principal{
+    background: #14b3b0;
+    width: 110%;
+    margin-left: -45px;
+    height: 624px;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #14b3b0;
+}
+
+::-webkit-scrollbar-button{
+    background-color: #14b3b0;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #14b3b0;
+}
+
+.Home-container .serviços{
+    background: #14b3b0;
+    width: 100%;
+    height: 624px;
+}
+.Home-container .paginas{
+    background: #14b3b0;
+    width: 100%;
+    height: 624px;
+}
+
+.Home-container .header .navbar .search{
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: -90px;
+    margin-right: 60px;
+    border: none;
+    font-size: 15px;
+    text-align: center;
+    background-color: rgba(131, 131, 131, 0.342);
+    border-radius: 8px;
+    color: black;
+}
+
+.Home-container .header .navbar .iconsearch{
+    color: #000;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    margin-left: 780px;
+    margin-right: 30px;
+}
+.Home-container aside .aprofile{
+    margin-left: 20px;
+}
+
+.Home-container aside .pprofile{
+    border-radius: 70%;
+    margin-top: 100px;
+    width: 40px;
+}
+.Home-container aside .bProfile{
+    display: flex;
+    justify-content: center;
+    background-color: #FFF;
+    border: none;
+    border-radius: 8px;
+    margin-top: -55px;
+    margin-bottom: 30px;
+    margin-left: 25px;
+    align-items: center;
+    width: 290px;
+    height: 70px;
+}
+
+.Home-container aside .nameProfile{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+/*.Home-container aside .horizontalLine{
+    width: 80%;
+    align-self: center;
+    border: 0;
+    margin-left: 30px;
+    margin-top: 30px;
+    border-top: 1px solid #000;
+}*/
+
+.Home-container aside .btnPages{
+    display: flex;
+    justify-content: center;
+    background-color: #FFF;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    margin-left: -80px;
+    align-items: center;
+    width: 300px;
+    height: 70px;
+}
+
+.Home-container aside .btnPages:hover{
+    opacity: 0.8;
+}
+
+.Home-container aside #pAboutUs{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.Home-container aside #pCad{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.Home-container aside #pLog{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin-left: 10px;
+}
+
+/*
+pUser: Picture User
+nUser: Name  User
+lUser: Local User
+cUser: Category User
+tUser: Text User
+*/
+.Home-container .principal .cases{
+    margin-left: 30px;
+}
+
+.Home-container .principal .cases .list .pUser{
+    border-radius: 70%;
+    margin-top: 5px;
+    margin-left: 3px;
+    width: 40px;
+    display: flex;
+}
+
+.Home-container .principal .cases .list .nUser{
+    display: block;
+    margin-bottom: 5px;
+    color: #000;
+    display: flex;
+    margin-left: 50px;
+    margin-top: -35px;
+}
+
+.Home-container .principal .cases .list .lUser{
+    margin-top: -5px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+
+.Home-container .principal .cases .list .cUser{
+    margin-bottom: -50ox;
+}
+
+.Home-container .principal .cases .list .tUser{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.Home-container .principal .cases .list .message{
+    width: 40px;
+    margin: 0px 0px 0px 2px;
+    border-radius: 30px;
+}
+
+.Home-container .principal .cases .list .cases{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.Home-container .principal .cases .list{
+    background: #f3f3f3;
+    padding: 24px;
+    border-radius: 10px;
+    margin-top: 90px;
+    width: 435px;
+    margin-left: 25px;
+    list-style: none;
+}
+
+.list::after{
+    position: relative;
+}
+
+
+.Home-container .principal .cases .list .btnWhats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 320px;
+    width: 80px;
+    height: 40px;
+    background-color: #26a918;
+    border-radius: 70px;
+    border: none;
+}
+
+.btnWhats:hover{
+    opacity: 0.8;
+}
+
+.Home-container aside .btnNewService{
+    display: block;
+    justify-content: center;
+    background-color: #FFF;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 87px;
+    margin-left: 95px;
+    align-items: center;
+    width: 300px;
+    height: 70px;
+}
+
+.Home-container aside .btnNewService:hover{
+    opacity: 0.8;
+}
+

@@ -1,0 +1,100 @@
+.Aboutus-container{
+    background-color: #f5f5f5;
+    width: 97%;
+    max-width: 2000px;
+    height: 280vh;   
+    border-radius: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 25px;
+    margin-right: 0px;
+}
+.Aboutus-container .alinhar{
+    display: flex ; 
+    align-items: center;
+    justify-content: space-evenly;
+}
+.Aboutus-container .menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.volta-link{
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    font-weight: 500;
+    transition: filter 0.2s;
+    
+}
+.Aboutus-container a{
+    color: #14b3b0;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: right;
+    display: flex;
+    justify-content: last baseline;
+}
+.Quem-somos{
+    width: 80%;
+    height: 550px;
+    text-align: center;
+    background-color: #14b3b0;
+    margin-left: 130px;
+    border-radius: 20px;
+  
+}
+.Nossas-mot{
+    width: 80%;
+    height: 400px;
+    text-align: center;
+    background-color: #f5f5f5;
+    margin-left: 130px;
+    border-radius: 20px;
+}
+.Nossos-Obj{
+    width: 80%;
+    height: 550px;
+    text-align: center;
+    background-color: #14b3b0;
+    margin-left: 130px;
+    border-radius: 20px;
+}
+.h3{
+    padding-top: 20px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color:#1C1C1C;
+}
+.p{
+    padding-left: 250px;
+    padding-right: 250px;
+    margin-bottom: 50px;
+    color: #222222;
+    font-size: 18px;
+    line-height: 32px; 
+}    
+
+.logo-1{
+    width: 150px;
+    margin-top: 2vh;
+    margin-bottom: 10px;
+    margin-left: 60px;
+}
+.maos{
+    width: 100px;
+    margin-top: 30px;
+    margin-left: 17px;
+}
+.objetivos{
+    width: 100px;
+    margin-top: 30px;
+    margin-left: 17px;
+}
+.prancheta{
+    width: 100px;
+    margin-top: 30px;
+    margin-left: 17px;
+}
