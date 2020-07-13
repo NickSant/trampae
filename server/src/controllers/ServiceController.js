@@ -3,6 +3,10 @@ import crypto from "crypto";
 
 import * as jwt from "../setup/jwt";
 
+import Util from '../helpers/Util';
+
+const util = new Util;
+
 export default {
   async index(request, response) {
     //valor default de paginação -> page = 1
@@ -22,16 +26,13 @@ export default {
       return response.json(services);
 
     }catch(e){
-
-      response.json({db_error: `erro: ${e}`});
-
+      return util.handleError(res, 400, `Database Error: ${e}`);
     }
 
-    return response.json(services);
   },
   async delete(request, response) {
     const { id } = request.params;
-    const user_id = request.headers.id_user;
+    const { id:user_id } = request.auth;//NÃO ESQUECER DE PASSAR ESSE PARAM NO HEADER
     try{
       const service = await connection("services")
         .where("id", id)
@@ -41,14 +42,20 @@ export default {
       response.json({db_error: `erro: ${e}`});
     }
       
+    if (service.user_id !== user_id) 
+      return util.handleError(response, 401, 'Unauthorized');    
+    try{
 
-    if (service.user_id != user_id) {
-      return response.status(401).json({ error: "Operation not permited" });
+      await connection("services")
+      .where({
+        id:id,
+        user_id:user_id
+      })
+      .delete();
+      return response.status(204).send();
+    }catch(e){
+      return util.handleError(response, 400, `Delete Service Error: ${e}`);
     }
-
-    await connection("services").where("id", id).delete();
-
-    return response.status(204).send();
   },
 
   async create(request, response) {
@@ -64,8 +71,7 @@ export default {
 
     const data = request.body;
     console.log(data);
-
-    const user_id = request.headers.id_user;
+    const {id:user_id} = request.auth;
     const id = crypto.randomBytes(4).toString("HEX");
     try{
       await connection("services").insert({
@@ -80,10 +86,8 @@ export default {
         id_category,
       });
     }catch(e){
-      response.json({db_error: `erro: ${e}`});
+      return util.handleError(response, 400, `Create Service Error: ${e}` );
     }
-      
-
-    return response.json({ id });
+    return response.json({ service_id:id });
   },
 };

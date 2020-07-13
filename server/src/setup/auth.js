@@ -1,6 +1,7 @@
 import * as jwt from './jwt';
 import connection from '../database/connection';
-
+import Util from '../helpers/Util';
+const util = new Util;
 module.exports = async function authMiddleware(req, res, next){
     
     const [hashType, token] = req.headers.authorization.split(' ');//Bearer Authorization
@@ -8,11 +9,9 @@ module.exports = async function authMiddleware(req, res, next){
     try{
         console.log('PASSANDO PELO MIDDLEWARE.....');
         console.log(token)
-        if(token === undefined || !token){
-            res.status(401);
-            console.log('Token não existe');
-            return res.json({error:'Token Undefined'});
-        }
+        if(token === undefined || !token)
+            return util.handleError(res, 401, 'Undefined Token');
+        
         
         const payload = await jwt.decodeToken(token);//setado no login ou cadastro!!!
         
@@ -21,16 +20,10 @@ module.exports = async function authMiddleware(req, res, next){
         
         console.log(`ID: ${id_user}`);//esse parâmetro user.id é gerado no momento do login ou cadastro!!!
 
-        if(!id_user){
-            console.log('VOCÊ NÃO É AUTORIZADO AQUI')
-            res.status(401, {error: 'Não autorizado'});
-            res.json({Erro:'Unauthorized!'});
-        }
-
- 
+        if(!id_user)
+            return util.handleError(res, 401, 'Unauthorized!');
+         
         const result = await connection('users').select('*').where('id', id_user).first();
-        
-        
         
         console.log(`Usuário validado: ${result.name}`);
 
@@ -40,7 +33,6 @@ module.exports = async function authMiddleware(req, res, next){
 
         next();//FUNÇÃO QUE PERMITE ACESSAR AS PRÓXIMAS ROTAS!!
     }catch(err){
-        console.log(`(auth.js)ERRO: ${err.name}`)
-        return res.status(401).send(err.message).toString();
+        return util.handleError(res, 401, `(auth.js)\nERR NAME: ${err.name}\nERR MESSAGE: ${err.message}`);
     }
   }
