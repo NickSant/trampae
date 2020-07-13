@@ -1,6 +1,5 @@
 server/node_modules
 server/.env
-
 web-client/node_modules
 web-client/yarn.lock
 mobile/node_modules
