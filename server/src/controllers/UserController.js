@@ -1,7 +1,6 @@
 import crypto from "crypto";
 
 import connection from "../database/connection";
-import validator from "../validations/userValidator";
 
 import * as jwt from "../setup/jwt";
 
