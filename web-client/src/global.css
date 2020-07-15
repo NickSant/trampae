@@ -7,6 +7,11 @@
     box-sizing: border-box;
 }
 
+li, a{
+    text-decoration: none;
+    list-style: none;
+}
+
 body{
     font: 400 14px Ubuntu, sans-serif;
     background: #14b3b0;
@@ -43,7 +48,6 @@ form textarea{
     border-radius: 10px;
     padding: 16px 24px;
     line-height: 24px;
-    
 }
 
 .button{
@@ -82,7 +86,6 @@ form textarea{
     font-weight: 500;
     transition: opacity 0.2s;
 }
-
 
 .back-link svg{
     margin-right: 8px;

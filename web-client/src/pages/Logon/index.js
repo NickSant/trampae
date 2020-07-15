@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi'
+import { FiLogIn, FiSun } from 'react-icons/fi'
 import './styles.css';
-import script from "./scripts";
-
 import logoImg from '../../assets/logo.png';
 import logonImg from '../../assets/logonImg.png';
 
@@ -11,8 +9,22 @@ export default function Logon() {
     return (
         <div className="logon-container">
             <section className="form">
+                {/*NavBar e header*/}
                 <nav>
-                    <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
+                    <header>
+                        <button className="aboutUs-button">
+                            <Link id="aboutUs" className="rota-link" to="/aboutus">
+                                <p>
+                                    Quem Somos?
+                                </p>
+                            </Link>
+                        </button>
+                        <button className="theme-button">
+                            <FiSun size={20} />
+                        </button>
+                    </header>
+
+                {/*Meio do site*/}
                 </nav>
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
@@ -30,7 +42,8 @@ export default function Logon() {
                 </Link>
                 </form>
             </section>
-            <div />
+
+            {/*trabalhadores*/}
             <div className="img">
                 <img src={logonImg} alt="trabalhador" />
             </div>
