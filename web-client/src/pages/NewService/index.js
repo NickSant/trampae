@@ -2,13 +2,14 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './styles.css';
 import { FiArrowLeft } from 'react-icons/fi';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo.png'
+
 export default function Newservice() {
     return (
-        <div className="new-service-container">
+        <div className="New-Service-Container">
+            {/*Parte da logo e dos textos*/}
             <div className="content">
                 <section>
-
                     <img className="logo" src={logoImg} alt='Trampâe' />
                     <h1>Cadastrar Novo Bico</h1>
                     <p>Cadastre um novo bico e tenha seus problemas de Trâmpo solucionados.</p>
@@ -16,8 +17,9 @@ export default function Newservice() {
                         <FiArrowLeft size={16} color="#14b3b0" />
                         Voltar para Home
                     </Link>
-
                 </section>
+
+                {/*Formulário*/}
                 <form>
                     <input placeholder="Título do Bico"/>
                     <textarea className="alinha" placeholder="Descrição"/>
@@ -27,6 +29,5 @@ export default function Newservice() {
                 </form>
             </div>
         </div>
-
      );            
 }

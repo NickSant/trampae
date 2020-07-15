@@ -4,7 +4,7 @@ import { FiArrowLeft, FiCheckSquare } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/logo.png';
 
-
+/* Função de Cadastro concluído*/ 
 export default function Register() {
 
     const styles = {
@@ -32,12 +32,12 @@ export default function Register() {
         window.location = '/'
     }
 
-
+    /*Começo da pagina*/
     return (
         <div className="Register-container">
             <div className="content">
                 <section>
-
+                    {/*Logo e textos do lado esquerdo*/}
                     <img className="logo" src={logoImg} alt='Trampâe' />
                     <h1>Cadastro</h1>
                     <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
@@ -45,8 +45,9 @@ export default function Register() {
                         <FiArrowLeft size={16} color="#14b3b0" />
                         Já tenho cadastro
                     </Link>
-
                 </section>
+
+                {/*Começo dos inputs do cadastro*/}
                 <form>
                     <input placeholder="Nome Completo"></input>
                     <input type="Email" placeholder="E-mail"></input>
@@ -68,7 +69,7 @@ export default function Register() {
                     <button className="button" onClick={submitRegister}>Cadastar</button>
                 </form>
 
-
+                {/*Função do cadastro concluído*/}
                 <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
                     <div>
                         <FiCheckSquare size={100} />
