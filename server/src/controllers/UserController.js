@@ -1,6 +1,10 @@
 import crypto from "crypto";
 
 import connection from "../database/connection";
+<<<<<<< HEAD
+=======
+//import validator from "../validations/userValidator";
+>>>>>>> 6b5165a960878be3d24b738a9eae4b868dc54f51
 
 import * as jwt from "../setup/jwt";
 
@@ -10,13 +14,28 @@ import fs from 'fs';
 import { profile } from "console";
 import Util from "../helpers/Util";
 
+
 const util = new Util();
+
+const userDefault = [
+  'id',
+  'name',
+  'email',
+  'whatsapp',
+  'city',
+  'uf',
+  'password'
+];
 
 export default {
   //list users
   async index(request, response) {
 
     const { page = 1 } = request.query;
+
+    // const { id:user_id } = req.auth; - DEVELOPMENT
+    // if(!user_id || user_id === undefined || user_id === '')
+    //   util.handleError(res, 401, 'Unathorized');
 
     const user = await connection('users')
     .select("*")
@@ -27,9 +46,9 @@ export default {
       //deletando senha do objeto de retornos
       delete item.password;
       return item;
+
     });
-    
-    
+
     return response.json(res_user);
   },
   //create user
@@ -59,14 +78,11 @@ export default {
     } catch (e) {
       console.log(e.sqlMessage);
       if (e.sqlMessage.includes("users_email_unique")) {
-        response.status(406);
-        return response.json({ err: "Duplicated email" });
-      } else if (e.sqlMessage.includes("users_whatsapp_unique")) {
-        response.status(406);
-        return response.json({ err: "Duplicated Whatsapp" });
+        return util.handleError(res, 406,'Duplicated email');
+      }else if(e.sqlMessage.includes("users_whatsapp_unique")) {
+        return util.handleError(res, 406,'Duplicated Whatsapp' );
       }
-      console.log(e);
-      return response.json({ Error: `Database Error: ${e}` });
+      return util.handleError(res, 400,`Database Error: ${e}` );
     }
 
     return response.json({ id, token });
@@ -74,14 +90,13 @@ export default {
   async GoogleOAuth(req, res) {
     const user_id = req.user[0].id;
     const token = await jwt.generateToken({ user_id });
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   },
-
   async login(req, res) {
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-    console.log("inicio de login");
+    console.log("inicio da função login");
     try {
       if (
         !email.includes("@") ||
@@ -90,10 +105,10 @@ export default {
         !password ||
         password === "" ||
         password === null
-      ) {
-        res.status(401, { error: "Malformated Elements" });
-        return res.json({ Error: "Malformated Elements" });
-      }
+      ) 
+        return util.handleError(res, 401,'Malformated Elements');
+      
+
       console.log("passou validação");
 
       const result = await connection("users")
@@ -103,29 +118,24 @@ export default {
 
       console.log(result)
 
-      if(!result || result === undefined){
-        return res.status(400).json({Error:'User not found'})
-      }
+      if(!result || result === undefined)
+        return util.handleError(res, 401, 'User not Found');
+      
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
       console.log("decodificou buffer");
 
       //argon2.verify (HASHED_PASS, plainTextPassword)
-      if (!(await argon2.verify(pass_bd, password))) {
-        console.log("senhas diferentes");
-        res.status(400);
-        return res.json({Error:'Senhas Incorreta'});
-      }
+      if (!(await argon2.verify(pass_bd, password))) 
+        return util.handleError(res, 401, 'Senha Incorreta');
+      
 
-      if (email !== result.email || !(await argon2.verify(pass_bd, password))) {
-        res.status(401, { error: "Incorrect username or password" });
-        return res.json({ Error: "Incorret username or password" });
-      }
-
-      if (result === undefined) {
-        res.status(401, { error: "Operation not permited!" });
-        return res.json({ Error: "Unauthorized" });
-      }
+      if (email !== result.email || !(await argon2.verify(pass_bd, password))) 
+        return util.handleError(res, 401,'Incorrect username or password' );
+      
+      if (result === undefined)
+        return util.handleError(res, 401, 'Unauthorized');
+      
 
       const token = await jwt.generateToken({ user_id: result.id });
 
@@ -136,11 +146,9 @@ export default {
         email: result.email,
         id: result.id,
       };
-
       res.json({ user: user, token: token });
     } catch (err) {
-      console.log('Deu pau..');
-      res.status(401, { error: err });
+      return util.handleError(res, 400, err);
     }
   },
 
@@ -154,25 +162,22 @@ export default {
     .where('id',id)
     .first();
 
-    if(!exists || exists === undefined || exists === '') {
-      console.log(`User ${id} not exists`);
-      res.status(401, { error: "User not Found" });
-      return res.json({ Error: "User not Found" });
-    }
+    if(!exists || exists === undefined || exists === '') 
+      return util.handleError(res, 401, `User ${id} not exists`);
+    
     delete exists.password;
       
 
     if(id === req_id){
       //ĺógica para a possibilidade de editar os dados!!
       console.log('USER ENTROU NO PRÓPRIO PERFIL');
-
+      exists.changePermission = true;
 
     }else{
       //dados são somente visíveis ao user 'requisitante'
       console.log('USER ENTROU NO PERFIL DE OUTRO');
-
-    }
-    
+      exists.changePermission =  false;
+    }  
     
     return res.json(exists);
     
@@ -186,27 +191,23 @@ export default {
       
       const { name:original_name, id } = req.auth;
       if(!id || id === undefined || id === '')  
-        return res.json({Error:'User not valid'})
+        return util.handleError(res, 401, 'Operation not permited');
       
       if(req.file === undefined || !req.file)
-        return res.json({Error:'Archive not exists'});
+        return util.handleError(res, 400, 'Archive Does not exists');
       
 
       const name_user = util.clearString(original_name);
       console.log(name_user);
       
-
-
-
       fs.rename(`./uploads/${req.file.originalname}`,//nome antigo
         `./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
         (err) =>{//catch
-          if(err){
-              console.error(err);
-              res.status(400);
-              return res.json({Error:'Erro'});
-          }
+          if(err)      
+            return util.handleError(res, 400, `Erro: ${err}`);
+          
           console.log('Arquivo renomeado')
+
         }
       );
       //NOME_USER-ID_USER.TIPO
@@ -223,12 +224,62 @@ export default {
       return res.json({image: req.file});
 
     }catch(e){
-      console.log(e);
-      res.status(400);
-      return res.json({Error:e})
+      return util.handleError(res, 400, e);
     }
 
   },
+  async updateData(req, res){
+    const { id:user_id } = req.auth;
+    const { newValue } = req.body;
+    const { type } = req.params;
+
+    let typeExists = false;
+
+    if( newValue === undefined || newValue === null || newValue === '')
+      return util.handleError(res, 400, 'New Value is not declared')
+    
+      
+    userDefault.filter( (field, index) =>{
+
+      if(field === type) 
+        return typeExists = true;
+
+    }); 
+    console.log(typeExists);
+
+    if(typeExists){
+
+      try{
+
+        const result = await connection('users')
+        .update(type, newValue)
+        .where({
+          id: user_id
+        });
+
+        if(result !== undefined && result !== ''){
+          const newUser = await connection('users')
+          .select('*')
+          .where({
+            id:user_id
+          })
+          .first();
+          
+          delete newUser.password;
+          console.log('Succefully Update!');
+          res.status(200);
+          return res.json(newUser);
+        }
+
+      }catch(e){
+        return util.handleError(res, 400, e)
+      }
+    
+    }else{
+      return util.handleError(res, 400, `Type "${type}" doesn't exists`);
+    }
+  },
+
 
 
   
