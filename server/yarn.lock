@@ -2898,6 +2898,13 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+passport-facebook-token@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/passport-facebook-token/-/passport-facebook-token-4.0.0.tgz#3b75c4ad4af338b6e20ac829d712866fc82b2f4b"
+  integrity sha512-QihlU3xphIVDvhko1e2pfLZfIyLnjIgSO2CVtlas0QNv3484atvfQLs+3WoXSkG70KEV/nhD5Dkki/QGqsHeMA==
+  dependencies:
+    passport-oauth "1.0.0"
+
 passport-google-plus-token@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/passport-google-plus-token/-/passport-google-plus-token-2.1.0.tgz#15e69acebeea186c305965b93c6b2b582063244d"
