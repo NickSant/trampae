@@ -1,11 +1,17 @@
-form {
-    height: 40%;
-    width: 80%;
+.registerForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
 }
 
-form input{
-    height: 40px;
+.registerForm .column{
+    width: 50%;
 }
-container{
-    width: 100%;
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 40px;
 }

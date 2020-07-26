@@ -4,7 +4,7 @@ import { FiArrowLeft, FiCheckSquare } from "react-icons/fi";
 import "./styles.css";
 import logoImg from "../../assets/logo.png";
 
-import SignInForm from "../../components/registerForm/registerForm";
+import SignUpForm from "../../components/registerForm/registerForm";
 
 /* Função de Cadastro concluído*/
 
@@ -40,7 +40,10 @@ export default function Register() {
       <div className="box">
         <div className="disabled-register">
           <h1 className="title"> Já tem registro? </h1>
-          <h3 className="title"> vem logo, faça login e encontro novos bicos!</h3>
+          <h3 className="title">
+            {" "}
+            vem logo, faça login e encontro novos bicos!
+          </h3>
           <button className="button"> Login </button>
         </div>
         <div className="signup">
@@ -49,7 +52,7 @@ export default function Register() {
             <h1 className="title"> Registre-se já! </h1>
           </div>
           <div className="form-container">
-            <SignInForm />
+            <SignUpForm />
           </div>
         </div>
       </div>
