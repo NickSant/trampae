@@ -1,0 +1,11 @@
+form {
+    height: 40%;
+    width: 80%;
+}
+
+form input{
+    height: 40px;
+}
+container{
+    width: 100%;
+}
