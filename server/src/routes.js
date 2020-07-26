@@ -16,10 +16,14 @@ const routes = express.Router();
 
 //SignUp rota
 routes.post(
-  "/signup",
+  '/signup',
   validateBody(schemas.signUpSchema),
   UserController.create
 );
+
+//SignIn rota
+routes.post("/login", UserController.login);
+
 
 //GoogleOAuth
 routes.post(
@@ -28,8 +32,6 @@ routes.post(
   UserController.GoogleOAuth
 );
 
-//SignIn rota
-routes.post("/login", UserController.login);
 
 //listar usuários - development
 routes.get("/user", UserController.index);
@@ -48,6 +50,8 @@ routes.get("/me", (req, res) => {
   //de acordo com o bearer token
   res.send(req.auth); //esse parâmetro é setado em auth.js
 });
+
+routes.put('/update/:type', UserController.updateData);
 
 //UPLOAD DE IMAGENS - Perfil
 //setando middleware multer.js

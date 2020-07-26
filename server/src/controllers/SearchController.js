@@ -1,5 +1,6 @@
 import connection from "../database/connection";
-
+import Util from '../helpers/Util';
+const util = new Util;
 export default {
   async SearchServices(request, response) {
 
@@ -19,11 +20,18 @@ export default {
   },
   async SearchUsers(request, response) {
     const { name } = request.params;
+    try{
+      const users = await connection("users")
+        .where("name", "like", `%${name}%`)
+        .select("*");
 
-    const users = await connection("users")
-      .where("name", "like", `%${name}%`)
-      .select("*");
+      return response.json(users);
 
-    return response.json(users);
+    }catch(e){
+      return util.handleError(response, 400, 'Database Error')
+    }
+    
   },
+
+  
 };

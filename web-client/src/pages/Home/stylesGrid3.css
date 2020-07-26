@@ -1,0 +1,51 @@
+/*Grid da direita*/
+
+/*Div no meio da grid*/
+.Home-container .serviços .right{
+    display: block;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: left;
+    width: 400px;
+    height: 530px;
+    margin: 78px 0px 0px 47px;
+    background-color: #FFF;
+    border-radius: 10px;
+    list-style: none;
+    box-shadow: 0 0 1px rgba(0, 0, 0.1);
+}
+
+/*botão de novo serviço*/
+.Home-container aside .btnNewService{
+    display: block;
+    justify-content: center;
+    margin: 0px 0px 0px 30px;
+    background-color: #14b3b0;
+    border: none;
+    border-radius: 8px;
+    width: 300px;
+    height: 70px;
+}
+
+.Home-container aside .btnNewService:hover{
+    opacity: 0.8;
+}
+
+/*Rede social*/
+.Home-container .serviços .socialNetWork{
+    background-color: #14b3b0;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 370px;
+    margin: 50px 0px 0px 30px;
+    border-radius: 8px;
+}
+
+/*título*/
+.Home-container .serviços .socialNetWork .titleSocialNetWork{
+    color: #000;
+    text-align: center;
+    padding: 10px;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi'
+import { FiLogIn, FiSun } from 'react-icons/fi'
 import './styles.css';
-import script from "./scripts";
+import './responsive.css';
 import logoImg from '../../assets/logo.png';
 import logonImg from '../../assets/logonImg.png';
 
@@ -10,9 +10,22 @@ export default function Logon() {
     return (
         <div className="logon-container">
             <section className="form">
-                <nav>
-                    <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
-                </nav>
+                {/*NavBar e header*/}
+                <header>
+                    <nav>
+                        <button className="aboutUs-button">
+                            <Link id="aboutUs" className="rota-link" to="/aboutus">
+                                <p>
+                                    Quem Somos?
+                                </p>
+                            </Link>
+                        </button>
+                        <button className="theme-button">
+                            <FiSun size={20} />
+                        </button>
+                    </nav>
+                </header>
+                 {/*Meio do site*/}
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
                     <h1>Faça seu Login</h1>
@@ -25,11 +38,12 @@ export default function Logon() {
 
                     <Link className="back-link" to="/register">
                         <FiLogIn size={16} color="#14b3b0" />
-                    Não tenho cadastro
-                </Link>
+                        Não tenho cadastro
+                    </Link>
                 </form>
             </section>
-            <div />
+
+            {/*trabalhadores*/}
             <div className="img">
                 <img src={logonImg} alt="trabalhador" />
             </div>

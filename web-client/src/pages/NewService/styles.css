@@ -1,4 +1,5 @@
-.new-service-container{
+/*Estrutura da página*/
+.New-Service-Container{
     background-color: #f5f5f5;
     width: 2000px;
     max-width: 1120px;
@@ -10,7 +11,8 @@
     justify-content: center;
 }
 
-.new-service-container .content{
+/*Div na frente*/
+.New-Service-Container .content{
     width: 100%;
     padding: 96px;
     background: #f5f5f5;
@@ -19,62 +21,52 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
-.new-service-container .content section{
+
+/*Conteúdo da esquerda*/
+.New-Service-Container .content section{
     width: 100%;
     max-width: 380px;
     max-height: 500px;
-    margin-bottom: 110px;
-
+    margin: 0px 0px 110px 0px;
 }
-.new-service-container .content section h1{
-    margin: 10px 0 20px;
+
+.New-Service-Container .content section h1{
+    margin: 10px 0px 20px;
     font-size: 32px;
 }
-.new-service-container .content section p{
+
+.New-Service-Container .content section p{
     font-size: 18px;
     color: #737380;
     line-height: 32px;
-
 }
-.new-service-container .content form{
+
+/*Inputs/ Formulário*/
+.New-Service-Container .content form{
     width: 100%;
     max-width: 450px;
-
 }
 
-.new-service-container form input:focus{
+.New-Service-Container form input:focus{
     border-left-width: 7px;
     border-left-color:#14b3b0;
 }
-.new-service-container form textarea{
-    margin-top: 5px;
+
+.New-Service-Container form textarea{
+    margin: 5px 0px 0px 0px;
 }
-.new-service-container .content form button{
+
+.New-Service-Container form textarea:focus{
+    border-left-width: 7px;
+    border-left-color:#14b3b0;
+}
+
+/*Botão*/
+.New-Service-Container .content form button{
     font-size: 19px;
 }
 
-.new-service-container form button:hover{
+.New-Service-Container form button:hover{
     background-color:#17d4d2;
-}
-
-.new-service-container .content .hide {
-    background-color:  #14b4bfa4;
-    height: 100vh;
-    width: 160vw;
-    position: fixed;
-    top: 0;
-    left: -440px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: 400ms;
-}
-
-.new-service-container .content .hide h1{
-    color: black;
-    font-size: 36px;
-    line-height: 42px;
 }
