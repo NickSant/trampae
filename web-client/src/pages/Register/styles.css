@@ -1,10 +1,9 @@
 /*Div que estrutura o projeto*/
 .Register-container{
     background-color: #f5f5f5;
-    width: 2000px;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 100px 100px 100px 100px;
+    width: 80%;
+    max-width: 2000px;
+    margin: 100px 100px 100px 130px;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -30,6 +29,9 @@
     max-height: 500px;
     margin-bottom: 110px;
 
+}
+.Register-container .content section .Logo{
+    width: 250px;
 }
 .Register-container .content section h1{
     margin: 10px 0 20px;
@@ -61,6 +63,7 @@
 
 .Register-container .content form .input-group input + input{
     margin-left: 8px;
+    width: 80px;
 }
 
 .Register-container form input:focus{

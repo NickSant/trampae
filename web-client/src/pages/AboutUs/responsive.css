@@ -1,0 +1,233 @@
+@media (max-width:2560px){
+
+}
+
+@media (max-width:1024px){
+    .Aboutus-container {
+        background-color: #f5f5f5;
+        width: 100%;
+        max-width: 2600px;
+        height: 305vh;
+        margin: 0px 0px 0px 0px;
+        border-radius: 0px;
+    }
+    .Aboutus-container .About-us, .About-us-Reasons, .About-us-Objectives p {
+        padding-left: 250px;
+        padding-right: 250px;
+        margin-bottom: 50px;
+        color: #f5f5f5;
+        font-size: 1.5rem;
+        line-height: 24px;
+    }
+    .Aboutus-container .About-us {
+        width: 80%;
+        height: 480px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 130px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 780px){
+    .Aboutus-container {
+        background-color: #f5f5f5;
+        width: 100%;
+        max-width: 2600px;
+        height: 305vh;
+        margin: 0px 0px 0px 0px;
+        border-radius: 0px;
+    }
+    
+    .Aboutus-container .align {
+        display: flex;
+        align-items: center;
+        /* justify-content: space-evenly; */
+    }
+    .Aboutus-container .align .logo {
+        width: 150px;
+        margin-top: 1vh;
+        margin-bottom: 1px;
+        /* margin-left: 60px; */
+        margin-right: 210px;
+    } 
+
+  
+    .Aboutus-container nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-left: -230px;
+    }
+    .Aboutus-container .back-link {
+        margin-left: 30px;
+        display: flex;
+        align-items: center;
+        margin-top: 40px;
+        font-weight: 500;
+        transition: filter 0.2s;
+    }
+    .Aboutus-container .About-us {
+        width: 80%;
+        height: 495px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 90px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Reasons {
+        width: 80%;
+        height: 450px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 90px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Objectives {
+        width: 80%;
+        height: 480px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 90px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us, .About-us-Reasons, .About-us-Objectives p {
+        padding-left: 200px;
+        padding-right: 200px;
+        margin-bottom: 50px;
+        color: #f5f5f5;
+        font-size: 1.4rem;
+        line-height: 20px;
+    }
+}
+
+@media (max-width: 425px){
+   html{
+       font-size: 60%;
+    }
+    .Aboutus-container {
+        background-color: #f5f5f5;
+        width: 540px;
+        max-width: 2600px;
+        height: 335vh;
+        margin: 0px 200px 0px 0px;
+        border-radius: 0px;
+    }
+    .Aboutus-container .align{
+        display: block;
+    }
+    .Aboutus-container .align .logo{
+        width: 150px;
+        margin-top: 2vh;
+        margin-bottom: 1px;
+        margin-left: 180px;
+    }
+    .Aboutus-container header nav ul{
+        display: block;
+        margin-left: 200px;
+        margin-bottom: 50px;
+    }
+    .Aboutus-container .back-link{
+        margin-top: 20px;
+    }
+    .Aboutus-container .About-us {
+        width: 80%;
+        height: 495px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 50px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Reasons {
+        width: 80%;
+        height: 450px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 50px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Objectives {
+        width: 80%;
+        height: 480px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 50px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us, .About-us-Reasons, .About-us-Objectives p {
+        padding-left: 100px;
+        padding-right: 100px;
+        margin-bottom: 50px;
+        color: #f5f5f5;
+        font-size: 1.2rem;
+        line-height: 18px;
+    }
+}
+
+@media (max-width: 375px){
+    .Aboutus-container {
+        background-color: #f5f5f5;
+        width: 560px;
+        max-width: 2600px;
+        height: 335vh;
+        margin: 0px 200px 0px 0px;
+        border-radius: 0px;
+    }
+    .Aboutus-container header nav ul{
+        display: block;
+        margin-left: 220px;
+        margin-bottom: 50px;
+    }
+    .Aboutus-container .align .logo{
+        width: 150px;
+        margin-top: 2vh;
+        margin-bottom: 1px;
+        margin-left: 200px;
+    }
+    .Aboutus-container .About-us {
+        width: 80%;
+        height: 495px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 60px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Reasons {
+        width: 80%;
+        height: 450px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 60px;
+        border-radius: 20px;
+    }
+    .Aboutus-container .About-us-Objectives {
+        width: 80%;
+        height: 480px;
+        text-align: center;
+        background-color: #14b3b0;
+        box-shadow: 0 0 20px rgba(0, 0, 0.1);
+        margin-left: 60px;
+        border-radius: 20px;
+    }
+
+}
+
+@media (max-width: 280px){
+    .Aboutus-container {
+        background-color: #f5f5f5;
+        width: 565px;
+        max-width: 2600px;
+        height: 335vh;
+        margin: 0px 200px 0px 0px;
+        border-radius: 0px;
+    }
+}

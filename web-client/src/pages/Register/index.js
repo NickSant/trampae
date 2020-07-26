@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiCheckSquare } from 'react-icons/fi';
 import './styles.css';
+import './responsive.css';
 import logoImg from '../../assets/logo.png';
 
 /* Função de Cadastro concluído*/ 
@@ -38,10 +39,10 @@ export default function Register() {
             <div className="content">
                 <section>
                     {/*Logo e textos do lado esquerdo*/}
-                    <img className="logo" src={logoImg} alt='Trampâe' />
+                    <img className="Logo" src={logoImg} alt='Trampâe' />
                     <h1>Cadastro</h1>
                     <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
-                    <Link className="back-link" to="/">
+                    <Link className="Cback-link" to="/">
                         <FiArrowLeft size={16} color="#14b3b0" />
                         Já tenho cadastro
                     </Link>
@@ -64,9 +65,9 @@ export default function Register() {
 
                     <div className="input-group">
                         <input placeholder="Cidade"></input>
-                        <input placeholder="UF" style={{ width: 80 }}></input>
+                        <input className="uf" placeholder="UF" ></input>
                     </div>
-                    <button className="button" onClick={submitRegister}>Cadastar</button>
+                    <button className="Button" onClick={submitRegister}>Cadastar</button>
                 </form>
 
                 {/*Função do cadastro concluído*/}
