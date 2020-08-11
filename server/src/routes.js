@@ -1,5 +1,5 @@
 import express from "express";
-import passport from "passport";
+// import passport from "passport";
 
 import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
@@ -10,7 +10,7 @@ import multer from "./multer";
 import authMiddleware from "./setup/auth";
 import SearchController from "./controllers/SearchController";
 
-import passportConf from "./passport";
+// import passportConf from "./passport";
 
 const routes = express.Router();
 
@@ -25,17 +25,17 @@ routes.post(
 routes.post("/login", UserController.login);
 
 //GoogleOAuth
-routes.post(
-  "/oauth/google",
-  passport.authenticate("googleToken", { session: false }),
-  UserController.OAuth
-);
+// routes.post(
+//   "/oauth/google",
+//   passport.authenticate("googleToken", { session: false }),
+//   UserController.OAuth
+// );
 
-routes.post(
-  "/oauth/facebook",
-  passport.authenticate("facebookToken", { session: false }),
-  UserController.OAuth
-);
+// routes.post(
+//   "/oauth/facebook",
+//   passport.authenticate("facebookToken", { session: false }),
+//   UserController.OAuth
+// );
 
 //listar usuários - development
 routes.get("/user", UserController.index);

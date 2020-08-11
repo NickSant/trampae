@@ -3,7 +3,6 @@ server/.env
 web-client/node_modules
 yarn.lock
 package-lock.json
-
 mobile/node_modules
 
 

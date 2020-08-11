@@ -10,8 +10,27 @@ import ProfileImg from '../../assets/profile.png';
 import UserImg from '../../assets/user.png';
 
 
+import Service from '../../components/Service';
+
 
 export default function Home() {
+
+    //TEMPORÁRIO!!!
+    const data_temp = [
+        {id:'1', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'2', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'3', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'4', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'5', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'6', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'7', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'8', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'9', name:'Pedro Henrique', city:'Mauá - SP', category:'Limpeza', text:'Preciso de Alguém pra limpar minha casa na quarta-feira'},
+        {id:'10', name:'Nicolas', city:'São Bernardo', category:'Programação', text:'Preiciso de um programador bom'},
+        {id:'11', name:'Nicolas', city:'São Bernardo', category:'Programação', text:'Preiciso de um programador bom'},
+        {id:'12', name:'Nicolas', city:'São Bernardo', category:'Programação', text:'Preiciso de um programador bom'},
+        {id:'13', name:'Nicolas', city:'São Bernardo', category:'Programação', text:'Preiciso de um programador bom'},
+    ]
     
     return (
         <div className="Home-container">
@@ -60,146 +79,19 @@ export default function Home() {
             {/*Grid do meio*/}
             <main className="Grid2">
                 <ul className="cases">
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Pedro Henrique</h3>
-                        <h5 className="lUser">Mauá, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar a mihna casa quarta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Gustavo Mendes</h3>
-                        <h5 className="lUser">São Bernardo, SP</h5>
-                        <h3 className="cUser">Casa</h3>
-                        <p className="tUser">Preciso de alguém para me ajudar a levar os móveis de casa para a mudança</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Henrique Camargo</h3>
-                        <h5 className="lUser">Goiânia, GO</h5>
-                        <h3 className="cUser">Casa</h3>
-                        <p className="tUser">Preciso de alguém para cuidar do meu filho de segunda-feira à sexta-feira durante 10h</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Nicolas Santos</h3>
-                        <h5 className="lUser">Ourinhos, SP</h5>
-                        <h3 className="cUser">Manutenção</h3>
-                        <p className="tUser">Preciso de alguém para me ajudar a consertar meu ventilador</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Pedro Henrique</h3>
-                        <h5 className="lUser">Mauá, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar a mihna casa quarta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Gustavo Mendes</h3>
-                        <h5 className="lUser">São Bernardo, SP</h5>
-                        <h3 className="cUser">Casa</h3>
-                        <p className="tUser">Preciso de alguém para me ajudar a levar os móveis de casa para a mudança</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Henrique Camargo</h3>
-                        <h5 className="lUser">Goiânia, GO</h5>
-                        <h3 className="cUser">Casa</h3>
-                        <p className="tUser">Preciso de alguém para cuidar do meu filho de segunda-feira à sexta-feira durante 10h</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Nicolas Santos</h3>
-                        <h5 className="lUser">Ourinhos, SP</h5>
-                        <h3 className="cUser">Manutenção</h3>
-                        <p className="tUser">Preciso de alguém para me ajudar a consertar meu ventilador</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
-                    <li className="list">
-                        <img className="pUser" src={UserImg} alt="user" />
-                        <h3 className="nUser">Vinicius Silva</h3>
-                        <h5 className="lUser">Ouro Preto, SP</h5>
-                        <h3 className="cUser">Limpeza</h3>
-                        <p className="tUser">Preciso de alguém para limpar meu escritório quinta-feira</p>
-                        <button className="btnWhats" >
-                            <FiPhoneCall size={25} className="message" />
-                        </button>
-                    </li>
+                    {data_temp.map( service => {
+                        return(
+                            <Service 
+                                key={service.id}
+                                name={service.name} 
+                                city={service.city} 
+                                category={service.category} 
+                                text={service.text} 
+                            />
+                        );
+
+                    } )}
+                        
                 </ul>
             </main>
 
