@@ -98,16 +98,19 @@ export default function Register() {
         api.post('/signup', body )
         .then( (res) =>{
             console.log(res);
+            localStorage.clear();
             //confirmação
+            localStorage.setItem('token', `Bearer ${res.data.token}`);
+
             refDiv.current.style.display = 'flex';
             console.log(refDiv.current)
             setTimeout(() => {
                 goToHome();
-            }, 1500)
+            }, 20000)
 
 
         }).catch( e =>{
-
+            localStorage.clear();
             console.log(e)
         });
         
