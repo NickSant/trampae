@@ -1,32 +1,46 @@
 import React from 'react';
 import './styles.css';
+import './responsive.css';
 import { Link } from 'react-router-dom';
 import { FiLogIn, FiHome, FiUser, FiUsers, FiClipboard, FiCheckCircle } from 'react-icons/fi';
 import logoImg from '../../assets/logo.png';
 
 export default function AboutUs() {
     return (
-
         /*Começo do header*/
         <div className="Aboutus-container">
             <header className="align">
                 <div className="align">
                     <img className="logo" src={logoImg} alt="logo" />
                 </div>
-                <div className="menu">
-                    <Link className="back-link" to="/home">
-                        <FiHome className="IconsHeader" size={16} color="#000" />
-                            Home
-                        </Link>
-                    <Link className="back-link" to="/register">
-                        <FiUser className="IconsHeader" size={16} color="#000" />
-                            Cadastro
-                        </Link>
-
-                    <Link className="back-link" to="/">
-                        <FiLogIn className="IconsHeader" size={16} color="#000" />
-                            Login
-                        </Link>
+                <div class="menu-section ">
+                    <div class="menu-toggle">
+                        <div class="one"></div>
+                        <div class="two"></div>
+                        <div class="three"></div>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link className="back-link" to="/home">
+                                    <FiHome className="IconsHeader" size={16} color="#000" />
+                                        Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link className="back-link" to="/register">
+                                    <FiUser className="IconsHeader" size={16} color="#000" />
+                                        Cadastro
+                                </Link>
+                            </li>
+                            <li>
+                                <Link className="back-link" to="/">
+                                    <FiLogIn className="IconsHeader" size={16} color="#000" />
+                                        Login
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </header>
 

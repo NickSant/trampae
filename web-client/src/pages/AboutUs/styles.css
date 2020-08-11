@@ -2,8 +2,8 @@
 .Aboutus-container{
     background-color: #f5f5f5;
     width: 100%;
-    max-width: 1440px;
-    height: 1700px;
+    max-width: 2600px;
+    height: 265vh;
     margin: 0px 0px 0px 0px;
     border-radius: 0px;
 }
@@ -23,10 +23,13 @@
 }
 
 /*Link para outras paginas*/
-.Aboutus-container .menu{
+.Aboutus-container nav{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+.Aboutus-container header nav ul {
+    display: flex;
 }
 
 .Aboutus-container .back-link{
@@ -39,8 +42,8 @@
 }
 
 /*Icones do header*/
-.Aboutus-container .menu .back-link .IconsHeader{
-    font-size: 18px;
+.Aboutus-container nav .back-link .IconsHeader{
+    font-size: 1.8rem;
     font-weight: bold;
     text-decoration: none;
     text-align: right;
@@ -48,7 +51,7 @@
     justify-content: last baseline;
 }
 
-.Aboutus-container .menu .back-link:hover{
+.Aboutus-container nav .back-link:hover{
     color: #14b3b0;
 }
 
@@ -134,7 +137,6 @@
     padding-right: 250px;
     margin-bottom: 50px;
     color: #f5f5f5;
-    font-size: 18px;
+    font-size: 1.8rem;
     line-height: 32px; 
 }    
-

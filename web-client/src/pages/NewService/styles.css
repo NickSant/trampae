@@ -1,10 +1,9 @@
 /*Estrutura da página*/
 .New-Service-Container{
     background-color: #f5f5f5;
-    width: 2000px;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 100px 100px 100px 100px;
+    width: 80%;
+    max-width: 2000px;
+    margin: 100px 100px 100px 130px;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -19,7 +18,7 @@
     box-shadow: 0 0 100px rgba(0, 0, 0.1);
     border-radius: 25px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -30,6 +29,9 @@
     max-height: 500px;
     margin: 0px 0px 110px 0px;
 }
+.Logo{
+    width: 250px;
+ }
 
 .New-Service-Container .content section h1{
     margin: 10px 0px 20px;
