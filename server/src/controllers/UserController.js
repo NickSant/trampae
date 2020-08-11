@@ -82,10 +82,12 @@ export default {
     return res.status(200).json({ token });
   },
   async login(req, res) {
+    console.log('início login')
+    console.log(req.headers);
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
     //Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
-    console.log("inicio da função login");
+
     try {
       if (
         !email.includes("@") ||
