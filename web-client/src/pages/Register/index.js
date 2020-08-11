@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiCheckSquare } from 'react-icons/fi';
 import './styles.css';
@@ -6,12 +6,16 @@ import './responsive.css';
 import logoImg from '../../assets/logo.png';
 
 
-import SignUpForm from "../../components/registerForm/registerForm";
+// import SignUpForm from "../../components/registerForm/registerForm";
+
+import api from '../../services/api';
+import axios from 'axios';
+
 
 /* Função de Cadastro concluído*/
 
 export default function Register() {
-  /*const styles = {
+    const styles = {
         p: {
             color: '#cff8f9',
             fontSize: '26px',
@@ -22,15 +26,97 @@ export default function Register() {
     }
     const refDiv = React.createRef();
 
-    function submitRegister(e) {
+    // campos que o frontend envia -> name, email, whatsapp, city, uf, password
+    const [name, changeName] = useState('');
+    const [email, changeMail] = useState('');
+    const [whats, changeWhats] = useState('');
+    const [password, changePass] = useState('');
+
+    const [selectedUf, setSelectedUf] = useState('');
+    const [selectedCity, setSelectedcity] = useState('');
+
+
+
+
+    // ibge functions ----------------------------------------------------
+    //get ufs
+    const [ufs, setUfs] = useState([]);
+
+    function getUfs(){
+        axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
+        .then( response =>{
+
+            const siglas = response.data.map(estado => estado.sigla);     
+
+            console.log(siglas);       
+
+            setUfs(siglas);
+        });
+    }
+
+    useEffect( getUfs , [] );
+
+    // Buscando as cidades da uf selecionada
+    const [cities, setCities] = useState([]);
+    function getCities(){
+        console.log(selectedUf)
+
+        axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`)
+        .then( response =>{
+            const cidades = response.data.map(cidade =>{
+                delete cidade.municipio;
+                return cidade;
+            });
+            
+            console.log(cidades);
+
+            setCities(cidades);
+        })
+
+    }
+
+    useEffect( getCities, [selectedUf]);
+
+
+    //  SUBMIT- -----------------------------
+
+    async function submitRegister(e) {
         //fazer conexão com api......
         e.preventDefault();
-        refDiv.current.style.display = 'flex';
-        console.log(refDiv.current)
-        setTimeout(() => {
-            goToHome();
-        }, 1500)
+        //name, email, whatsapp, city, uf, password
+        const body = {
+            name: name,
+            email: email,
+            whatsapp: whats,
+            password: password,
+            city: selectedCity,
+            uf: selectedUf,
+        }
 
+        console.log(body);
+
+        api.post('/signup', body )
+        .then( (res) =>{
+            console.log(res);
+            localStorage.clear();
+            //confirmação
+            localStorage.setItem('token', `Bearer ${res.data.token}`);
+
+            refDiv.current.style.display = 'flex';
+            console.log(refDiv.current)
+            setTimeout(() => {
+                goToHome();
+            }, 20000)
+
+
+        }).catch( e =>{
+            localStorage.clear();
+            console.log(e)
+        });
+        
+
+
+        
     }
     function goToHome() {
         window.location = '/'
@@ -53,24 +139,67 @@ export default function Register() {
 
                 {/*Começo dos inputs do cadastro*/}
                 <form>
-                    <input placeholder="Nome Completo"></input>
-                    <input type="Email" placeholder="E-mail"></input>
+                    <input 
+                        placeholder="Nome Completo" 
+                        onChange={e => { changeName(e.target.value) }}
+                    />
+                    <input 
+                        type="Email" 
+                        placeholder="E-mail"
+                        onChange={e => changeMail(e.target.value)}
+                    />
 
+                    {/* NÃO ESQEUCER DE COLOCAR O CONFIRMAR SENHA NO BACKEND!!!!!! */}
                     <div className="input-password">
-                        <input name="senha" type="password" placeholder="Senha"></input>
+                        <input 
+                            type="password" 
+                            placeholder="Senha"
+                            onChange={e =>{changePass(e.target.value)}}
+                        />
                     </div>
 
                     <div className="input-password">
-                        <input type="password" placeholder="Confirmar senha"></input>
+                        <input 
+                            type="password" 
+                            placeholder="Confirmar senha"
+                        />
                     </div>
 
-                    <input type="tel" placeholder="WhatsApp"></input>
+                    <input 
+                        type="tel" 
+                        onChange={e =>{ changeWhats(e.target.value) }}
+                        placeholder="WhatsApp" 
+                    />
 
                     <div className="input-group">
-                        <input placeholder="Cidade"></input>
-                        <input className="uf" placeholder="UF" ></input>
+
+                        <select 
+                            onChange={e => setSelectedUf(e.target.value)}
+                            className="uf" 
+                            placeholder="UF" 
+                        >
+                            <option value="default" hidden defaultValue>UF</option>
+                            {ufs.map(uf =>{
+                                return(
+                                    <option key={uf} value={uf}>{uf}</option>
+                                );
+                            })}
+                        </select>
+
+                        <select
+                            onChange={e => setSelectedcity(e.target.value)}
+                            placeholder="cidade"
+                        >
+                            <option value="default" hidden defaultValue >Cidade</option>
+                            {cities.map(city =>{
+                                return(
+                                    <option key={city.id} value={city.nome}>{city.nome}</option>
+                                );
+                            })}
+                        </select>
+                        
                     </div>
-                    <button className="Button" onClick={submitRegister}>Cadastar</button>
+                    <button type="submit" className="Button" onClick={submitRegister}>Cadastar</button>
                 </form>
 
                 {/*Função do cadastro concluído*/}
@@ -83,9 +212,9 @@ export default function Register() {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-      </div>
-    </div>
-  );
+      
+    );
 }
