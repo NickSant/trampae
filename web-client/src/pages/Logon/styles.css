@@ -1,118 +1,82 @@
 /*Div que estrutura o projeto*/
-.logon-container{
-  background-color: #f5f5f5;
-  background-size: 1000px;
-  width: 2000px;
-  max-width: 1120px;
-  height: 120vh;
-  margin: 20px 20px 20px 100px;
-  border-radius: 30px;
+.container{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.box{
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  background: #ffff;
+  box-shadow: 5px 5px 10px #000000;
+}
+
+.login{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.login .login-header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+  height: 100px;
+  padding: 20px;
+}
+
+.login .login-header img{
+  width: 125px;
+}
+
+.form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+.form-container h1{
+  font-size: 40px;
+  padding: 10px;
+  border-bottom: 5px solid #14b3b0;
+}
+
+.disabled-register{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #121429;
+  background-image: url("../../assets/texture-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.img img{
-  width: 600px;
-}
-
-.logon-container section.form{
-  width: 100%;
-  max-width: 350px;
-  margin-right: 30px;
-}
-
-/*Começo do NavBar e header*/
-.logon-container section nav header{
-  width: 970px;
-  height: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logon-container section nav header .aboutUs-button{
-  display: flex;
-  align-items: center;
-  margin: 30px 0px 0px 770px;
-  width: 150px;
-  height: 70px;
-  padding: 5px;
-  border-radius: 9px;
-  border: none;
-  background-color: #f5f5f5;
-}
-
-.logon-container section nav header .aboutUs-button:hover{
-  color: #f5f5f5;
-  opacity: 0.8s;
-  background-color: #14b3b0;
-  border: none;
-}
-
-.logon-container section nav header .aboutUs-button p:hover {
-  color: #f5f5f5;
-}
-
-.logon-container section nav #aboutUs{
-  color: #14b3b0;
-  font-size: 22px;
-  margin: 0px 0px 0px 0px;
-}
-
-.logon-container section nav .theme-button{
-  color: #14b3b0;
-  margin: 30px 0px 0px 0px;
+.disabled-register h1{
+  margin-bottom: 60px;
+  font-size: 40px;
   padding: 10px;
-  border-color: #f5f5f5;
-  border: solid;
-  border: none;
-  border-radius: 8px;
-  background-color: #f5f5f5;
+  border-bottom: 5px solid #14b3b0;
 }
-.logon-container section nav .theme-button:hover{
-  opacity: 0.8s;
-  background-color: #14b3b0;
-  color: #f5f5f5;
-  border: none;
+.disabled-register .title{
+  color: #ffffff;
 }
 
-/*Logo, button e inputs*/
-.logon-container section.form form{
-  margin-top: 20px;   
+.disabled-register .button{
+  width: 60%;
 }
-
-.logon-container section.form form h1{
-  font-size: 25px;
-  margin-bottom: 32px;
-}
-
-.logon-container section.form form input{
-width: 350px;
-}
-
-.logon-container section.form form input:focus{
-
-  border-left-width: 7px;
-  border-left-color:#14b3b0;
-}
-
-.logon-container section.form form button{
-  font-size: 19px;
-}
-
-.logon-container section.form form button:hover{
-  background-color:#17d4d2;
-}
-
-.logon-container section.form nav .rota-link{
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 770px;
-  margin-bottom: 50px;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-

@@ -9,7 +9,6 @@ import IconImg from '../../assets/icon.png';
 import ProfileImg from '../../assets/profile.png';
 import UserImg from '../../assets/user.png';
 
-import  CreateService  from "../../components/createService";
 
 
 export default function Home() {
@@ -210,7 +209,7 @@ export default function Home() {
                         <button className="btnNewService">
                             Adicionar um novo serviço
                         </button>
-                    <CreateService />
+                    
                     
                 </div>
             </aside>

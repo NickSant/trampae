@@ -1,13 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiArrowLeft, FiCheckSquare } from 'react-icons/fi';
-import './styles.css';
-import logoImg from '../../assets/logo.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FiArrowLeft, FiCheckSquare } from "react-icons/fi";
+import "./styles.css";
+import logoImg from "../../assets/logo.png";
 
-/* Função de Cadastro concluído*/ 
+import SignUpForm from "../../components/registerForm/registerForm";
+
+/* Função de Cadastro concluído*/
+
 export default function Register() {
-
-    const styles = {
+  /*const styles = {
         p: {
             color: '#cff8f9',
             fontSize: '26px',
@@ -33,53 +35,27 @@ export default function Register() {
     }
 
     /*Começo da pagina*/
-    return (
-        <div className="Register-container">
-            <div className="content">
-                <section>
-                    {/*Logo e textos do lado esquerdo*/}
-                    <img className="logo" src={logoImg} alt='Trampâe' />
-                    <h1>Cadastro</h1>
-                    <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
-                    <Link className="back-link" to="/">
-                        <FiArrowLeft size={16} color="#14b3b0" />
-                        Já tenho cadastro
-                    </Link>
-                </section>
-
-                {/*Começo dos inputs do cadastro*/}
-                <form>
-                    <input placeholder="Nome Completo"></input>
-                    <input type="Email" placeholder="E-mail"></input>
-
-                    <div className="input-password">
-                        <input name="senha" type="password" placeholder="Senha"></input>
-                    </div>
-
-                    <div className="input-password">
-                        <input type="password" placeholder="Confirmar senha"></input>
-                    </div>
-
-                    <input type="tel" placeholder="WhatsApp"></input>
-
-                    <div className="input-group">
-                        <input placeholder="Cidade"></input>
-                        <input placeholder="UF" style={{ width: 80 }}></input>
-                    </div>
-                    <button className="button" onClick={submitRegister}>Cadastar</button>
-                </form>
-
-                {/*Função do cadastro concluído*/}
-                <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
-                    <div>
-                        <FiCheckSquare size={100} />
-                        <div>
-                            <h1>Cadastro Concluído com Sucesso!</h1>
-                            <p style={styles.p}>Aguarde para ser redirecionado</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="container">
+      <div className="box">
+        <div className="disabled-register">
+          <h1 className="title"> Já tem registro? </h1>
+          <h3 className="title">
+            {" "}
+            vem logo, faça login e encontro novos bicos!
+          </h3>
+          <button className="button"> Login </button>
         </div>
-    );
+        <div className="signup">
+          <div className="signup-header">
+            <img src={logoImg} alt="Trampaê"></img>
+            <h1 className="title"> Registre-se já! </h1>
+          </div>
+          <div className="form-container">
+            <SignUpForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
