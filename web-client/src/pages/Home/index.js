@@ -4,13 +4,15 @@ import './stylesGrid1.css'
 import './stylesGrid2.css'
 import './stylesGrid3.css'
 import { Link } from 'react-router-dom';
-import { FiSearch, FiHelpCircle, FiLogIn, FiUser, FiPhoneCall, FiPlusCircle } from 'react-icons/fi';
+import { FiSearch, FiHelpCircle, FiLogIn, FiUser, FiPhoneCall } from 'react-icons/fi';
 import IconImg from '../../assets/icon.png';
 import ProfileImg from '../../assets/profile.png';
 import UserImg from '../../assets/user.png';
 
 
+
 export default function Home() {
+    
     return (
         <div className="Home-container">
             {/*Header e NavBar da página*/}
@@ -204,18 +206,14 @@ export default function Home() {
             {/*Grid da direita*/}
             <aside className="serviços">
                 <div className="right">
-                    <Link to="/service/new">
                         <button className="btnNewService">
                             Adicionar um novo serviço
-                        <br />
-                            <FiPlusCircle size={20} />
                         </button>
-                    </Link>
-                    <main className="socialNetWork">
-                        <h1 className="titleSocialNetWork">Redes Sociais</h1>
-                    </main>
+                    
+                    
                 </div>
             </aside>
         </div>
+        
     );
 }

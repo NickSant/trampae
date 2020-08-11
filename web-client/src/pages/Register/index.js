@@ -5,10 +5,13 @@ import './styles.css';
 import './responsive.css';
 import logoImg from '../../assets/logo.png';
 
-/* Função de Cadastro concluído*/ 
-export default function Register() {
 
-    const styles = {
+import SignUpForm from "../../components/registerForm/registerForm";
+
+/* Função de Cadastro concluído*/
+
+export default function Register() {
+  /*const styles = {
         p: {
             color: '#cff8f9',
             fontSize: '26px',
@@ -82,5 +85,7 @@ export default function Register() {
                 </div>
             </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
