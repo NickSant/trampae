@@ -190,3 +190,24 @@
   width: 60%;
 }
 /* >>>>>>> develop */
+/*Tela de cadastro concluído*/
+ .hide {
+  background-color:  #14b4bfa4;
+  height: 100vh;
+  width: 160vw;
+  position: fixed;
+  left: -440px;
+  top: 0px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 400ms;
+}
+
+/*Texto de cadastro concluído*/
+ .hide h1{
+  color: #cff8f9;
+  font-size: 36px;
+  line-height: 42px;
+}

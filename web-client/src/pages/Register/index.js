@@ -77,7 +77,6 @@ export default function Register() {
 
     useEffect( getCities, [selectedUf]);
 
-
     //  SUBMIT- -----------------------------
 
     async function submitRegister(e) {
@@ -105,9 +104,8 @@ export default function Register() {
             refDiv.current.style.display = 'flex';
             console.log(refDiv.current)
             setTimeout(() => {
-                goToHome();
+                goToLogin();
             }, 20000)
-
 
         }).catch( e =>{
             localStorage.clear();
@@ -118,7 +116,7 @@ export default function Register() {
 
         
     }
-    function goToHome() {
+    function goToLogin() {
         window.location = '/'
     }
 
@@ -203,7 +201,7 @@ export default function Register() {
                 </form>
 
                 {/*Função do cadastro concluído*/}
-                <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
+                <div style={styles.cursorPointer} onClick={goToLogin} ref={refDiv} className="hide">
                     <div>
                         <FiCheckSquare size={100} />
                         <div>

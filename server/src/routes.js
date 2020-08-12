@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Router} from "express";
 // import passport from "passport";
 
 import UserController from "./controllers/UserController";
@@ -12,7 +12,7 @@ import SearchController from "./controllers/SearchController";
 
 // import passportConf from "./passport";
 
-const routes = express.Router();
+const routes = Router();
 
 //SignUp rota
 routes.post(
@@ -44,17 +44,20 @@ routes.get("/services", ServiceController.index);
 
 //ROTAS EM QUE É NECESSÁRIO AUTH-----------------------------------------------------------------------------
 
-routes.use(authMiddleware); //authenticator
+// routes.use(authMiddleware); //authenticator
 //pra todas as próximas rotas, o servidor vai passar por esse middleware pra verificar se o token do usuário, passado pelo Bearer da requisição é válido
 // logo, em todas preciso passar no header da req, um authorization do tipo Bearer!!!!
 
-routes.get("/me", (req, res) => {
+routes.get("/me", authMiddleware ,(req, res) => {
   //rota para usar no client, que busca qual usuário foi autenticado. (ver arquivo auth.js)
   //de acordo com o bearer token
   res.send(req.auth); //esse parâmetro é setado em auth.js
 });
 
-routes.put("/update/:type", UserController.updateData);
+routes.put("/update/:type", 
+  authMiddleware, 
+  UserController.updateData
+);
 
 //UPLOAD DE IMAGENS - Perfil
 //setando middleware multer.js
@@ -63,21 +66,49 @@ routes.put("/update/:type", UserController.updateData);
 //o name do campo que enviar a imagem, deve ser exatamente igual ao do .single()
 routes.post(
   "/upload-image",
+  authMiddleware,
   multer.single("img_perfil"),
   UserController.uploadImage
 );
 
-routes.get("/user/:id", UserController.profile);
+routes.get("/user/:id", 
+  authMiddleware,
+  UserController.profile
+);
 
 //searches
-routes.get("/search/:uf/:city/:cat_id", SearchController.SearchServices);
-routes.get("/search/:name", SearchController.SearchUsers);
+routes.get("/search/:uf/:city/:cat_id", 
+  authMiddleware,
+  SearchController.SearchServices
+);
+routes.get("/search/:name", 
+  authMiddleware,
+  SearchController.SearchUsers
+);
 
 routes.post(
   "/services",
+  authMiddleware,
   validateBody(schemas.serviceSchema),
   ServiceController.create
 );
-routes.delete("/services/:id", ServiceController.delete);
+routes.delete("/services/:id", 
+  authMiddleware,
+  ServiceController.delete
+);
+
+//404 routes
+routes.get('*', (req, res) =>{
+  res.send(`Cannot found endpoint: ${req.url}`).status(404);
+})
+routes.post('*', (req, res) =>{
+  res.send(`Cannot found endpoint: ${req.url}`).status(404);
+})
+routes.put('*', (req, res) =>{
+  res.send(`Cannot found endpoint: ${req.url}`).status(404);
+})
+routes.delete('*', (req, res) =>{
+  res.send(`Cannot found endpoint: ${req.url}`).status(404);
+})
 
 export default routes;

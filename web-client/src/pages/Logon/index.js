@@ -1,13 +1,74 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiLogIn, FiSun } from 'react-icons/fi'
+import axios from 'axios';
+import { FiLogIn, FiSun, FiCheckSquare } from 'react-icons/fi'
+
 import './styles.css';
 import './responsive.css';
 import logoImg from '../../assets/logo.png';
 import logonImg from '../../assets/logonImg.png';
+import api from '../../services/api';
+
 
 export default function Logon() {
+
+    const refSuc = React.createRef();
+    
+    const [mail, setMail] = useState('');
+    const [pass, setPass] = useState('');
+
+    const [user, setUser] = useState({});
+
+
+        // useEffect(
+        //     () =>localStorage.getItem('token')  ? window.location = '/home' : localStorage.clear()
+        //     ,[]
+        // );
+
+    function submit(e){
+        e.preventDefault();
+        //convertendo para base64 - 'Basic Authentication' no server! - ver UserController
+        // const data = `Basic ${btoa(mail)}:${btoa(pass)}`; btoa() - converte pra 64
+        //maaas, estou convertendo no próprio onChange do input, por questões de segurança 
+        const basic = `Basic ${btoa(`${mail}:${pass}`)}`;
+
+        console.log(basic);
+
+        api.post('/login', {},//sim, esse objeto vai vazio mesmo, NÃO APAGA MANO!!!!
+        {
+            headers:{
+                'authorization': basic,
+            }
+        })
+        .then( res =>{
+            localStorage.clear();
+            console.log(res.data);
+
+            localStorage.setItem('token', res.data.token);
+            setUser(res.data.user);
+            console.log(user);
+            // console.log(refSuc.current)
+            // refSuc.current.style.display = 'flex';
+            setTimeout(() => {
+                alert(`Parabéns ${user.name}, logou com sucesso`);//alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
+                goToHome();
+            }, 4000);
+
+        })
+        .catch( e =>{
+            localStorage.clear();
+            console.log(e)
+        })
+
+    }
+
+    function goToHome() {
+        window.location = '/home';
+    }
+
+
+
     return (
         <div className="logon-container">
             <section className="form">
@@ -30,12 +91,18 @@ export default function Logon() {
                 <img className="logo" src={logoImg} alt="logo" />
                 <form>
                     <h1>Faça seu Login</h1>
-                    <input type="email" placeholder="E-mail" />
-                    <input type="password" placeholder="Senha" />
+                    <input 
+                        onChange={ e => setMail( e.target.value ) }
+                        type="email" 
+                        placeholder="E-mail" 
+                    />
+                    <input 
+                        onChange={ e => setPass( e.target.value ) }
+                        type="password" 
+                        placeholder="Senha" 
+                    />
 
-                    <Link className="back-link" to="/home">
-                        <button className="button" type="submit">Entrar</button>
-                    </Link>
+                    <button className="back-link" onClick={submit} className="button" type="submit">Entrar</button>
 
                     <Link className="back-link" to="/register">
                         <FiLogIn size={16} color="#14b3b0" />
@@ -43,6 +110,17 @@ export default function Logon() {
                     </Link>
                 </form>
             </section>
+            {/*Função do cadastro concluído*/}
+            <div style={{display:'none'}}  onClick={goToHome} ref={refSuc} className="hide">
+                <div>
+                    <FiCheckSquare size={100} />
+                    <div>
+                    <h1>Parabéns {user.name}</h1>
+                        <p >Aguarde para ser redirecionado para a Home!</p>
+                    </div>
+                </div>
+            </div>
+
 
             {/*trabalhadores*/}
             <div className="img">
