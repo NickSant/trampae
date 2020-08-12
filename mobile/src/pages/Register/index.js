@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { View, Text, Image, Button, TouchableOpacity, ToastAndroid, Picker} from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity, ToastAndroid, Picker, AsyncStorage} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput, FlatList, ScrollView } from 'react-native-gesture-handler';
 import {Feather} from '@expo/vector-icons';
@@ -12,7 +12,7 @@ import logoImg from '../../assets/icon.png';
 import api from '../../services/api';
 
 export default function Index(){
-
+    
 
     const nav = useNavigation();
 
@@ -67,6 +67,10 @@ export default function Index(){
 
     //submit
     function submit(){
+        AsyncStorage.clear();
+        
+        //Criar gif para aguardar! no onclick do button!!!
+
         const body = {
             name: name,
             email: email,
@@ -81,9 +85,15 @@ export default function Index(){
             headers:{
                 "Content-Type": "application/json",
             },
-            body:body
+            body:JSON.stringify(body),
         }).then( res =>{
-            res.text().then( (data) => console.log(data) )
+            res.json().then( (data) => {
+
+                const token = data.token;
+                AsyncStorage.setItem('token',token);
+                ToastAndroid.show(`Usuário ${body.name} criado com sucesso!\nVocê será redirecionado à Home!`, ToastAndroid.LONG )
+                nav.navigate('home')
+            } )
         })
         .catch(e =>console.log(e))
 
