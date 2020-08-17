@@ -97,8 +97,7 @@ export default {
         !password ||
         password === "" ||
         password === null
-      )
-        return util.handleError(res, 401, "Malformated Elements");
+      ) return util.handleError(res, 401, "Malformated Elements");
 
       console.log("passou validação");
 
@@ -109,22 +108,19 @@ export default {
 
       console.log(result);
 
-      if (!result || result === undefined)
-        return util.handleError(res, 401, "User not Found");
+      if (!result || result === undefined) return util.handleError(res, 401, "User not Found");
 
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
       console.log("decodificou buffer");
 
       //argon2.verify (HASHED_PASS, plainTextPassword)
-      if (!(await argon2.verify(pass_bd, password)))
-        return util.handleError(res, 401, "Senha Incorreta");
+      if (!(await argon2.verify(pass_bd, password))) return util.handleError(res, 401, "Senha Incorreta");
 
       if (email !== result.email || !(await argon2.verify(pass_bd, password)))
         return util.handleError(res, 401, "Incorrect username or password");
 
-      if (result === undefined)
-        return util.handleError(res, 401, "Unauthorized");
+      if (result === undefined) return util.handleError(res, 401, "Unauthorized");
 
       const token = await jwt.generateToken({ user_id: result.id });
 
@@ -221,7 +217,7 @@ export default {
     if (newValue === undefined || newValue === null || newValue === "")
       return util.handleError(res, 400, "New Value is not declared");
 
-    userDefault.filter((field, index) => {
+    userDefault.filter( field => {
       if (field === type) return (typeExists = true);
     });
     console.log(typeExists);
@@ -256,16 +252,37 @@ export default {
   async forgotPass(req, res){
     const { mail } = req.body;
 
-    connection('users').select('email').where({email:mail}).first()
-    .then( () =>{
-      const subject = 'Recuperar Senha';
-      const body = '<h1> TESTE </h1>';
+    connection('users').select('*').where({email:mail}).first()
+    .then( user =>{
+      delete user.password;
+      const subject = "Recuperação de Senha"
+      const body = `
+        <h1> Recuperação de Senha do usuário: ${user.name} </h1>
+        <p>
+          Olá <b>${user.name}</b>, recebemos uma solicitação de mudança de Senha.
+          Basta clicar no Botão abaixo, e efetivar a mudança de sua senha.
+        </p>
+        <br />
+        <a href="http://localhost:3000/recover"> Clique Aqui </a>
+        <br />
+        <small>OBS: o link expira em 24h.</small>
+      `;
+      //OBS - POR ENQUANTO, O LINK DA PÁGINA DE RECUPERAÇÃO, SERÁ ESTÁTICO, DEPOIS PENSAR EM COLOCAR COMO link DINÂMICO!!!!!
 
       mailer.setMailConfigs(mail, subject, body);
       mailer.send().then( send =>{
-        if(send) return res.json({message:'Email enviado com sucesso'}).status(200).end();
+        if(!send) return util.handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde');
+        
+        const token = jwt.generateToken({mail_user_id: user.id});//autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
 
-        return util.handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
+        return res.json({
+          message:'Email enviado com sucesso', 
+          auth_token: token, 
+          //no frontend, fazer o mesmo esquema de bearer token, 
+          //mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
+          link: `http://localhost:3000/recover/`,
+        }).status(200).end();
+
       });
 
     }).catch(err =>{
@@ -273,6 +290,30 @@ export default {
       return util.handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
     })
 
-  }
+  },
+
+  async changePass(req, res){
+    const {mail_auth: auth_user} = req;//setado no middleware mailer
+    const { newPass } = req.body;//vem em BASE64!!
+
+    const pass = Buffer.from(newPass).toString();
+
+    const user = await connection('users').select('*')
+    .where({ id: auth_user.id }).first();
+
+    if(!user || user === undefined) return util.handleError(res, 401, 'Não autorizado.');
+
+  
+    const updatedUser = await connection('users').update('password', pass).where({id: user.id});
+
+    if(!updatedUser === 1) return util.handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde');
+
+    const currentUser = await connection('users').select('*').where({id: user.id}).first();
+    delete currentUser.password;
+    console.log(updatedUser);
+
+    return res.json({currentUser: currentUser, message: 'Senha atualizada com sucesso!'});
+  
+  },
 
 };

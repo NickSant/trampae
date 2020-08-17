@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer';
 require('dotenv/config');
 
 class Mailer{
-
     constructor(){
         this.transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
@@ -35,7 +34,6 @@ class Mailer{
         if(send) return true;
 
         return false;
-
     }
 }
 export default Mailer;
