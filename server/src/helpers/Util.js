@@ -42,7 +42,7 @@ class Util {
     handleError(res, status, message){
         console.error(message);
         res.status(status);
-        return res.json({Error:message});
+        return res.json({Error:message}).end();
     }
 }
 export default Util;

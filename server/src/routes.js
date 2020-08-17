@@ -5,11 +5,11 @@ import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
 
 import { validateBody, schemas } from "./helpers/validation";
-import multer from "./multer";
+import multer from "./helpers/multer";
 
-import authMiddleware from "./setup/auth";
+import authMiddleware from "./setup/middlewares/auth";
 import SearchController from "./controllers/SearchController";
-
+import mailerAuth from './setup/middlewares/mailer_auth';
 // import passportConf from "./passport";
 
 const routes = Router();
@@ -23,6 +23,9 @@ routes.post(
 
 //SignIn rota
 routes.post("/login", UserController.login);
+
+routes.post('/forgot', UserController.forgotPass);
+routes.put('/forgot', mailerAuth ,UserController.changePass);
 
 //GoogleOAuth
 // routes.post(

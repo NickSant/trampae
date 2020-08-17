@@ -1,4 +1,4 @@
-import jwt, { TokenExpiredError } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const secret = process.env.SECRET_JWT;
 //payload = dado que vai ser criptografado
