@@ -5,7 +5,7 @@ import UserController from "./controllers/UserController";
 import ServiceController from "./controllers/ServiceController";
 
 import { validateBody, schemas } from "./helpers/validation";
-import multer from "./multer";
+import multer from "./helpers/multer";
 
 import authMiddleware from "./setup/auth";
 import SearchController from "./controllers/SearchController";
@@ -23,7 +23,7 @@ routes.post(
 
 //SignIn rota
 routes.post("/login", UserController.login);
-
+routes.post('/forgot', UserController.forgotPass);
 //GoogleOAuth
 // routes.post(
 //   "/oauth/google",

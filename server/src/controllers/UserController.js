@@ -1,12 +1,13 @@
 import connection from "../database/connection";
 import * as jwt from "../setup/jwt";
 import Util from "../helpers/Util";
-
+import Mailer from '../helpers/mailer';
 import argon2 from "argon2"; //algoritmo de hash
 import fs from "fs";
 import crypto from "crypto";
 
 const util = new Util();
+const mailer = new Mailer();
 
 const userDefault = [
   "id",
@@ -251,4 +252,27 @@ export default {
       return util.handleError(res, 400, `Type "${type}" doesn't exists`);
     }
   },
+
+  async forgotPass(req, res){
+    const { mail } = req.body;
+
+    connection('users').select('email').where({email:mail}).first()
+    .then( () =>{
+      const subject = 'Recuperar Senha';
+      const body = '<h1> TESTE </h1>';
+
+      mailer.setMailConfigs(mail, subject, body);
+      mailer.send().then( send =>{
+        if(send) return res.json({message:'Email enviado com sucesso'}).status(200).end();
+
+        return util.handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
+      });
+
+    }).catch(err =>{
+      console.log(err);
+      return util.handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
+    })
+
+  }
+
 };
