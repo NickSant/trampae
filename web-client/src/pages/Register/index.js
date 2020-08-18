@@ -97,7 +97,7 @@ export default function Register() {
       .post("/signup", body)
       .then((res) => {
         console.log(res);
-        localStorage.clear();
+        localStorage.removeItem('token')
         //confirmação
         localStorage.setItem("token", `Bearer ${res.data.token}`);
 
@@ -106,7 +106,7 @@ export default function Register() {
         }, 2000);
       })
       .catch((e) => {
-        localStorage.clear();
+        localStorage.removeItem('token');
         console.log(e);
       });
   }

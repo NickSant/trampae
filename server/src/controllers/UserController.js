@@ -2,7 +2,7 @@ import connection from "../database/connection";
 import * as jwt from "../setup/jwt";
 import Util from "../helpers/Util";
 import Mailer from '../helpers/mailer';
-import argon2 from "argon2"; //algoritmo de hash
+import argon2, { hash } from "argon2"; //algoritmo de hash
 import fs from "fs";
 import crypto from "crypto";
 
@@ -303,13 +303,16 @@ export default {
 
     if(!user || user === undefined) return util.handleError(res, 401, 'Não autorizado.');
 
+    const hashed_pass = await argon2.hash(pass);
   
-    const updatedUser = await connection('users').update('password', pass).where({id: user.id});
+    const updatedUser = await connection('users').update('password', hashed_pass).where({id: user.id});
 
     if(!updatedUser === 1) return util.handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde');
 
     const currentUser = await connection('users').select('*').where({id: user.id}).first();
+
     delete currentUser.password;
+    
     console.log(updatedUser);
 
     return res.json({currentUser: currentUser, message: 'Senha atualizada com sucesso!'});

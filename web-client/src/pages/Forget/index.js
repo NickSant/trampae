@@ -20,10 +20,6 @@ export default function Forget() {
   //     ,[]
   // );
 
-  const clearStorage = () => localStorage.clear();
-
-  useEffect(clearStorage, []);
-
 
   function submit(e) {
     e.preventDefault();

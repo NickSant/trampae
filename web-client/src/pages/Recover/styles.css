@@ -19,15 +19,15 @@
   box-shadow: 5px 5px 10px #000000;
 }
 
-.login{
-  width: 50%;
+.outra {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 
-.login .login-header{
+.outra .login-header{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -36,7 +36,7 @@
   padding: 20px;
 }
 
-.login .login-header img{
+.outra .login-header img{
   width: 125px;
 }
 

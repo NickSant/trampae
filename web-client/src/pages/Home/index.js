@@ -14,6 +14,8 @@ import api from "../../services/api";
 
 export default function Home() {
 
+  useEffect(() => !localStorage.getItem('token') ? window.location = '/' : '', []);
+
   function clearStorage(){
     localStorage.clear();
   }

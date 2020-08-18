@@ -1,110 +1,89 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-import "./styles.css";
+import './styles.css';
 
-import logoImg from "../../assets/logo.png";
-import api from "../../services/api";
+import logoImg from '../../assets/logo.png';
+import api from '../../services/api';
 
-import Input from "../../components/Input";
+import Input from '../../components/Input';
 
 export default function Recover() {
   // const refSuc = React.createRef();
 
-  const [mail, setMail] = useState("");
-  const [pass, setPass] = useState("");
+  const [confPass, setConfPass] = useState('');
+  const [pass, setPass] = useState('');
 
-  const [user, setUser] = useState({});
-  // useEffect(
-  //     () => localStorage.getItem('token')  ? window.location = '/home' : localStorage.clear()
-  //     ,[]
-  // );
+  useEffect(() => !localStorage.getItem('mail_auth') ? window.location = '/': '' , []);
 
   function submit(e) {
     e.preventDefault();
-    //convertendo para base64 - 'Basic Authentication' no server! - ver UserController
-    // const data = `Basic ${btoa(mail)}:${btoa(pass)}`; btoa() - converte pra 64
-    //maaas, estou convertendo no próprio onChange do input, por questões de segurança
-    const basic = `Basic ${btoa(`${mail}:${pass}`)}`;
 
-    console.log(basic);
+    if(pass !== confPass) return alert('As senhas precisam ser iguais');
+    if(confPass.length < 6) return alert('A senha deve ter no mínimo 6 caracteres!');
 
-    api
-      .post(
-        "/login",
-        {}, //sim, esse objeto vai vazio mesmo, NÃO APAGA MANO!!!!
-        {
-          headers: {
-            authorization: basic,
-          },
-        }
-      )
-      .then((res) => {
-        localStorage.clear();
-        console.log('data',res.data);
+    const mailToken = localStorage.getItem('mail_auth');
+    const body = { newPass: confPass };
+    const configs = {
+      headers: {
+        mail_auth: `Bearer ${mailToken}`,
+      },
+    };
+    api.put('/forgot', body, configs).then((res) => {
+      console.log('res',res)
 
-        localStorage.setItem("token", res.data.token);
-        console.log('user ',res.data.user);
-        setUser(res.data.user);
-        console.log(user);
+      if(res.Error) return alert(res.Error)
+      const user = res.data.currentUser;
 
-        setTimeout(() => {
-          alert(`Parabéns ${res.data.name}, logou com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
-          goToHome();
-        }, 3000);
-      })
-      .catch((e) => {
-        localStorage.clear();
-        console.log(e);
-      });
+      console.log('user', user)
+
+      
+      alert(`${user.name}, Sua senha foi alterada com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
+      setTimeout(function(){
+        goToLogin();
+      }, 2000)
+
+    }).catch((e) => {
+      alert(e);
+      console.log(e);
+    });
   }
 
-  function goToHome() {
-    window.location = "/home";
+  function goToLogin() {
+    window.location = '/';
   }
 
   return (
-    <div className="container">
-      <div className="box">
-        <div className="login">
-          <div className="login-header">
-            <img src={logoImg} alt="Trampaê"></img>
+    <div className='container'>
+      <div className='box'>
+        <div className='outra'>
+          <div className='login-header'>
+            <img src={logoImg} alt='Trampaê' />
           </div>
-          <div className="form-container">
-            <h1 className="title"> Faça seu login! </h1>
-            <container>
-              <form>
-                <Input
-                  onChange={ e => setMail(e.target.value)}
-                  type="email"
-                  name="E-mail"
-                />
-                <Input
-                  onChange={ e => setPass(e.target.value)}
-                  type="password"
-                  name="Senha"
-                />
+          <div className='form-container'>
+            <h1 className='title'> Cadastre sua nova senha! </h1>
 
-                <button
-                  className="back-link"
-                  onClick={submit}
-                  className="button"
-                  type="submit"
-                >
-                  Entrar
-                </button>
-              </form>
-              <Link to="/forget" className="title">Esqueceu a Senha?</Link>
-            </container>
+            <form>
+              <Input
+                onChange={(e) => setPass(e.target.value)}
+                type='password'
+                name='Senha'
+              />
+              <Input
+                onChange={(e) => setConfPass(e.target.value)}
+                type='password'
+                name='Confirme sua Senha'
+              />
+
+              <button className='button' onClick={submit} type='submit'>
+                Entrar
+              </button>
+            </form>
+            <Link to='/forget' className='title'>
+              Esqueceu a Senha?
+            </Link>
           </div>
-        </div>
-        <div className="disabled-register">
-          <h1 className="title"> Ainda não tem Login? </h1>
-          <h3 className="title"> Tá esperando o que?</h3>
-          <Link className="button" to="/register">
-            Registre-se já!
-          </Link>
         </div>
       </div>
     </div>
