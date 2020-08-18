@@ -9,7 +9,7 @@ import api from "../../services/api";
 
 import Input from "../../components/Input";
 
-export default function Logon() {
+export default function Recover() {
   // const refSuc = React.createRef();
 
   const [mail, setMail] = useState("");

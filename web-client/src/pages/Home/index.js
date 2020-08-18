@@ -13,6 +13,10 @@ import Service from "../../components/Post";
 import api from "../../services/api";
 
 export default function Home() {
+
+  function clearStorage(){
+    localStorage.clear();
+  }
   const [services, setServices] = useState([]);
 
   async function concatData(service) {
@@ -85,7 +89,7 @@ export default function Home() {
                 <p className="text-button">Cadastro</p>
               </p>
             </Link>
-            <Link to="/">
+            <Link onClick={clearStorage} to="/">
               <p className="button-pages">
                 <FiLogIn size={30} />
                 <p className="text-button">Login</p>
