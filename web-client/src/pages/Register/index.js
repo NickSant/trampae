@@ -78,6 +78,7 @@ export default function Register() {
   //  SUBMIT- -----------------------------
 
   async function submitRegister(e) {
+    console.log("to aqui bosta");
     //fazer conexão com api......
     e.preventDefault();
     //name, email, whatsapp, city, uf, password
@@ -100,11 +101,9 @@ export default function Register() {
         //confirmação
         localStorage.setItem("token", `Bearer ${res.data.token}`);
 
-        refDiv.current.style.display = "flex";
-        console.log(refDiv.current);
         setTimeout(() => {
           goToLogin();
-        }, 20000);
+        }, 2000);
       })
       .catch((e) => {
         localStorage.clear();

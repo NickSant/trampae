@@ -84,7 +84,7 @@ routes.get("/search/:uf/:city/:cat_id",
   authMiddleware,
   SearchController.SearchServices
 );
-routes.get("/search/:name", 
+routes.get("/search/:id", 
   authMiddleware,
   SearchController.SearchUsers
 );
