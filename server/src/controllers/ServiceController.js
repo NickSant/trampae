@@ -26,7 +26,7 @@ export default {
       return response.json(services);
 
     }catch(e){
-      return util.handleError(res, 400, `Database Error: ${e}`);
+      return util.handleError(response, 400, `Database Error: ${e}`);
     }
 
   },

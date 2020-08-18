@@ -19,13 +19,14 @@ export default {
     return response.json(services);
   },
   async SearchUsers(request, response) {
-    const { name } = request.params;
+    const { id } = request.query;
+
     try{
-      const users = await connection("users")
-        .where("name", "like", `%${name}%`)
+      const user = await connection("users")
+        .where("id", id)
         .select("*");
 
-      return response.json(users);
+      return response.json(user);
 
     }catch(e){
       return util.handleError(response, 400, 'Database Error')
