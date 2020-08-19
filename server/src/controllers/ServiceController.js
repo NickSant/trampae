@@ -5,7 +5,7 @@ import * as jwt from "../setup/jwt";
 
 import Util from '../helpers/Util';
 
-const util = new Util;
+const {handleError} = new Util;
 
 export default {
   async index(request, response) {
@@ -26,7 +26,7 @@ export default {
       return response.json(services);
 
     }catch(e){
-      return util.handleError(response, 400, `Database Error: ${e}`);
+      return handleError(response, 400, `Database Error: ${e}`);
     }
 
   },
@@ -43,7 +43,7 @@ export default {
     }
       
     if (service.user_id !== user_id) 
-      return util.handleError(response, 401, 'Unauthorized');    
+      return handleError(response, 401, 'Unauthorized');    
     try{
 
       await connection("services")
@@ -54,7 +54,7 @@ export default {
       .delete();
       return response.status(204).send();
     }catch(e){
-      return util.handleError(response, 400, `Delete Service Error: ${e}`);
+      return handleError(response, 400, `Delete Service Error: ${e}`);
     }
   },
 
@@ -86,7 +86,7 @@ export default {
         id_category,
       });
     }catch(e){
-      return util.handleError(response, 400, `Create Service Error: ${e}` );
+      return handleError(response, 400, `Create Service Error: ${e}` );
     }
     return response.json({ service_id:id });
   },
