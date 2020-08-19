@@ -1,6 +1,6 @@
 import connection from "../database/connection";
 import Util from '../helpers/Util';
-const util = new Util;
+const {handleError} = new Util;
 export default {
   async SearchServices(request, response) {
 
@@ -29,7 +29,7 @@ export default {
       return response.json(user);
 
     }catch(e){
-      return util.handleError(response, 400, 'Database Error')
+      return handleError(response, 400, 'Database Error')
     }
     
   },

@@ -8,9 +8,7 @@ import Select from "../../components/Select";
 
 import api from "../../services/api";
 import axios from "axios";
-
-/* Função de Cadastro concluído*/
-
+require('dotenv/config');
 export default function Register() {
   const styles = {
     p: {
@@ -97,16 +95,16 @@ export default function Register() {
       .post("/signup", body)
       .then((res) => {
         console.log(res);
-        localStorage.clear();
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
         //confirmação
-        localStorage.setItem("token", `Bearer ${res.data.token}`);
+        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, `Bearer ${res.data.token}`);
 
         setTimeout(() => {
           goToLogin();
         }, 2000);
       })
       .catch((e) => {
-        localStorage.clear();
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         console.log(e);
       });
   }

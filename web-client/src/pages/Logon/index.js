@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./styles.css";
@@ -8,19 +8,15 @@ import logoImg from "../../assets/logo.png";
 import api from "../../services/api";
 
 import Input from "../../components/Input";
-
+require('dotenv/config');
 export default function Logon() {
-  const refSuc = React.createRef();
+  const history = useHistory();
+  // const refSuc = React.createRef();
 
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
 
   const [user, setUser] = useState({});
-
-  // useEffect(
-  //     () =>localStorage.getItem('token')  ? window.location = '/home' : localStorage.clear()
-  //     ,[]
-  // );
 
   function submit(e) {
     e.preventDefault();
@@ -42,27 +38,27 @@ export default function Logon() {
         }
       )
       .then((res) => {
-        localStorage.clear();
-        console.log(res.data);
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+        console.log('data',res.data);
 
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, res.data.token);
+        console.log('user ',res.data.user);
         setUser(res.data.user);
         console.log(user);
-        // console.log(refSuc.current)
-        // refSuc.current.style.display = 'flex';
+
         setTimeout(() => {
-          alert(`Parabéns ${user.name}, logou com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
+          alert(`Parabéns ${res.data.name}, logou com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
           goToHome();
-        }, 4000);
+        }, 3000);
       })
       .catch((e) => {
-        localStorage.clear();
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         console.log(e);
       });
   }
 
   function goToHome() {
-    window.location = "/home";
+    history.push('/home');
   }
 
   return (
@@ -77,12 +73,12 @@ export default function Logon() {
             <container>
               <form>
                 <Input
-                  onChange={(e) => setMail(e.target.value)}
+                  onChange={ e => setMail(e.target.value)}
                   type="email"
                   name="E-mail"
                 />
                 <Input
-                  onChange={(e) => setPass(e.target.value)}
+                  onChange={ e => setPass(e.target.value)}
                   type="password"
                   name="Senha"
                 />
@@ -96,6 +92,7 @@ export default function Logon() {
                   Entrar
                 </button>
               </form>
+              <Link to="/forget" className="title">Esqueceu a Senha?</Link>
             </container>
           </div>
         </div>

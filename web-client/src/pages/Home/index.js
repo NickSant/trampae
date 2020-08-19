@@ -3,7 +3,7 @@ import "./styles.css";
 import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FiSearch, FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import IconImg from "../../assets/icon.png";
 import ProfileImg from "../../assets/profile.png";
@@ -12,7 +12,20 @@ import Service from "../../components/Post";
 
 import api from "../../services/api";
 
+import Util from '../../helpers/Util';
+
+require('dotenv/config');
+
 export default function Home() {
+  const { isAuthenticated } = new Util();
+  
+  const history = useHistory();
+
+  useEffect(() => !isAuthenticated('token') ? history.push('/') : '', []);
+
+  function clearStorage(){
+    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+  }
   const [services, setServices] = useState([]);
 
   async function concatData(service) {
@@ -85,7 +98,7 @@ export default function Home() {
                 <p className="text-button">Cadastro</p>
               </p>
             </Link>
-            <Link to="/">
+            <Link onClick={clearStorage} to="/">
               <p className="button-pages">
                 <FiLogIn size={30} />
                 <p className="text-button">Login</p>
