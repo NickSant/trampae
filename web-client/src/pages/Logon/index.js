@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./styles.css";
@@ -8,18 +8,15 @@ import logoImg from "../../assets/logo.png";
 import api from "../../services/api";
 
 import Input from "../../components/Input";
-
+require('dotenv/config');
 export default function Logon() {
+  const history = useHistory();
   // const refSuc = React.createRef();
 
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
 
   const [user, setUser] = useState({});
-  // useEffect(
-  //     () => localStorage.getItem('token')  ? window.location = '/home' : localStorage.clear()
-  //     ,[]
-  // );
 
   function submit(e) {
     e.preventDefault();
@@ -41,10 +38,10 @@ export default function Logon() {
         }
       )
       .then((res) => {
-        localStorage.clear();
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         console.log('data',res.data);
 
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, res.data.token);
         console.log('user ',res.data.user);
         setUser(res.data.user);
         console.log(user);
@@ -55,13 +52,13 @@ export default function Logon() {
         }, 3000);
       })
       .catch((e) => {
-        localStorage.clear();
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         console.log(e);
       });
   }
 
   function goToHome() {
-    window.location = "/home";
+    history.push('/home');
   }
 
   return (

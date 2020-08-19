@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./styles.css";
@@ -8,18 +8,14 @@ import logoImg from "../../assets/logo.png";
 import api from "../../services/api";
 
 import Input from "../../components/Input";
+require('dotenv/config');
 
 export default function Forget() {
-  // const refSuc = React.createRef();
+  const history = useHistory();
 
   const [mail, setMail] = useState("");
 
   const [user, setUser] = useState({});
-  // useEffect(
-  //     () => localStorage.getItem('token')  ? window.location = '/home' : localStorage.clear()
-  //     ,[]
-  // );
-
 
   function submit(e) {
     e.preventDefault();
@@ -35,7 +31,7 @@ export default function Forget() {
 
       localStorage.clear();
       const mail_auth_token = res.data.auth_token;
-      localStorage.setItem('mail_auth', mail_auth_token);
+      localStorage.setItem( process.env.REACT_APP_TOKEN_KEY , mail_auth_token);
 
       setTimeout(() => {
 
@@ -54,7 +50,7 @@ export default function Forget() {
   }
 
   function goToLogin() {
-    window.location = "/";
+    history.push('/');
   }
 
   return (

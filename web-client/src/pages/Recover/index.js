@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles.css';
@@ -9,13 +9,18 @@ import api from '../../services/api';
 
 import Input from '../../components/Input';
 
+import Util from '../../helpers/Util';
+
+require('dotenv/config');
+
 export default function Recover() {
-  // const refSuc = React.createRef();
+  const { isAuthenticated } = new Util();
+  const history = useHistory();
 
   const [confPass, setConfPass] = useState('');
   const [pass, setPass] = useState('');
 
-  useEffect(() => !localStorage.getItem('mail_auth') ? window.location = '/': '' , []);
+  useEffect(() => ! isAuthenticated('mail') ? history.push('/') : '' , []);
 
   function submit(e) {
     e.preventDefault();
@@ -23,7 +28,7 @@ export default function Recover() {
     if(pass !== confPass) return alert('As senhas precisam ser iguais');
     if(confPass.length < 6) return alert('A senha deve ter no mínimo 6 caracteres!');
 
-    const mailToken = localStorage.getItem('mail_auth');
+    const mailToken = localStorage.getItem(process.env.REACT_APP_TOKEN_MAIL);
     const body = { newPass: confPass };
     const configs = {
       headers: {

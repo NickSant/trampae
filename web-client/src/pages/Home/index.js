@@ -3,7 +3,7 @@ import "./styles.css";
 import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FiSearch, FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import IconImg from "../../assets/icon.png";
 import ProfileImg from "../../assets/profile.png";
@@ -12,12 +12,19 @@ import Service from "../../components/Post";
 
 import api from "../../services/api";
 
-export default function Home() {
+import Util from '../../helpers/Util';
 
-  useEffect(() => !localStorage.getItem('token') ? window.location = '/' : '', []);
+require('dotenv/config');
+
+export default function Home() {
+  const { isAuthenticated } = new Util();
+  
+  const history = useHistory();
+
+  useEffect(() => !isAuthenticated('token') ? history.push('/') : '', []);
 
   function clearStorage(){
-    localStorage.clear();
+    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
   }
   const [services, setServices] = useState([]);
 

@@ -13,12 +13,13 @@ export default function Routes() {
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={Logon} />
+                <Route path="/home" component={Home} />  
                 <Route path="/register" component={Register} />
-                <Route path="/home" component={Home} />
                 <Route path="/aboutus" component={AboutUs} />
                 <Route path="/service/new" component={NewService} />
+
                 <Route path="/forget" component={Forget} />{/*Mudar senha - mail_auth*/}
-                <Route path="/recover" component={Recover}/>{/*digitar email para nodemailer*/}
+                <Route path="/recover" component={Recover}/> 
             </Switch>
         </BrowserRouter>
     );
