@@ -1,12 +1,12 @@
 import connection from "../database/connection";
 import * as jwt from "../setup/jwt";
 import Util from "../helpers/Util";
-import Mailer from '../helpers/mailer';
+import Mailer from "../helpers/mailer";
 import argon2, { hash } from "argon2"; //algoritmo de hash
 import fs from "fs";
 import crypto from "crypto";
 
-import UserModel from '../models/UserModel';
+import UserModel from "../models/UserModel";
 
 const { handleError } = new Util();
 const mailer = new Mailer();
@@ -24,8 +24,8 @@ const userDefault = [
 
 export default {
   //list users
-  async index(request, response) {
-    const { page = 1 } = request.query;
+  async index(req, res) {
+    const { page = 1 } = req.query;
 
     // const { id:user_id } = req.auth; - DEVELOPMENT
     // if(!user_id || user_id === undefined || user_id === '')
@@ -42,14 +42,14 @@ export default {
       return item;
     });
 
-    return response.json(res_user);
+    return res.json(res_user);
   },
   //create user
-  async create(request, response) {
-    const { name, email, whatsapp, city, uf, password } = request.value.body;
+  async create(req, res) {
+    const { name, email, whatsapp, city, uf, password } = req.value.body;
     const hashed_pass = await argon2.hash(password);
 
-    const data = request.value.body;
+    const data = req.value.body;
     delete data.password;
 
     const id = await crypto.randomBytes(4).toString("HEX");
@@ -67,7 +67,6 @@ export default {
         password: hashed_pass,
       });
       console.log(data);
-
     } catch (e) {
       console.log(e.sqlMessage);
       if (e.sqlMessage.includes("users_email_unique")) {
@@ -78,7 +77,7 @@ export default {
       return handleError(res, 400, `Database Error: ${e}`);
     }
 
-    return response.json({ id, token });
+    return res.json({ id, token });
   },
   async OAuth(req, res) {
     const user_id = req.user[0].id;
@@ -86,7 +85,7 @@ export default {
     return res.status(200).json({ token });
   },
   async login(req, res) {
-    console.log('início login')
+    console.log("início login");
     console.log(req.headers);
     const [hashTyp, hash] = req.headers.authorization.split(" "); //Basic Authenticate. Formato: Basic HASH
     const [email, password] = Buffer.from(hash, "base64").toString().split(":"); //Buffer - descriptografa um hash -> separado por :
@@ -100,22 +99,25 @@ export default {
         !password ||
         password === "" ||
         password === null
-      ) return handleError(res, 401, "Malformated Elements");
+      )
+        return handleError(res, 401, "Malformated Elements");
 
       console.log("passou validação");
 
-      const result = await user_m.get({email:email}, true);
+      const result = await user_m.get({ email: email }, true);
 
       console.log(result);
 
-      if (!result || result === undefined) return handleError(res, 401, "User not Found");
+      if (!result || result === undefined)
+        return handleError(res, 401, "User not Found");
 
       const pass_bd = await Buffer.from(result.password, "base64").toString(); //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
 
       console.log("decodificou buffer");
 
       //argon2.verify (HASHED_PASS, plainTextPassword)
-      if (!(await argon2.verify(pass_bd, password))) return handleError(res, 401, "Senha Incorreta");
+      if (!(await argon2.verify(pass_bd, password)))
+        return handleError(res, 401, "Senha Incorreta");
 
       if (email !== result.email || !(await argon2.verify(pass_bd, password)))
         return handleError(res, 401, "Incorrect username or password");
@@ -142,7 +144,7 @@ export default {
 
     const { id: req_id } = req.auth; //id do user autenticado e logado
 
-    const exists = await user_m.get({id}, true);
+    const exists = await user_m.get({ id }, true);
 
     if (!exists || exists === undefined || exists === "")
       return handleError(res, 401, `User ${id} not exists`);
@@ -192,8 +194,8 @@ export default {
       //caminho da imagem
       req.file.path = `uploads/${req.file.filename}`;
 
-      await user_m.update({image_url: req.file.path}, {id});
-      
+      await user_m.update({ image_url: req.file.path }, { id });
+
       // await connection("users")
       //   .update({
       //     image_url: req.file.path,
@@ -217,26 +219,25 @@ export default {
     if (newValue === undefined || newValue === null || newValue === "")
       return handleError(res, 400, "New Value is not declared");
 
-    userDefault.filter( field => {
+    userDefault.filter((field) => {
       if (field === type) return (typeExists = true);
     });
     console.log(typeExists);
 
     if (typeExists) {
       try {
-         await connection("users").update(type, newValue).where({
+        await connection("users").update(type, newValue).where({
           id: user_id,
         });
 
         if (result !== undefined && result !== "") {
-          
-          const newUser = await user_m.get({id: user_id}, true);
+          const newUser = await user_m.get({ id: user_id }, true);
           // await connection("users")
-            // .select("*")
-            // .where({
-              // id: user_id,
-            // })
-            // .first();
+          // .select("*")
+          // .where({
+          // id: user_id,
+          // })
+          // .first();
 
           delete newUser.password;
           console.log("Succefully Update!");
@@ -251,15 +252,16 @@ export default {
     }
   },
 
-  async forgotPass(req, res){
+  async forgotPass(req, res) {
     const { mail } = req.body;
 
     // connection('users').select('*').where({email:mail}).first()
-    user_m.get({email:mail}, true)
-    .then( user =>{
-      delete user.password;
-      const subject = "Recuperação de Senha"
-      const body = `
+    user_m
+      .get({ email: mail }, true)
+      .then((user) => {
+        delete user.password;
+        const subject = "Recuperação de Senha";
+        const body = `
         <h1> Recuperação de Senha do usuário: ${user.name} </h1>
         <p>
           Olá <b>${user.name}</b>, recebemos uma solicitação de mudança de Senha.
@@ -270,59 +272,79 @@ export default {
         <br />
         <small>OBS: o link expira em 24h.</small>
       `;
-      //OBS - POR ENQUANTO, O LINK DA PÁGINA DE RECUPERAÇÃO, SERÁ ESTÁTICO, DEPOIS PENSAR EM COLOCAR COMO link DINÂMICO!!!!!
+        //OBS - POR ENQUANTO, O LINK DA PÁGINA DE RECUPERAÇÃO, SERÁ ESTÁTICO, DEPOIS PENSAR EM COLOCAR COMO link DINÂMICO!!!!!
 
-      mailer.setMailConfigs(mail, subject, body);
-      mailer.send().then( send =>{
-        if(!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde');
-        
-        const token = jwt.generateToken({mail_user_id: user.id});//autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
+        mailer.setMailConfigs(mail, subject, body);
+        mailer.send().then((send) => {
+          if (!send)
+            return handleError(
+              res,
+              400,
+              "Não foi possível enviar o email\nTente novamente mais tarde"
+            );
 
-        return res.json({
-          message:'Email enviado com sucesso', 
-          auth_token: token, 
-          //no frontend, fazer o mesmo esquema de bearer token, 
-          //mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
-          link: `http://localhost:3000/recover/`,
-        }).status(200).end();
+          const token = jwt.generateToken({ mail_user_id: user.id }); //autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
 
+          return res
+            .json({
+              message: "Email enviado com sucesso",
+              auth_token: token,
+              //no frontend, fazer o mesmo esquema de bearer token,
+              //mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
+              link: `http://localhost:3000/recover/`,
+            })
+            .status(200)
+            .end();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return handleError(
+          res,
+          400,
+          "Não foi possível enviar o email\nTente novamente mais tarde"
+        );
       });
-
-    }).catch(err =>{
-      console.log(err);
-      return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
-    })
-
   },
 
-  async changePass(req, res){
-    const {mail_auth: auth_user} = req;//setado no middleware mailer
-    const { newPass } = req.body;//vem em BASE64!!
+  async changePass(req, res) {
+    const { mail_auth: auth_user } = req; //setado no middleware mailer
+    const { newPass } = req.body; //vem em BASE64!!
 
     const pass = Buffer.from(newPass).toString();
 
-    const user = await user_m.get({id: auth_user.id}, true);
+    const user = await user_m.get({ id: auth_user.id }, true);
     // await connection('users').select('*')
     // .where({ id: auth_user.id }).first();
 
-    if(!user || user === undefined) return handleError(res, 401, 'Não autorizado.');
+    if (!user || user === undefined)
+      return handleError(res, 401, "Não autorizado.");
 
     const hashed_pass = await argon2.hash(pass);
-  
-    const updatedUser = await user_m.update({password: hashed_pass}, {id: user.id} );
+
+    const updatedUser = await user_m.update(
+      { password: hashed_pass },
+      { id: user.id }
+    );
     // await connection('users').update('password', hashed_pass).where({id: user.id});
 
-    if(!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde');
+    if (!updatedUser === 1)
+      return handleError(
+        res,
+        400,
+        "Não foi possível atualizar a senha\nTente novamente mais tarde"
+      );
 
-    const currentUser = await user_m.get({ id:user.id }, true);
+    const currentUser = await user_m.get({ id: user.id }, true);
     // connection('users').select('*').where({id: user.id}).first();
 
     delete currentUser.password;
-    
+
     console.log(updatedUser);
 
-    return res.json({currentUser: currentUser, message: 'Senha atualizada com sucesso!'});
-  
+    return res.json({
+      currentUser: currentUser,
+      message: "Senha atualizada com sucesso!",
+    });
   },
-
 };
