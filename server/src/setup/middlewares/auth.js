@@ -1,7 +1,7 @@
 import * as jwt from '../jwt';
 import connection from '../../database/connection';
 import Util from '../../helpers/Util';
-const {handleError} = new Util;
+const {handleError} = new Util();
 module.exports = async function authMiddleware(req, res, next){
     
     const [hashType, token] = req.headers.authorization.split(' ');//Bearer Authorization
