@@ -38,6 +38,7 @@ export default {
         .where("id", id)
         .select("user_id")
         .first();
+        
     }catch(e){
       response.json({db_error: `erro: ${e}`});
     }

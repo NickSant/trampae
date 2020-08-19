@@ -6,8 +6,11 @@ import argon2, { hash } from "argon2"; //algoritmo de hash
 import fs from "fs";
 import crypto from "crypto";
 
+import UserModel from '../models/UserModel';
+
 const { handleError } = new Util();
 const mailer = new Mailer();
+const user_m = new UserModel();
 
 const userDefault = [
   "id",
@@ -54,7 +57,7 @@ export default {
     const token = await jwt.generateToken({ user_id: id }); //gerando token para auth
 
     try {
-      await connection("users").insert({
+      await user_m.insert({
         id,
         name,
         email,
@@ -63,8 +66,8 @@ export default {
         uf,
         password: hashed_pass,
       });
-
       console.log(data);
+
     } catch (e) {
       console.log(e.sqlMessage);
       if (e.sqlMessage.includes("users_email_unique")) {
@@ -101,10 +104,7 @@ export default {
 
       console.log("passou validação");
 
-      const result = await connection("users")
-        .select("*")
-        .where("email", email)
-        .first();
+      const result = await user_m.get({email:email}, true);
 
       console.log(result);
 
@@ -142,10 +142,7 @@ export default {
 
     const { id: req_id } = req.auth; //id do user autenticado e logado
 
-    const exists = await connection("users")
-      .select("*")
-      .where("id", id)
-      .first();
+    const exists = await user_m.get({id}, true);
 
     if (!exists || exists === undefined || exists === "")
       return handleError(res, 401, `User ${id} not exists`);
@@ -195,11 +192,14 @@ export default {
       //caminho da imagem
       req.file.path = `uploads/${req.file.filename}`;
 
-      await connection("users")
-        .update({
-          image_url: req.file.path,
-        })
-        .where("id", id);
+      await user_m.update({image_url: req.file.path}, {id});
+      
+      // await connection("users")
+      //   .update({
+      //     image_url: req.file.path,
+      //   })
+      //   .where("id", id);
+
       console.log("inseriu path image no banco");
 
       return res.json({ image: req.file });
@@ -224,17 +224,19 @@ export default {
 
     if (typeExists) {
       try {
-        const result = await connection("users").update(type, newValue).where({
+         await connection("users").update(type, newValue).where({
           id: user_id,
         });
 
         if (result !== undefined && result !== "") {
-          const newUser = await connection("users")
-            .select("*")
-            .where({
-              id: user_id,
-            })
-            .first();
+          
+          const newUser = await user_m.get({id: user_id}, true);
+          // await connection("users")
+            // .select("*")
+            // .where({
+              // id: user_id,
+            // })
+            // .first();
 
           delete newUser.password;
           console.log("Succefully Update!");
@@ -252,7 +254,8 @@ export default {
   async forgotPass(req, res){
     const { mail } = req.body;
 
-    connection('users').select('*').where({email:mail}).first()
+    // connection('users').select('*').where({email:mail}).first()
+    user_m.get({email:mail}, true)
     .then( user =>{
       delete user.password;
       const subject = "Recuperação de Senha"
@@ -298,18 +301,21 @@ export default {
 
     const pass = Buffer.from(newPass).toString();
 
-    const user = await connection('users').select('*')
-    .where({ id: auth_user.id }).first();
+    const user = await user_m.get({id: auth_user.id}, true);
+    // await connection('users').select('*')
+    // .where({ id: auth_user.id }).first();
 
     if(!user || user === undefined) return handleError(res, 401, 'Não autorizado.');
 
     const hashed_pass = await argon2.hash(pass);
   
-    const updatedUser = await connection('users').update('password', hashed_pass).where({id: user.id});
+    const updatedUser = await user_m.update({password: hashed_pass}, {id: user.id} );
+    // await connection('users').update('password', hashed_pass).where({id: user.id});
 
     if(!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde');
 
-    const currentUser = await connection('users').select('*').where({id: user.id}).first();
+    const currentUser = await user_m.get({ id:user.id }, true);
+    // connection('users').select('*').where({id: user.id}).first();
 
     delete currentUser.password;
     
