@@ -49,7 +49,7 @@ export default function Logon() {
         setTimeout(() => {
           alert(`Parabéns ${res.data.name}, logou com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
           goToHome();
-        }, 3000);
+        }, 1000);
       })
       .catch((e) => {
         localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);

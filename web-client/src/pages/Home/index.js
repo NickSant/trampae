@@ -34,7 +34,7 @@ export default function Home() {
   }
 
   async function getUserData(userId) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
     const apiResponse = await api.get("/search/users", {
       headers: {
         authorization: `Bearer ${token}`,
@@ -115,7 +115,9 @@ export default function Home() {
             return (
               <Service
                 key={service.id}
-                name={service.userData.name}
+                user_name={service.userData.name}
+                title={service.title}
+                price={service.price}
                 city={service.city}
                 category={service.category}
                 text={service.description}
