@@ -4,11 +4,11 @@ import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
 import { Link, useHistory } from "react-router-dom";
-import { FiSearch, FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
-import IconImg from "../../assets/icon.png";
+import {FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import ProfileImg from "../../assets/profile.png";
 
 import Service from "../../components/Post";
+import Navbar from "../../components/Navbar";
 
 import api from "../../services/api";
 
@@ -64,21 +64,8 @@ export default function Home() {
 
   return (
     <div className="Home-container">
-      {/*Header e NavBar da página*/}
-      <header className="header">
-        <nav className="navbar">
-          <Link className="home-link" to="/">
-            <img className="logo" src={IconImg} alt="icone" />
-          </Link>
-          <FiSearch size={25} className="iconsearch" />
-          <input
-            className="search"
-            placeholder="Pesquise os bicos da sua cidade"
-          ></input>
-        </nav>
-      </header>
-
       {/*Grid da esquerda*/}
+      <Navbar />
       <aside className="Grid1">
         <div className="div-center">
           <li>
@@ -130,7 +117,7 @@ export default function Home() {
       {/*Grid da direita*/}
       <aside className="serviços">
         <div className="right">
-          <button className="btnNewService">Adicionar um novo serviço</button>
+          
         </div>
       </aside>
     </div>

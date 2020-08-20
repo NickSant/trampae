@@ -1,5 +1,4 @@
 import React from "react";
-import { FiLogIn } from "react-icons/fi";
 import "./styles.css";
 
 export default function input({ onChange, name, type }) {
