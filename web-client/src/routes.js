@@ -15,8 +15,8 @@ export default function Routes() {
                 <Route path="/" exact component={Logon} />
                 <Route path="/home" component={Home} />  
                 <Route path="/register" component={Register} />
+                <Route path="/new-service" component={NewService} />
                 <Route path="/aboutus" component={AboutUs} />
-                <Route path="/service/new" component={NewService} />
 
                 <Route path="/forget" component={Forget} />{/*Mudar senha - mail_auth*/}
                 <Route path="/recover" component={Recover}/> 

@@ -1,74 +1,58 @@
-/*Estrutura da página*/
-.New-Service-Container{
-    background-color: #f5f5f5;
-    width: 80%;
-    max-width: 2000px;
-    margin: 100px 100px 100px 130px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.wrapper-box {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #ffff;
+  box-shadow: 5px 5px 10px #000000;
+}
+.wrapper-box header {
+  width: 100%;
+  padding: 0 50px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/*Div na frente*/
-.New-Service-Container .content{
-    width: 100%;
-    padding: 96px;
-    background: #f5f5f5;
-    box-shadow: 0 0 100px rgba(0, 0, 0.1);
-    border-radius: 25px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.wrapper-box header img {
+  width: 125px;
 }
 
-/*Conteúdo da esquerda*/
-.New-Service-Container .content section{
-    width: 100%;
-    max-width: 380px;
-    max-height: 500px;
-    margin: 0px 0px 110px 0px;
-}
-.Logo{
-    width: 250px;
- }
-
-.New-Service-Container .content section h1{
-    margin: 10px 0px 20px;
-    font-size: 32px;
+.wrapper-box header .title {
+    padding: 5px;
+    border-bottom: 5px solid #14b3b0;
 }
 
-.New-Service-Container .content section p{
-    font-size: 18px;
-    color: #737380;
-    line-height: 32px;
+.container .content-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 50px;
+}
+.container .content-wrapper form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-/*Inputs/ Formulário*/
-.New-Service-Container .content form{
-    width: 100%;
-    max-width: 450px;
+.container .content-wrapper form .small-input-wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.New-Service-Container form input:focus{
-    border-left-width: 7px;
-    border-left-color:#14b3b0;
+.container .content-wrapper form .button-wrapper{
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;  
+}
+.container .content-wrapper form .button-wrapper .button{
+  max-width: 150px;
 }
 
-.New-Service-Container form textarea{
-    margin: 5px 0px 0px 0px;
-}
-
-.New-Service-Container form textarea:focus{
-    border-left-width: 7px;
-    border-left-color:#14b3b0;
-}
-
-/*Botão*/
-.New-Service-Container .content form button{
-    font-size: 19px;
-}
-
-.New-Service-Container form button:hover{
-    background-color:#17d4d2;
-}

@@ -7,18 +7,11 @@ import Input from "../../components/Input";
 import Select from "../../components/Select";
 
 import api from "../../services/api";
-import axios from "axios";
-require('dotenv/config');
+import ibge from "../../services/ibge";
+
+require("dotenv/config");
+
 export default function Register() {
-  const styles = {
-    p: {
-      color: "#cff8f9",
-      fontSize: "26px",
-    },
-    cursorPointer: {
-      cursor: "pointer",
-    },
-  };
   const refDiv = React.createRef();
 
   // campos que o frontend envia -> name, email, whatsapp, city, uf, password
@@ -30,53 +23,31 @@ export default function Register() {
   const [selectedUf, setSelectedUf] = useState("");
   const [selectedCity, setSelectedcity] = useState("");
 
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
+
   // ibge functions ----------------------------------------------------
   //get ufs
-  const [ufs, setUfs] = useState([]);
 
-  function getUfs() {
-    axios
-      .get(
-        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
-      )
-      .then((response) => {
-        const siglas = response.data.map((estado) => estado.sigla);
+  useEffect(() => {
+    async function getUfsOnIBGE() {
+      const ufs = await ibge.getUfs();
+      setUfs(ufs);
+    }
+    getUfsOnIBGE();
+  }, []);
 
-        console.log(siglas);
-
-        setUfs(siglas);
-      });
-  }
-
-  useEffect(getUfs, []);
-
-  // Buscando as cidades da uf selecionada
-  const [cities, setCities] = useState([]);
-  function getCities() {
-    console.log(selectedUf);
-
-    axios
-      .get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`
-      )
-      .then((response) => {
-        const cidades = response.data.map((cidade) => {
-          delete cidade.municipio;
-          return cidade;
-        });
-
-        console.log(cidades);
-
-        setCities(cidades);
-      });
-  }
-
-  useEffect(getCities, [selectedUf]);
+  useEffect(() => {
+    async function getCitiesOnIBGE() {
+      const cities = await ibge.getCities(selectedUf);
+      setCities(cities);
+    }
+    getCitiesOnIBGE();
+  }, [selectedUf]);
 
   //  SUBMIT- -----------------------------
 
   async function submitRegister(e) {
-    console.log("to aqui bosta");
     //fazer conexão com api......
     e.preventDefault();
     //name, email, whatsapp, city, uf, password
@@ -95,9 +66,12 @@ export default function Register() {
       .post("/signup", body)
       .then((res) => {
         console.log(res);
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         //confirmação
-        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, `Bearer ${res.data.token}`);
+        localStorage.setItem(
+          process.env.REACT_APP_TOKEN_KEY,
+          `Bearer ${res.data.token}`
+        );
 
         setTimeout(() => {
           goToLogin();

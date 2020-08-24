@@ -6,8 +6,10 @@
 
 
 nav .btnNewService{
-    display: block;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    font-size: 20px; 
     color: #FFF;
     background-color: #14b3b0;
     border: none;
