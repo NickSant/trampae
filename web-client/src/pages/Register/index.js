@@ -65,7 +65,7 @@ export default function Register() {
     api
       .post("/signup", body)
       .then((res) => {
-        console.log(res);
+        console.log(res,'res');
         localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         //confirmação
         localStorage.setItem(
@@ -78,8 +78,17 @@ export default function Register() {
         }, 2000);
       })
       .catch((e) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
-        console.log(e);
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+
+        const res = e.request;
+        console.log(res, 'err')
+        // if(res.status === 401)  alert('Faça o login antes de entrar')
+
+        const {Error} = JSON.parse(res.responseText)
+
+        alert(Error)
+
+        // handleError(e.request.requestText, 3000)
       });
   }
   function goToLogin() {

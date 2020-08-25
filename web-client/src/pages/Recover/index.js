@@ -9,18 +9,15 @@ import api from '../../services/api';
 
 import Input from '../../components/Input';
 
-import Util from '../../helpers/Util';
-
 require('dotenv/config');
 
 export default function Recover() {
-  const { isAuthenticated } = new Util();
   const history = useHistory();
 
   const [confPass, setConfPass] = useState('');
   const [pass, setPass] = useState('');
 
-  useEffect(() => ! isAuthenticated('mail') ? history.push('/') : '' , []);
+
 
   function submit(e) {
     e.preventDefault();
@@ -45,6 +42,7 @@ export default function Recover() {
 
       
       alert(`${user.name}, Sua senha foi alterada com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
+      localStorage.clear()
       setTimeout(function(){
         goToLogin();
       }, 2000)
