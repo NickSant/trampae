@@ -17,11 +17,11 @@ import Util from '../../helpers/Util';
 require('dotenv/config');
 
 export default function Home() {
-  const { isAuthenticated } = new Util();
+
   
   const history = useHistory();
 
-  useEffect(() => !isAuthenticated('token') ? history.push('/') : '', []);
+  useEffect(() => !Util.isAuthenticated('token') ? history.push('/') : '', []);
 
   function clearStorage(){
     localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);

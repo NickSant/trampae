@@ -1,4 +1,4 @@
-import express, {Router} from "express";
+import {Router} from "express";
 // import passport from "passport";
 
 import UserController from "./controllers/UserController";
@@ -102,7 +102,6 @@ routes.delete("/services/:id",
 
 //404 routes
 routes.get('*', (req, res) =>{
-  res.send(`Cannot found endpoint: ${req.url}`).status(404);
 })
 routes.post('*', (req, res) =>{
   res.send(`Cannot found endpoint: ${req.url}`).status(404);

@@ -119,10 +119,8 @@ export default {
       if (!(await argon2.verify(pass_bd, password)))
         return handleError(res, 401, "Senha Incorreta");
 
-      if (email !== result.email || !(await argon2.verify(pass_bd, password)))
-        return handleError(res, 401, "Incorrect username or password");
 
-      if (result === undefined) return handleError(res, 401, "Unauthorized");
+      if (result === undefined || result === null) return handleError(res, 401, "Unauthorized");
 
       const token = await jwt.generateToken({ user_id: result.id });
 
