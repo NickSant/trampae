@@ -3,7 +3,7 @@ import connection from '../../database/connection';
 import Util from '../../helpers/Util';
 const {handleError} = new Util();
 module.exports = async function authMiddleware(req, res, next){
-    
+    if(!req.headers.authorization) handleError(res, 401, 'Não autorizado')
     const [hashType, token] = req.headers.authorization.split(' ');//Bearer Authorization
 
     try{

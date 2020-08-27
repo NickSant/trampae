@@ -5,6 +5,7 @@ import Util from '../../helpers/Util';
 const {handleError} = new Util;
 
 module.exports = async function mailerAuth(req, res, next){
+    if(!req.headers.admin) return handleError(res, 401, 'Não autorizado')
     const [hashType, token] = req.headers.mail_auth.split(' ');//Bearer authorization
 
     try{

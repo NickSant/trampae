@@ -64,6 +64,8 @@ routes.get('/search/:id', authMiddleware, SearchController.SearchUsers)
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
+
+
 //404 routes
 routes.get('*', (req, res) => {
 	res.send(`Cannot found endpoint: ${req.url}`).status(404)
