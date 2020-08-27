@@ -1,5 +1,3 @@
-/** @format */
-
 import connection from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
@@ -14,15 +12,12 @@ const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password'
 
 const { handleError, clearString } = new Util()
 
-
 const mailer = new Mailer()
 const user_m = new UserModel()
 
 export default {
 	async profile(req, res) {
 		const { id } = req.params
-
-
 		const { id: req_id } = req.auth //id do user autenticado e logado
 
 		const exists = await user_m.get({ id }, true)
@@ -49,7 +44,7 @@ export default {
 			const [, tipoImg] = req.file.mimetype.split('/')
 
 			const { name: original_name, id } = req.auth
-			if (!id || id === undefined || id === '') return handleError(res, 401, 'Operation not permited')
+			if (!id || id === undefined || id === '') return handleError(res, 401, 'Operação não permitida')
 
 			if (req.file === undefined || !req.file) return handleError(res, 400, 'Archive Does not exists')
 
@@ -59,10 +54,8 @@ export default {
 			fs.rename(
 				`./uploads/${req.file.originalname}`, //nome antigo
 				`./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
-				err => {
-					//catch
+				err => {//catch
 					if (err) return handleError(res, 400, `Erro: ${err}`)
-
 					console.log('Arquivo renomeado')
 				}
 			)
@@ -73,7 +66,7 @@ export default {
 			//caminho da imagem
 			req.file.path = `uploads/${req.file.filename}`
 
-			await user_m.update({image_url: req.file.path},{ id })
+			await user_m.update({ image_url: req.file.path }, { id })
 
 			console.log('inseriu path image no banco')
 
@@ -91,7 +84,7 @@ export default {
 
 		let typeExists = false
 
-		if (newValue === undefined || newValue === null || newValue === '') return handleError(res, 400, 'New Value is not declared')
+		if (newValue === undefined || newValue === null || newValue === '') return handleError(res, 400, `Você precisa declarar um Novo valor para ${type}`)
 
 		userDefault.filter(field => {
 			if (field === type) return (typeExists = true)
@@ -100,7 +93,7 @@ export default {
 
 		if (typeExists) {
 			try {
-				const result = await user_m.update({[type]:[newValue]}, {id: user_id})
+				const result = await user_m.update({ [type]: [newValue] }, { id: user_id })
 				console.log(result, 'result')
 				if (result !== undefined && result !== '') {
 					const newUser = await user_m.get({ id: user_id }, true)
@@ -122,7 +115,8 @@ export default {
 		const { mail } = req.body
 
 		// connection('users').select('*').where({email:mail}).first()
-		user_m.get({ email: mail }, true)
+		user_m
+			.get({ email: mail }, true)
 			.then(user => {
 				delete user.password
 				const subject = 'Recuperação de Senha'
@@ -147,13 +141,16 @@ export default {
 						mail_user_id: user.id,
 					}) //autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
 
-					return res.json({
-						message: 'Email enviado com sucesso',
-						auth_token: token,
-						//no frontend, fazer o mesmo esquema de bearer token,
-						//mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
-						link: `http://localhost:3000/recover/`,
-					}).status(200).end()
+					return res
+						.json({
+							message: 'Email enviado com sucesso',
+							auth_token: token,
+							//no frontend, fazer o mesmo esquema de bearer token,
+							//mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
+							link: `http://localhost:3000/recover/`,
+						})
+						.status(200)
+						.end()
 				})
 			})
 			.catch(err => {
