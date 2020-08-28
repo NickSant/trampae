@@ -11,6 +11,7 @@ import multer from './helpers/multer'
 
 import authMiddleware from './setup/middlewares/auth'
 import mailerAuth from './setup/middlewares/mailer_auth'
+import adminMiddleware from './setup/middlewares/admin'
 import passportConf from "./passport";
 
 const routes = Router()
@@ -65,6 +66,13 @@ routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), Se
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
 
+//rotas admin
+routes.get('/isadmin', adminMiddleware ,(req, res) =>{
+	if(req.headers.isAdmin) 
+		return res.json({isAdmin:true})
+	else
+		return res.json({isAdmin:false})
+})
 
 //404 routes
 routes.get('*', (req, res) => {

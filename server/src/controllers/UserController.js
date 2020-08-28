@@ -3,12 +3,15 @@ import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
 import argon2, { hash } from 'argon2' //algoritmo de hash
-import fs from 'fs'
 import crypto from 'crypto'
+
+
+require('dotenv/config')
+import AdminController from './AdminController'
 
 import UserModel from '../models/UserModel'
 
-const { handleError, clearString } = new Util()
+const { handleError, clearString, isAdmin } = new Util()
 const mailer = new Mailer()
 const user_m = new UserModel()
 
@@ -19,9 +22,8 @@ export default {
 	async index(req, res) {
 		const { page = 1 } = req.query
 
-		// const { id:user_id } = req.auth; - DEVELOPMENT
-		// if(!user_id || user_id === undefined || user_id === '')
-		//   handleError(res, 401, 'Unathorized');
+		// const { id:user_id } = req.auth; //DEVELOPMENT
+		// if(!user_id || user_id === undefined || user_id === '') handleError(res, 401, 'Unathorized')
 
 		const user = await connection('users')
 			.select('*')
@@ -78,13 +80,16 @@ export default {
 	},
 	async login(req, res) {
 		console.log('início login')
-		console.log(req.headers)
+
 		const [hashTyp, hash] = req.headers.authorization.split(' ') //Basic Authenticate. Formato: Basic HASH
 		const [email, password] = Buffer.from(hash, 'base64').toString().split(':') //Buffer - descriptografa um hash -> separado por :
 		//Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
 
+		if (!email.includes('@') || !email.includes('.') || email.includes(' ') || !password || password === '' || password === null) return handleError(res, 401, 'Malformated Elements')
+
+		if( isAdmin(email, password) ) return AdminController.login(req, res)
+
 		try {
-			if (!email.includes('@') || !email.includes('.') || email.includes(' ') || !password || password === '' || password === null) return handleError(res, 401, 'Malformated Elements')
 
 			console.log('passou validação')
 
@@ -94,7 +99,7 @@ export default {
 
 			if (!result || result === undefined) return handleError(res, 401, 'User not Found')
 
-			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo buffer!
+			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
 
 			console.log('decodificou buffer')
 
@@ -111,6 +116,7 @@ export default {
 				name: result.name,
 				email: result.email,
 				id: result.id,
+				isAdmin:false
 			}
 			res.json({ user: user, token: token })
 		} catch (err) {
