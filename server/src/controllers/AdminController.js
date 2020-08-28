@@ -4,14 +4,12 @@ import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
 import argon2, { hash } from 'argon2' //algoritmo de hash
 
-import AdminController from './AdminController'
-
 import UserModel from '../models/UserModel'
+import { constants } from 'fs'
 
 const { handleError, clearString, isAdmin } = new Util()
 const mailer = new Mailer()
-const user_m = new UserModel()
-
+const User = new UserModel()
 
 export default {
     async login(req, res){    
@@ -37,7 +35,20 @@ export default {
 
     },
 
-    
+    async listUsers(req, res){
+        const u = await User.getAll()
+        res.json(u)
+    },
 
+    async deleteUser(req, res){
+
+    },
+    async listServices(req, res){
+        
+    },
+
+    async deleteService(req, res){
+        
+    }
 
 }

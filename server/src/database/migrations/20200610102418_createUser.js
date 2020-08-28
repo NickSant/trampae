@@ -13,6 +13,10 @@ exports.up = function(knex) {
         table.string('city');
         table.string('uf',2);
         table.unique('whatsapp');
+
+        table.integer('total_trampos').defaultTo(0)
+
+        table.string('forgot_url')
   })
 };
 

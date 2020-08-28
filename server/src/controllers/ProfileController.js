@@ -13,14 +13,14 @@ const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password'
 const { handleError, clearString } = new Util()
 
 const mailer = new Mailer()
-const user_m = new UserModel()
+const User = new UserModel()
 
 export default {
 	async profile(req, res) {
 		const { id } = req.params
 		const { id: req_id } = req.auth //id do user autenticado e logado
 
-		const exists = await user_m.get({ id }, true)
+		const exists = await User.get({ id }, true)
 
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
 
@@ -66,7 +66,7 @@ export default {
 			//caminho da imagem
 			req.file.path = `uploads/${req.file.filename}`
 
-			await user_m.update({ image_url: req.file.path }, { id })
+			await User.update({ image_url: req.file.path }, { id })
 
 			console.log('inseriu path image no banco')
 
@@ -93,10 +93,10 @@ export default {
 
 		if (typeExists) {
 			try {
-				const result = await user_m.update({ [type]: [newValue] }, { id: user_id })
+				const result = await User.update({ [type]: [newValue] }, { id: user_id })
 				console.log(result, 'result')
 				if (result !== undefined && result !== '') {
-					const newUser = await user_m.get({ id: user_id }, true)
+					const newUser = await User.get({ id: user_id }, true)
 
 					delete newUser.password
 					console.log('Succefully Update!')
@@ -115,7 +115,7 @@ export default {
 		const { mail } = req.body
 
 		// connection('users').select('*').where({email:mail}).first()
-		user_m
+		User
 			.get({ email: mail }, true)
 			.then(user => {
 				delete user.password
@@ -165,18 +165,18 @@ export default {
 
 		const pass = Buffer.from(newPass).toString()
 
-		const user = await user_m.get({ id: auth_user.id }, true)
+		const user = await User.get({ id: auth_user.id }, true)
 
 		if (!user || user === undefined) return handleError(res, 401, 'Não autorizado.')
 
 		const hashed_pass = await argon2.hash(pass)
 
-		const updatedUser = await user_m.update({ password: hashed_pass }, { id: user.id })
+		const updatedUser = await User.update({ password: hashed_pass }, { id: user.id })
 		// await connection('users').update('password', hashed_pass).where({id: user.id});
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 
-		const currentUser = await user_m.get({ id: user.id }, true)
+		const currentUser = await User.get({ id: user.id }, true)
 
 		delete currentUser.password
 
@@ -187,4 +187,7 @@ export default {
 			message: 'Senha atualizada com sucesso!',
 		})
 	},
+	async registerUserWork(){
+		
+	}
 }

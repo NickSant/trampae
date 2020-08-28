@@ -42,6 +42,20 @@ class UserModel{
     async delete(filterItems){
         try{
             this.users = await db('users').delete().where(filterItems)
+            return true
+        }catch(e){
+            console.log(e)
+            return false;
+        }
+    }
+
+
+    //admin
+    async getAll(){
+        try{
+            this.users = await db('users').select('*')
+            this.users.map(user => delete user.password)
+            return this.users
         }catch(e){
             console.log(e)
             return false;

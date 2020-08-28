@@ -7,7 +7,7 @@
     "server": "nodemon -w src --exec \"babel-node src/server.js --presets env\"",
     "build": "babel src -s -D -d dist --presets env",
     "start": "node dist/server.js",
-    "migrate": "knex:migrate latest",
+    "migrate": "knex migrate:latest",
     "seed": "knex seed:run"
   },
   "keywords": [],

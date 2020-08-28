@@ -5,6 +5,7 @@ import UserController from './controllers/UserController'
 import ServiceController from './controllers/ServiceController'
 import SearchController from './controllers/SearchController'
 import ProfileController from './controllers/ProfileController'
+import AdminController from './controllers/AdminController'
 
 import { validateBody, schemas } from './helpers/validation'
 import multer from './helpers/multer'
@@ -74,6 +75,11 @@ routes.get('/isadmin', adminMiddleware ,(req, res) =>{
 		return res.json({isAdmin:false})
 })
 
+routes.get('/admin/users', adminMiddleware, AdminController.listUsers)
+routes.delete('/admin/users', adminMiddleware, AdminController.deleteUser)
+
+routes.get('admin/services', adminMiddleware, AdminController.listServices)
+routes.delete('admin/services', adminMiddleware, AdminController.deleteService)
 //404 routes
 routes.get('*', (req, res) => {
 	res.send(`Cannot found endpoint: ${req.url}`).status(404)
