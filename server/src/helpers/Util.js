@@ -1,3 +1,5 @@
+require('dotenv/config')
+import sha1 from 'sha1'
 class Util {
     clearString(original_value){
         //remove acentos e espaços vazios!
@@ -39,5 +41,15 @@ class Util {
         res.status(status);
         return res.json({Error:message}).end();
     }
+
+    isAdmin(email, password){
+        return (email === process.env.ADMIN_USER && sha1(password) === process.env.ADMIN_PASS) ? true : false   
+    }
+
+    isAdminID(id){
+        return (id === process.env.ADMIN_ID_PAYLOAD_JWT) ? true : false
+    }
+
+
 }
 export default Util;

@@ -11,7 +11,7 @@ export default {
 	async index(request, response) {
 		//valor default de paginação -> page = 1
 		const { page = 1 } = request.query
-		
+
 		try {
 			const [count] = await connection('services').count() //retorna um array com a quantidade de services
 
@@ -66,7 +66,7 @@ export default {
 				city,
 				uf,
 				user_id,
-				id_category,
+				id_category
 			})
 		} catch (e) {
 			return handleError(response, 400, `Create Service Error: ${e}`)
