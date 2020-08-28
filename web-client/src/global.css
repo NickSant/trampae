@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:400,500,700display=swap');
+
 
 *{
     margin: 0;
@@ -46,7 +46,8 @@ form input:focus{
 form textarea{
     width: 100%;
     resize: vertical;
-    min-height: 200px;
+    min-height: 100px;
+    max-height: 150px;
     color: #333;
     border: 1px solid #dcdce6;
     border-radius: 10px;
@@ -73,6 +74,12 @@ form textarea{
 
 .button:hover{
     filter: brightness(90%);
+}
+
+.secondary{
+    background: none;
+    border: 2px solid #14b3b0;
+    color: #14b3b0;
 }
 .Button{
     width: 100%;

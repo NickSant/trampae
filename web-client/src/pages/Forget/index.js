@@ -31,9 +31,9 @@ export default function Forget() {
 
       localStorage.clear();
       const mail_auth_token = res.data.auth_token;
-      localStorage.setItem( process.env.REACT_APP_TOKEN_KEY , mail_auth_token);
+      localStorage.setItem( process.env.REACT_APP_TOKEN_MAIL , mail_auth_token);
 
-      setTimeout(() => {
+      setTimeout(() => { 
 
         alert(res.data.message); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
         goToLogin();

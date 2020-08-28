@@ -4,11 +4,11 @@ import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
 import { Link, useHistory } from "react-router-dom";
-import { FiSearch, FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
-import IconImg from "../../assets/icon.png";
+import {FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import ProfileImg from "../../assets/profile.png";
 
 import Service from "../../components/Post";
+import Navbar from "../../components/Navbar";
 
 import api from "../../services/api";
 
@@ -17,11 +17,11 @@ import Util from '../../helpers/Util';
 require('dotenv/config');
 
 export default function Home() {
-  const { isAuthenticated } = new Util();
+
   
   const history = useHistory();
 
-  useEffect(() => !isAuthenticated('token') ? history.push('/') : '', []);
+  useEffect(() => !Util.isAuthenticated('token') ? history.push('/') : '', []);
 
   function clearStorage(){
     localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
@@ -34,7 +34,7 @@ export default function Home() {
   }
 
   async function getUserData(userId) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
     const apiResponse = await api.get("/search/users", {
       headers: {
         authorization: `Bearer ${token}`,
@@ -64,21 +64,8 @@ export default function Home() {
 
   return (
     <div className="Home-container">
-      {/*Header e NavBar da página*/}
-      <header className="header">
-        <nav className="navbar">
-          <Link className="home-link" to="/">
-            <img className="logo" src={IconImg} alt="icone" />
-          </Link>
-          <FiSearch size={25} className="iconsearch" />
-          <input
-            className="search"
-            placeholder="Pesquise os bicos da sua cidade"
-          ></input>
-        </nav>
-      </header>
-
       {/*Grid da esquerda*/}
+      <Navbar />
       <aside className="Grid1">
         <div className="div-center">
           <li>
@@ -115,7 +102,9 @@ export default function Home() {
             return (
               <Service
                 key={service.id}
-                name={service.userData.name}
+                user_name={service.userData.name}
+                title={service.title}
+                price={service.price}
                 city={service.city}
                 category={service.category}
                 text={service.description}
@@ -128,7 +117,7 @@ export default function Home() {
       {/*Grid da direita*/}
       <aside className="serviços">
         <div className="right">
-          <button className="btnNewService">Adicionar um novo serviço</button>
+          
         </div>
       </aside>
     </div>

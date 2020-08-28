@@ -32,6 +32,7 @@ class UserModel{
     async update(data, filterItems){
         try {
             this.users = await db('users').update(data).where(filterItems);
+            return true
         } catch (error) {
             console.log(e);
             return false;

@@ -1,8 +1,10 @@
+require('dotenv/config')
+import sha1 from 'sha1'
 class Util {
-    constructor(){
-        //clear String
-        this.removedSpaces= '';
-        this.mapAcentosHexa = {
+    clearString(original_value){
+        //remove acentos e espaços vazios!
+        let removedSpaces = '';
+        const mapAcentosHexa = {
             a : /[\xE0-\xE6]/g,
             A : /[\xC0-\xC6]/g,
             e : /[\xE8-\xEB]/g,
@@ -14,29 +16,24 @@ class Util {
             u : /[\xF9-\xFC]/g,
             U : /[\xD9-\xDC]/g,
         };
-
-        //Other Methods
-
-    }
-    clearString(original_value){
         
         const value_trim = original_value.trim();
         const value_acento = value_trim.toLowerCase();
         let value = value_acento;
         //retirando acentos
-        for( let letra in this.mapAcentosHexa ){
-            var regularExpression = this.mapAcentosHexa[letra];
+        for( let letra in mapAcentosHexa ){
+            var regularExpression = mapAcentosHexa[letra];
             value = value.replace( regularExpression, letra );
         }
 
         for(let i=0; i < value.length; i++){
             let letter = value.charAt(i);
             if(letter !== ' '){
-                this.removedSpaces += letter;
+                removedSpaces += letter;
             }
         }
-        console.log(this.removedSpaces);
-        return this.removedSpaces;
+        console.log(removedSpaces);
+        return removedSpaces;
     }
 
     handleError(res, status, message){
@@ -44,5 +41,15 @@ class Util {
         res.status(status);
         return res.json({Error:message}).end();
     }
+
+    isAdmin(email, password){
+        return (email === process.env.ADMIN_USER && sha1(password) === process.env.ADMIN_PASS) ? true : false   
+    }
+
+    isAdminID(id){
+        return (id === process.env.ADMIN_ID_PAYLOAD_JWT) ? true : false
+    }
+
+
 }
 export default Util;
