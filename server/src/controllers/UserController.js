@@ -13,7 +13,7 @@ import UserModel from '../models/UserModel'
 
 const { handleError, clearString, isAdmin } = new Util()
 const mailer = new Mailer()
-const user_m = new UserModel()
+const User = new UserModel()
 
 const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password']
 
@@ -51,7 +51,7 @@ export default {
 		const token = await jwt.generateToken({ user_id: id }) //gerando token para auth
 
 		try {
-			await user_m.insert({
+			await User.insert({
 				id,
 				name,
 				email,
@@ -93,7 +93,7 @@ export default {
 
 			console.log('passou validação')
 
-			const result = await user_m.get({ email: email }, true)
+			const result = await User.get({ email: email }, true)
 
 			console.log(result)
 
