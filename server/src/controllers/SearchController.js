@@ -6,7 +6,7 @@ export default {
 
     const { page = 1 } = request.query;
 
-    const { uf, city, cat_id } = request.params;
+    const { uf, city, cat_id } = request.query;
 
     const services = await connection("services")
       .where("uf", uf)

@@ -4,26 +4,35 @@ import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
 import { Link, useHistory } from "react-router-dom";
-import {FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
+import { FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import ProfileImg from "../../assets/profile.png";
 
 import Service from "../../components/Post";
 import Navbar from "../../components/Navbar";
+import Select from "../../components/Select";
 
 import api from "../../services/api";
+import ibge from "../../services/ibge";
 
-import Util from '../../helpers/Util';
+import Util from "../../helpers/Util";
 
-require('dotenv/config');
+require("dotenv/config");
 
 export default function Home() {
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
 
-  
+  const [selectedUf, setSelectedUf] = useState();
+  const [selectedCity, setSelectedCity] = useState();
+
   const history = useHistory();
 
-  useEffect(() => !Util.isAuthenticated('token') ? history.push('/') : '', []);
+  useEffect(
+    () => (!Util.isAuthenticated("token") ? history.push("/") : ""),
+    []
+  );
 
-  function clearStorage(){
+  function clearStorage() {
     localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
   }
   const [services, setServices] = useState([]);
@@ -56,11 +65,50 @@ export default function Home() {
           return concatData(service);
         })
       );
-
       setServices(concatedData);
     }
     getServicesData();
+
+    async function getUfs() {
+      const ufs = await ibge.getUfs();
+
+      setUfs(ufs);
+    }
+    getUfs();
   }, []);
+
+  useEffect(() => {
+    async function getCities() {
+      const cities = await ibge.getCities(selectedUf);
+
+      setCities(cities);
+    }
+    getCities();
+  }, [selectedUf]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
+    const response = await api.get("/search/services", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      params: {
+        uf: selectedUf,
+        city: selectedCity,
+        cat_id: 1,
+      },
+    });
+
+    const data = response.data;
+    const concatedData = await Promise.all(
+      data.map((service) => {
+        return concatData(service);
+      })
+    );
+    setServices(concatedData);
+  }
 
   return (
     <div className="Home-container">
@@ -117,7 +165,38 @@ export default function Home() {
       {/*Grid da direita*/}
       <aside className="serviços">
         <div className="right">
-          
+          <h1>Filtrar Bicos</h1>
+          <form>
+            <label>Estado:</label>
+            <Select
+              onChange={(e) => setSelectedUf(e.target.value)}
+              name="UF"
+              children={ufs.map((uf) => {
+                return (
+                  <option key={uf} value={uf}>
+                    {uf}
+                  </option>
+                );
+              })}
+            />
+
+            <label>Cidade:</label>
+            <Select
+              onChange={(e) => setSelectedCity(e.target.value)}
+              name="cidade"
+              children={cities.map((city) => {
+                return (
+                  <option key={city.id} value={city.nome}>
+                    {city.nome}
+                  </option>
+                );
+              })}
+            ></Select>
+
+            <button type="submit" className="Button" onClick={handleSubmit}>
+              Filtrar
+            </button>
+          </form>
         </div>
       </aside>
     </div>
