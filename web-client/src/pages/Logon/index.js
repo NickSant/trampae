@@ -66,13 +66,13 @@ export default function Logon() {
     }).catch((e) => {
       localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
 
-      const res = e.request;
+      const res = e;
       console.log(res, 'err')
       // if(res.status === 401)  alert('Faça o login antes de entrar')
 
-      const err = JSON.parse(res.response )
+      
 
-      alert(err)
+      alert(res)
 
       // handleError(e.request.requestText, 3000)
     

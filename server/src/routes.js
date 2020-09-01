@@ -60,7 +60,7 @@ routes.post('/upload-image', authMiddleware, multer.single('img_perfil'), Profil
 routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
-routes.get('/search/:uf/:city/:cat_id', authMiddleware, SearchController.SearchServices)
+routes.get('/search/services', authMiddleware, SearchController.SearchServices)
 routes.get('/search/:id', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
