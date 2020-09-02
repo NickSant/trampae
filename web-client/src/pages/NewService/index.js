@@ -60,6 +60,8 @@ export default function NewService() {
         alert("Serviço cadastrado com sucesso");
 
         window.location = "/home";
+      }).catch((err)=>{
+        alert(err)
       });
 
 
