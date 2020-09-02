@@ -5,7 +5,6 @@
     display: grid;
     height: 100vh;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 10vh 80vh 10vh;
 }
 
 

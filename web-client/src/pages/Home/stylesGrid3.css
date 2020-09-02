@@ -7,29 +7,10 @@
     justify-content: space-between;
     align-items: left;
     width: 400px;
-    height: 530px;
+    height: 50vh;
     margin: 78px 0px 0px 47px;
     background-color: #FFF;
     border-radius: 10px;
     list-style: none;
     box-shadow: 0 0 1px rgba(0, 0, 0.1);
-}
-
-/*Rede social*/
-.Home-container .serviços .socialNetWork{
-    background-color: #14b3b0;
-    display: block;
-    justify-content: space-between;
-    align-items: center;
-    width: 300px;
-    height: 370px;
-    margin: 50px 0px 0px 30px;
-    border-radius: 8px;
-}
-
-/*título*/
-.Home-container .serviços .socialNetWork .titleSocialNetWork{
-    color: #000;
-    text-align: center;
-    padding: 10px;
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
 import logoImg from "../../assets/logo.png";
 
 import Input from "../../components/Input";
@@ -8,6 +7,15 @@ import Select from "../../components/Select";
 
 import api from "../../services/api";
 import ibge from "../../services/ibge";
+
+import {
+  Box,
+  ActiveSection,
+  Header,
+  FormContainer,
+  Title,
+  DisabledSection,
+} from "./styles";
 
 require("dotenv/config");
 
@@ -65,7 +73,7 @@ export default function Register() {
     api
       .post("/signup", body)
       .then((res) => {
-        console.log(res,'res');
+        console.log(res, "res");
         localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
         //confirmação
         localStorage.setItem(
@@ -78,15 +86,15 @@ export default function Register() {
         }, 2000);
       })
       .catch((e) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
 
         const res = e.request;
-        console.log(res, 'err')
+        console.log(res, "err");
         // if(res.status === 401)  alert('Faça o login antes de entrar')
 
-        const {Error} = JSON.parse(res.responseText)
+        const { Error } = JSON.parse(res.responseText);
 
-        alert(Error)
+        alert(Error);
 
         // handleError(e.request.requestText, 3000)
       });
@@ -97,87 +105,74 @@ export default function Register() {
 
   /*Começo da pagina*/
   return (
-    <>
-      <div className="container">
-        <div className="box">
-          <div className="disabled-register">
-            <h1 className="title"> Já tem registro? </h1>
-            <h3 className="title">
-              {" "}
-              Vem logo, faça login e encontro novos bicos!
-            </h3>
-            <Link className="button" to="/">
-              {" "}
-              Login{" "}
-            </Link>
-          </div>
-          <div className="signup">
-            <div className="signup-header">
-              <img src={logoImg} alt="Trampaê"></img>
-              <h1 className="title"> Registre-se já! </h1>
+    <Box>
+      <DisabledSection>
+        <h1>Já tem registro? </h1>
+        <h3>Vem logo, faça login e encontro novos bicos!</h3>
+        <Link className="button" to="/">
+          Login
+        </Link>
+      </DisabledSection>
+      <ActiveSection>
+        <Header>
+          <img src={logoImg} width={125} alt="Trampaê"></img>
+          <h1 className="title"> Registre-se já! </h1>
+        </Header>
+        <FormContainer>
+          <form>
+            <Input
+              type="text"
+              name="Nome Completo"
+              onChange={(e) => changeName(e.target.value)}
+            />
+            <Input
+              type="Email"
+              name="E-mail"
+              onChange={(e) => changeMail(e.target.value)}
+            />
+            <Input
+              type="pasword"
+              name="Senha"
+              onChange={(e) => changePass(e.target.value)}
+            />
+            <Input type="password" name="Confirmar Senha" />
+            <Input
+              type="tel"
+              name="Whatsapp"
+              onChange={(e) => changeWhats(e.target.value)}
+            />
+            <div className="location">
+              <Select
+                onChange={(e) => setSelectedUf(e.target.value)}
+                name="UF"
+                children={ufs.map((uf) => {
+                  return (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  );
+                })}
+              ></Select>
+
+              <Select
+                onChange={(e) => setSelectedcity(e.target.value)}
+                name="cidade"
+                children={cities.map((city) => {
+                  return (
+                    <option key={city.id} value={city.nome}>
+                      {city.nome}
+                    </option>
+                  );
+                })}
+              ></Select>
             </div>
-            <div className="form-container">
-              <form className="form">
-                <div className="registerForm">
-                  <Input
-                    type="text"
-                    name="Nome Completo"
-                    onChange={(e) => changeName(e.target.value)}
-                  />
-                  <Input
-                    type="Email"
-                    name="E-mail"
-                    onChange={(e) => changeMail(e.target.value)}
-                  />
-                  <Input
-                    type="pasword"
-                    name="Senha"
-                    onChange={(e) => changePass(e.target.value)}
-                  />
-                  <Input type="password" name="Confirmar Senha" />
-                  <Input
-                    type="tel"
-                    name="Whatsapp"
-                    onChange={(e) => changeWhats(e.target.value)}
-                  />
 
-                  <Select
-                    onChange={(e) => setSelectedUf(e.target.value)}
-                    name="UF"
-                    children={ufs.map((uf) => {
-                      return (
-                        <option key={uf} value={uf}>
-                          {uf}
-                        </option>
-                      );
-                    })}
-                  ></Select>
-
-                  <Select
-                    onChange={(e) => setSelectedcity(e.target.value)}
-                    name="cidade"
-                    children={cities.map((city) => {
-                      return (
-                        <option key={city.id} value={city.nome}>
-                          {city.nome}
-                        </option>
-                      );
-                    })}
-                  ></Select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="Button"
-                  onClick={submitRegister}
-                >
-                  Cadastar
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+            <button type="submit" className="Button" onClick={submitRegister}>
+              Cadastar
+            </button>
+          </form>
+        </FormContainer>
+      </ActiveSection>
+    </Box>
   );
 }
