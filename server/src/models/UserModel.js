@@ -1,17 +1,16 @@
 import db from '../database/connection';
 import Util from '../helpers/Util';
-const {handleError} = new Util();
 class UserModel{
     constructor(){
         this.users = false;
     }
 
     async get(filterItems, first=false){//filter -> objeto com os campos do filtro
+
         try {
-            console.log('first', first)
             if(!first) this.users = await db('users').select('*').where(filterItems);
             if(first) this.users = await db('users').select('*').where(filterItems).first();
-
+            if(typeof this.users === undefined || this.users === null) return false
             return this.users;
         }catch(e){
             console.log(e);
@@ -20,8 +19,9 @@ class UserModel{
     }   
 
     async insert(data){
+        let users=false;
         try{
-            this.users = await db('users').insert(data);
+            users = await db('users').insert(data);
             return true;
         }catch(e){
             console.log(e)
@@ -30,18 +30,19 @@ class UserModel{
     }
 
     async update(data, filterItems){
+        let users=false;
         try {
-            this.users = await db('users').update(data).where(filterItems);
+            users = await db('users').update(data).where(filterItems);
             return true
         } catch (error) {
-            console.log(e);
+            console.log(error);
             return false;
         }
     }
 
     async delete(filterItems){
         try{
-            this.users = await db('users').delete().where(filterItems)
+            users = await db('users').delete().where(filterItems)
             return true
         }catch(e){
             console.log(e)
@@ -52,10 +53,12 @@ class UserModel{
 
     //admin
     async getAll(){
+        let users=false;
+
         try{
-            this.users = await db('users').select('*')
-            this.users.map(user => delete user.password)
-            return this.users
+            users = await db('users').select('*')
+            users.map(user => delete user.password)
+            return users
         }catch(e){
             console.log(e)
             return false;
