@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useParams } from 'react-router-dom'
 import auth from '../../helpers/Util'
 
-const PrivateRoute = ({ component: Component, authType, ...rest }) =>(
+const PrivateRoute = ({ component: Component, authType, isUrlHash=false, ...rest  }) =>{
+    return(
     <Route 
         { ...rest }
-
         render={
             (props) => auth.isAuthenticated(authType) ? (
                 <Component {...props} />
@@ -20,5 +20,5 @@ const PrivateRoute = ({ component: Component, authType, ...rest }) =>(
             
         }
     />
-)
+)}
 export default PrivateRoute;

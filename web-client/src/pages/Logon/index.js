@@ -59,7 +59,7 @@ export default function Logon() {
       console.log(user)
 
       setTimeout(() => {
-        alert(`Parabéns ${res.data.name}, logou com sucesso`) 
+        alert(`Parabéns ${res.data.user.name}, logou com sucesso`) 
         //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!! - alerts param a thread principal de um server node
         goToHome()
       }, 1000)
