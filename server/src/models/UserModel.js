@@ -1,4 +1,5 @@
 import db from '../database/connection';
+import { exit } from 'process'
 import Util from '../helpers/Util';
 class UserModel{
     constructor(){
@@ -6,11 +7,13 @@ class UserModel{
     }
 
     async get(filterItems, first=false){//filter -> objeto com os campos do filtro
-
         try {
+            console.log(filterItems)
             if(!first) this.users = await db('users').select('*').where(filterItems);
             if(first) this.users = await db('users').select('*').where(filterItems).first();
+
             if(typeof this.users === undefined || this.users === null) return false
+            console.log(this.users)
             return this.users;
         }catch(e){
             console.log(e);
