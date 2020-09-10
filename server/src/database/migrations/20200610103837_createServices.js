@@ -13,8 +13,6 @@ exports.up = function(knex) {
 
         table.integer('id_category',10).unsigned()
         .notNullable().references('id').inTable('category')
-
-
   })
 }
 

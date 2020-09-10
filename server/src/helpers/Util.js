@@ -1,6 +1,12 @@
-require('dotenv/config')
+import 'dotenv/config'
 import sha1 from 'sha1'
+
+import db from '../database/connection'
+
 class Util {
+    constructor(){
+       
+    }
     clearString(original_value){
         //remove acentos e espaços vazios!
         let removedSpaces = '';
@@ -49,6 +55,37 @@ class Util {
     isAdminID(id){
         return (id === process.env.ADMIN_ID_PAYLOAD_JWT) ? true : false
     }
+
+    mysqlNowFormat(){
+        let date = new Date();
+        date = date.getUTCFullYear() + '-' +
+            ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+            ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+            ('00' + date.getUTCHours()).slice(-2) + ':' + 
+            ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+            ('00' + date.getUTCSeconds()).slice(-2);
+        return date
+    }
+
+    dateTimeToISO(dateTime){
+        dateTime = dateTime.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        return dateTime
+    }
+
+    async timestampDiff(dateTime){
+        try{
+            const now = this.mysqlNowFormat()
+            const query = `select timestampdiff(HOUR, '${dateTime}', '${now}');`
+            
+            const result = await db.raw(query)
+            const timeDiff = Object.values(result[0][0]) [0]
+                
+            return timeDiff
+        }catch(e){
+            throw new Error(e)
+        }
+    }
+
 
 
 }

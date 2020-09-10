@@ -20,7 +20,12 @@ exports.up = function(knex) {
 
         table.integer('total_trampos').defaultTo(0)
 
-        table.string('forgot_url')
+        table.boolean('is_verified_mail').defaultTo(false).notNullable()
+
+        table.string('hash_url_to_change_pass')
+        table.unique('hash_url_to_change_pass')
+        table.timestamp('req_change_pass_time').defaultTo(knex.fn.now())
+
   })
 }
 
