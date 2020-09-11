@@ -5,12 +5,16 @@ import Mailer from '../helpers/mailer'
 import argon2, { hash } from 'argon2' //algoritmo de hash
 import fs from 'fs'
 import crypto from 'crypto'
-
+import sha1 from 'sha1'
 import UserModel from '../models/UserModel'
+import 'dotenv/config'
+import { exit } from 'process'
+
 
 const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password']
 
-const { handleError, clearString } = new Util()
+const { handleError, clearString, mysqlNowFormat, dateTimeToISO } = new Util()
+const u = new Util()
 
 const mailer = new Mailer()
 const User = new UserModel()
@@ -54,7 +58,8 @@ export default {
 			fs.rename(
 				`./uploads/${req.file.originalname}`, //nome antigo
 				`./uploads/${name_user}-${id}.${tipoImg}`, //novo nome
-				err => {//catch
+				err => {
+					//catch
 					if (err) return handleError(res, 400, `Erro: ${err}`)
 					console.log('Arquivo renomeado')
 				}
@@ -113,44 +118,52 @@ export default {
 
 	async forgotPass(req, res) {
 		const { mail } = req.body
-
-		// connection('users').select('*').where({email:mail}).first()
-		User
-			.get({ email: mail }, true)
+		User.get({ email: mail }, true)
 			.then(user => {
+				if(!user) return handleError(res, 400, 'bad_request')
 				delete user.password
+				console.log(user)
+
+				const urlHash = sha1(crypto.randomBytes(4))
+				const link = `${process.env.BASE_URL}recover/${urlHash}`
+
 				const subject = 'Recuperação de Senha'
 				const body = `
-				<h1> Recuperação de Senha do usuário: ${user.name} </h1>
-				<p>
-					Olá <b>${user.name}</b>, recebemos uma solicitação de mudança de Senha.
-					Basta clicar no Botão abaixo, e efetivar a mudança de sua senha.
-				</p>
-				<br />
-				<a href="http://localhost:3000/recover"> Clique Aqui </a>
-				<br />
-				<small>OBS: o link expira em 24h.</small>
-			`
-				//OBS - POR ENQUANTO, O LINK DA PÁGINA DE RECUPERAÇÃO, SERÁ ESTÁTICO, DEPOIS PENSAR EM COLOCAR COMO link DINÂMICO!!!!!
+					<h1> Recuperação de Senha do usuário: ${user.name} </h1>
+					<p>
+						Olá <b>${user.name}</b>, recebemos uma solicitação de mudança de Senha.
+						Basta clicar no Botão abaixo, e efetivar a mudança de sua senha.
+					</p>
+					<br />
+					<a href="${link}"> Clique Aqui </a>
+					<br />
+					<small>OBS: o link expira em 24h.</small>
+				`
 
-				mailer.setMailConfigs(mail, subject, body)
-				mailer.send().then(send => {
-					if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
+				const now = mysqlNowFormat()
 
-					const token = jwt.generateToken({
-						mail_user_id: user.id,
-					}) //autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
+				User.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
 
-					return res
-						.json({
+					mailer.setMailConfigs(mail, subject, body)
+					mailer.send().then(send => {
+						if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
+
+						// const token = jwt.generateToken({
+						// 	mail_user_id: user.id,
+						// }) //autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
+
+						return res.json({
 							message: 'Email enviado com sucesso',
-							auth_token: token,
+							// auth_token: token,
 							//no frontend, fazer o mesmo esquema de bearer token,
 							//mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
-							link: `http://localhost:3000/recover/`,
-						})
-						.status(200)
-						.end()
+							link: link,
+						}).status(200).end()
+					})
+
+				})
+				.catch(e =>{
+					handleError(res, 400, e)
 				})
 			})
 			.catch(err => {
@@ -158,26 +171,30 @@ export default {
 				return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
 			})
 	},
-
 	async changePass(req, res) {
-		const { mail_auth: auth_user } = req //setado no middleware mailer
+		// const { mail_auth: auth_user } = req //setado no middleware mailer
 		const { newPass } = req.body //vem em BASE64!!
-
+		const { urlHash } = req.body
 		const pass = Buffer.from(newPass).toString()
 
-		const user = await User.get({ id: auth_user.id }, true)
+		const user = await User.get({ hash_url_to_change_pass: urlHash }, true)
 
 		if (!user || user === undefined) return handleError(res, 401, 'Não autorizado.')
+		let reqTime = dateTimeToISO(user.req_change_pass_time)
+		const timeDiff = await u.timestampDiff(reqTime)
+		if(timeDiff >= 24 ) return handleError(res, 401, 'unauthorized')
 
-		const hashed_pass = await argon2.hash(pass)
+		const hashed_pass = await hash(pass)
 
 		const updatedUser = await User.update({ password: hashed_pass }, { id: user.id })
-		// await connection('users').update('password', hashed_pass).where({id: user.id});
+
+		await connection('users').update('password', hashed_pass).where({id: user.id});
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 
 		const currentUser = await User.get({ id: user.id }, true)
-
+		delete currentUser.hash_url_to_change_pass
+		delete currentUser.req_change_pass_time
 		delete currentUser.password
 
 		console.log(updatedUser)
@@ -187,7 +204,7 @@ export default {
 			message: 'Senha atualizada com sucesso!',
 		})
 	},
-	async registerUserWork(){
+	async registerUserWork() {
 		
-	}
+	},
 }

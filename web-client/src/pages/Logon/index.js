@@ -27,6 +27,7 @@ export default function Logon() {
   const [user, setUser] = useState({});
 
   function submit(e) {
+<<<<<<< HEAD
     e.preventDefault();
     const basic = `Basic ${btoa(`${mail}:${pass}`)}`;
     api
@@ -65,6 +66,46 @@ export default function Logon() {
 
         // handleError(e.request.requestText, 3000)
       });
+=======
+    e.preventDefault()
+    const basic = `Basic ${btoa(`${mail}:${pass}`)}`
+    api.post(
+      "/login",
+      {}, //sim, esse objeto vai vazio mesmo, NÃO APAGA MANO!!!!
+      {
+        headers: {
+          authorization: basic,
+        },
+      }
+    ).then((res) => {
+      localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+      console.log('data',res.data)
+
+      localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, res.data.token)
+      console.log('user ',res.data.user)
+      setUser(res.data.user)
+      console.log(user)
+
+      setTimeout(() => {
+        alert(`Parabéns ${res.data.user.name}, logou com sucesso`) 
+        //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!! - alerts param a thread principal de um server node
+        goToHome()
+      }, 1000)
+    }).catch((e) => {
+      localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+
+      const res = e;
+      console.log(res, 'err')
+      // if(res.status === 401)  alert('Faça o login antes de entrar')
+
+      
+
+      alert(res)
+
+      // handleError(e.request.requestText, 3000)
+    
+    })
+>>>>>>> ba04db7fb03007da12e18cbdedad73cae7f9b5fe
   }
 
   function goToHome() {

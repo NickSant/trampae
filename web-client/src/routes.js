@@ -7,7 +7,6 @@ import AboutUs from './pages/AboutUs'
 import NewService from './pages/NewService'
 import Forget from './pages/Forget'
 import Recover from './pages/Recover'
-
 import PrivateRoute from './components/PrivateRoute'
 
 export default function Routes() {
@@ -22,7 +21,7 @@ export default function Routes() {
 
                 <PrivateRoute exact={true} component={Home} path="/home" authType="token" />
 
-                <PrivateRoute exact={true} component={Recover} path="/recover" authType="mail" />
+                <Route exact={true} component={Recover} path="/recover/:url_hash"/>
 
                 <Route path="/*" component={() =>(<div> NOT FOUND COMPONENT!!! </div>)} />
             </Switch>

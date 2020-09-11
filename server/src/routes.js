@@ -24,6 +24,7 @@ routes.post('/signup', validateBody(schemas.signUpSchema), UserController.create
 routes.post('/login', UserController.login)
 
 routes.post('/forgot', ProfileController.forgotPass)
+routes.post('/verfiy-url-hash', mailerAuth)
 routes.put('/forgot', mailerAuth, ProfileController.changePass)
 
 // GoogleOAuth

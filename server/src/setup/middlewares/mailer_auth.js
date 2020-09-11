@@ -2,35 +2,30 @@ import * as jwt from '../jwt';
 import connection from '../../database/connection';
 import Util from '../../helpers/Util';
 
+import UserModel from '../../models/UserModel'
+const User = new UserModel()
+
 const {handleError} = new Util;
 
 module.exports = async function mailerAuth(req, res, next){
-    if(!req.headers.admin) return handleError(res, 401, 'Não autorizado')
-    const [hashType, token] = req.headers.mail_auth.split(' ');//Bearer authorization
-
     try{
-        console.log(token);
+        const { url_hash } = req.headers
+        const { not_middleware=false } = req.body
 
-        console.log('Mailer Middleware..');
-        if(!token || token === undefined) return handleError(res, 401, 'Undefined Token');
+        if(url_hash === undefined || url_hash === null || typeof url_hash === undefined) return handleError(res,401,'incompleted_info')
         
-        const payload = await jwt.decodeToken(token);
+        const user = await User.get({hash_url_to_change_pass: url_hash}, true)
+        console.log(user)
 
-        const mail_user_id = payload.mail_user_id;
+        if(!user) return handleError(res, 401, 'unauthorized')
+    
+		delete user.password
+        req.user = user 
 
-        console.log(`user ID: ${mail_user_id}`);
+        if(not_middleware) return res.json({user: user, auth:true}).end()
 
-        if(!mail_user_id || mail_user_id === undefined) return handleError(res, 401, 'Unauthorized!');
-
-        const user = await connection('users').select('*').where({id: mail_user_id}).first();
-        delete user.password;
-
-        console.log(`Usuário existe: ${user.name}`);
-        
-        req.mail_auth = user;
-        next();
-
+        next()
     }catch(e){
-        return handleError(res, 401, 'Não autorizado.');
+        return handleError(res, 401, 'unauthorized');
     }
 }
