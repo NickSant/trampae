@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_HOST_API;
 const port = process.env.REACT_APP_PORT_API;
 
 const api =  axios.create({
-    baseURL:`${host}:${port}`,
+    baseURL:`http://localhost:3333`,
 });
 
 export default api;
