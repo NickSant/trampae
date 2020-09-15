@@ -9,7 +9,7 @@ class Util{
         this.authStatus = false
         switch(type){
             case 'token':
-                const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY)
+                const token = localStorage.getItem('@Trampae:token');
                 if( typeof token !== undefined && token !== null) this.authStatus = true
                 break
 

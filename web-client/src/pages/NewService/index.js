@@ -49,13 +49,8 @@ export default function NewService() {
       city: selectedCity,
     };
 
-    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
     api
-      .post("services", body, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
+      .post("services", body, {})
       .then(() => {
         alert("Serviço cadastrado com sucesso");
 
