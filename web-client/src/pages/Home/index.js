@@ -7,6 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 import { FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import ProfileImg from "../../assets/profile.png";
 
+import { useAuth } from "../../contexts/authContext";
+
 import Service from "../../components/Post";
 import Navbar from "../../components/Navbar";
 import Select from "../../components/Select";
@@ -25,6 +27,9 @@ export default function Home() {
   const [selectedUf, setSelectedUf] = useState();
   const [selectedCity, setSelectedCity] = useState();
 
+
+  const { user } = useAuth();
+
   const history = useHistory();
 
   useEffect(
@@ -33,7 +38,7 @@ export default function Home() {
   );
 
   function clearStorage() {
-    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+    localStorage.removeItem('@Trampae:token');
   }
   const [services, setServices] = useState([]);
 
@@ -43,11 +48,7 @@ export default function Home() {
   }
 
   async function getUserData(userId) {
-    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
     const apiResponse = await api.get("/search/users", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
       params: {
         id: userId,
       },
@@ -89,11 +90,7 @@ export default function Home() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
     const response = await api.get("/search/services", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
       params: {
         uf: selectedUf,
         city: selectedCity,
@@ -119,7 +116,7 @@ export default function Home() {
           <li>
             <p className="button-pages">
               <img className="Profile" src={ProfileImg} alt="profile" />
-              <p className="text-button">Bem vindo, Pica-Pau</p>
+              <p className="text-button"> Bem vindo, {user.name} </p>
             </p>
             <Link to="/aboutus">
               <p className="button-pages">

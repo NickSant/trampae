@@ -74,10 +74,10 @@ export default function Register() {
       .post("/signup", body)
       .then((res) => {
         console.log(res, "res");
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+        localStorage.removeItem('@Trampae:token');
         //confirmação
         localStorage.setItem(
-          process.env.REACT_APP_TOKEN_KEY,
+          '@Trampae:token',
           `Bearer ${res.data.token}`
         );
 
@@ -86,7 +86,7 @@ export default function Register() {
         }, 2000);
       })
       .catch((e) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+        localStorage.removeItem('@Trampae:token');
 
         const res = e.request;
         console.log(res, "err");
