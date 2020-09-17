@@ -4,27 +4,41 @@ import "./stylesGrid1.css";
 import "./stylesGrid2.css";
 import "./stylesGrid3.css";
 import { Link, useHistory } from "react-router-dom";
-import { FiSearch, FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
-import IconImg from "../../assets/icon.png";
+import { FiHelpCircle, FiLogIn, FiUser } from "react-icons/fi";
 import ProfileImg from "../../assets/profile.png";
 
+import { useAuth } from "../../contexts/authContext";
+
 import Service from "../../components/Post";
+import Navbar from "../../components/Navbar";
+import Select from "../../components/Select";
 
 import api from "../../services/api";
+import ibge from "../../services/ibge";
 
-import Util from '../../helpers/Util';
+import Util from "../../helpers/Util";
 
-require('dotenv/config');
+require("dotenv/config");
 
 export default function Home() {
-  const { isAuthenticated } = new Util();
-  
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [selectedUf, setSelectedUf] = useState();
+  const [selectedCity, setSelectedCity] = useState();
+
+
+  const { user } = useAuth();
+
   const history = useHistory();
 
-  useEffect(() => !isAuthenticated('token') ? history.push('/') : '', []);
+  useEffect(
+    () => (!Util.isAuthenticated("token") ? history.push("/") : ""),
+    []
+  );
 
-  function clearStorage(){
-    localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
+  function clearStorage() {
+    localStorage.removeItem('@Trampae:token');
   }
   const [services, setServices] = useState([]);
 
@@ -34,11 +48,7 @@ export default function Home() {
   }
 
   async function getUserData(userId) {
-    const token = localStorage.getItem("token");
     const apiResponse = await api.get("/search/users", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
       params: {
         id: userId,
       },
@@ -56,35 +66,57 @@ export default function Home() {
           return concatData(service);
         })
       );
-
       setServices(concatedData);
     }
     getServicesData();
+
+    async function getUfs() {
+      const ufs = await ibge.getUfs();
+
+      setUfs(ufs);
+    }
+    getUfs();
   }, []);
+
+  useEffect(() => {
+    async function getCities() {
+      const cities = await ibge.getCities(selectedUf);
+
+      setCities(cities);
+    }
+    getCities();
+  }, [selectedUf]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const response = await api.get("/search/services", {
+      params: {
+        uf: selectedUf,
+        city: selectedCity,
+        cat_id: 1,
+      },
+    });
+
+    const data = response.data;
+    const concatedData = await Promise.all(
+      data.map((service) => {
+        return concatData(service);
+      })
+    );
+    setServices(concatedData);
+  }
 
   return (
     <div className="Home-container">
-      {/*Header e NavBar da página*/}
-      <header className="header">
-        <nav className="navbar">
-          <Link className="home-link" to="/">
-            <img className="logo" src={IconImg} alt="icone" />
-          </Link>
-          <FiSearch size={25} className="iconsearch" />
-          <input
-            className="search"
-            placeholder="Pesquise os bicos da sua cidade"
-          ></input>
-        </nav>
-      </header>
-
       {/*Grid da esquerda*/}
+      <Navbar />
       <aside className="Grid1">
         <div className="div-center">
           <li>
             <p className="button-pages">
               <img className="Profile" src={ProfileImg} alt="profile" />
-              <p className="text-button">Bem vindo, Pica-Pau</p>
+              <p className="text-button"> Bem vindo, {user.name} </p>
             </p>
             <Link to="/aboutus">
               <p className="button-pages">
@@ -115,7 +147,9 @@ export default function Home() {
             return (
               <Service
                 key={service.id}
-                name={service.userData.name}
+                user_name={service.userData.name}
+                title={service.title}
+                price={service.price}
                 city={service.city}
                 category={service.category}
                 text={service.description}
@@ -128,7 +162,38 @@ export default function Home() {
       {/*Grid da direita*/}
       <aside className="serviços">
         <div className="right">
-          <button className="btnNewService">Adicionar um novo serviço</button>
+          <h1>Filtrar Bicos</h1>
+          <form>
+            <label>Estado:</label>
+            <Select
+              onChange={(e) => setSelectedUf(e.target.value)}
+              name="UF"
+              children={ufs.map((uf) => {
+                return (
+                  <option key={uf} value={uf}>
+                    {uf}
+                  </option>
+                );
+              })}
+            />
+
+            <label>Cidade:</label>
+            <Select
+              onChange={(e) => setSelectedCity(e.target.value)}
+              name="cidade"
+              children={cities.map((city) => {
+                return (
+                  <option key={city.id} value={city.nome}>
+                    {city.nome}
+                  </option>
+                );
+              })}
+            ></Select>
+
+            <button type="submit" className="Button" onClick={handleSubmit}>
+              Filtrar
+            </button>
+          </form>
         </div>
       </aside>
     </div>

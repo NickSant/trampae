@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
 import logoImg from "../../assets/logo.png";
 
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 
 import api from "../../services/api";
-import axios from "axios";
-require('dotenv/config');
+import ibge from "../../services/ibge";
+
+import {
+  Box,
+  ActiveSection,
+  Header,
+  FormContainer,
+  Title,
+  DisabledSection,
+} from "./styles";
+
+require("dotenv/config");
+
 export default function Register() {
-  const styles = {
-    p: {
-      color: "#cff8f9",
-      fontSize: "26px",
-    },
-    cursorPointer: {
-      cursor: "pointer",
-    },
-  };
   const refDiv = React.createRef();
 
   // campos que o frontend envia -> name, email, whatsapp, city, uf, password
@@ -30,53 +31,31 @@ export default function Register() {
   const [selectedUf, setSelectedUf] = useState("");
   const [selectedCity, setSelectedcity] = useState("");
 
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
+
   // ibge functions ----------------------------------------------------
   //get ufs
-  const [ufs, setUfs] = useState([]);
 
-  function getUfs() {
-    axios
-      .get(
-        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
-      )
-      .then((response) => {
-        const siglas = response.data.map((estado) => estado.sigla);
+  useEffect(() => {
+    async function getUfsOnIBGE() {
+      const ufs = await ibge.getUfs();
+      setUfs(ufs);
+    }
+    getUfsOnIBGE();
+  }, []);
 
-        console.log(siglas);
-
-        setUfs(siglas);
-      });
-  }
-
-  useEffect(getUfs, []);
-
-  // Buscando as cidades da uf selecionada
-  const [cities, setCities] = useState([]);
-  function getCities() {
-    console.log(selectedUf);
-
-    axios
-      .get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`
-      )
-      .then((response) => {
-        const cidades = response.data.map((cidade) => {
-          delete cidade.municipio;
-          return cidade;
-        });
-
-        console.log(cidades);
-
-        setCities(cidades);
-      });
-  }
-
-  useEffect(getCities, [selectedUf]);
+  useEffect(() => {
+    async function getCitiesOnIBGE() {
+      const cities = await ibge.getCities(selectedUf);
+      setCities(cities);
+    }
+    getCitiesOnIBGE();
+  }, [selectedUf]);
 
   //  SUBMIT- -----------------------------
 
   async function submitRegister(e) {
-    console.log("to aqui bosta");
     //fazer conexão com api......
     e.preventDefault();
     //name, email, whatsapp, city, uf, password
@@ -94,18 +73,30 @@ export default function Register() {
     api
       .post("/signup", body)
       .then((res) => {
-        console.log(res);
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY)
+        console.log(res, "res");
+        localStorage.removeItem('@Trampae:token');
         //confirmação
-        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, `Bearer ${res.data.token}`);
+        localStorage.setItem(
+          '@Trampae:token',
+          `Bearer ${res.data.token}`
+        );
 
         setTimeout(() => {
           goToLogin();
         }, 2000);
       })
       .catch((e) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
-        console.log(e);
+        localStorage.removeItem('@Trampae:token');
+
+        const res = e.request;
+        console.log(res, "err");
+        // if(res.status === 401)  alert('Faça o login antes de entrar')
+
+        const { Error } = JSON.parse(res.responseText);
+
+        alert(Error);
+
+        // handleError(e.request.requestText, 3000)
       });
   }
   function goToLogin() {
@@ -114,87 +105,74 @@ export default function Register() {
 
   /*Começo da pagina*/
   return (
-    <>
-      <div className="container">
-        <div className="box">
-          <div className="disabled-register">
-            <h1 className="title"> Já tem registro? </h1>
-            <h3 className="title">
-              {" "}
-              Vem logo, faça login e encontro novos bicos!
-            </h3>
-            <Link className="button" to="/">
-              {" "}
-              Login{" "}
-            </Link>
-          </div>
-          <div className="signup">
-            <div className="signup-header">
-              <img src={logoImg} alt="Trampaê"></img>
-              <h1 className="title"> Registre-se já! </h1>
+    <Box>
+      <DisabledSection>
+        <h1>Já tem registro? </h1>
+        <h3>Vem logo, faça login e encontro novos bicos!</h3>
+        <Link className="button" to="/">
+          Login
+        </Link>
+      </DisabledSection>
+      <ActiveSection>
+        <Header>
+          <img src={logoImg} width={125} alt="Trampaê"></img>
+          <h1 className="title"> Registre-se já! </h1>
+        </Header>
+        <FormContainer>
+          <form>
+            <Input
+              type="text"
+              name="Nome Completo"
+              onChange={(e) => changeName(e.target.value)}
+            />
+            <Input
+              type="Email"
+              name="E-mail"
+              onChange={(e) => changeMail(e.target.value)}
+            />
+            <Input
+              type="pasword"
+              name="Senha"
+              onChange={(e) => changePass(e.target.value)}
+            />
+            <Input type="password" name="Confirmar Senha" />
+            <Input
+              type="tel"
+              name="Whatsapp"
+              onChange={(e) => changeWhats(e.target.value)}
+            />
+            <div className="location">
+              <Select
+                onChange={(e) => setSelectedUf(e.target.value)}
+                name="UF"
+                children={ufs.map((uf) => {
+                  return (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  );
+                })}
+              ></Select>
+
+              <Select
+                onChange={(e) => setSelectedcity(e.target.value)}
+                name="cidade"
+                children={cities.map((city) => {
+                  return (
+                    <option key={city.id} value={city.nome}>
+                      {city.nome}
+                    </option>
+                  );
+                })}
+              ></Select>
             </div>
-            <div className="form-container">
-              <form className="form">
-                <div className="registerForm">
-                  <Input
-                    type="text"
-                    name="Nome Completo"
-                    onChange={(e) => changeName(e.target.value)}
-                  />
-                  <Input
-                    type="Email"
-                    name="E-mail"
-                    onChange={(e) => changeMail(e.target.value)}
-                  />
-                  <Input
-                    type="pasword"
-                    name="Senha"
-                    onChange={(e) => changePass(e.target.value)}
-                  />
-                  <Input type="password" name="Confirmar Senha" />
-                  <Input
-                    type="tel"
-                    name="Whatsapp"
-                    onChange={(e) => changeWhats(e.target.value)}
-                  />
 
-                  <Select
-                    onChange={(e) => setSelectedUf(e.target.value)}
-                    name="UF"
-                    children={ufs.map((uf) => {
-                      return (
-                        <option key={uf} value={uf}>
-                          {uf}
-                        </option>
-                      );
-                    })}
-                  ></Select>
-
-                  <Select
-                    onChange={(e) => setSelectedcity(e.target.value)}
-                    name="cidade"
-                    children={cities.map((city) => {
-                      return (
-                        <option key={city.id} value={city.nome}>
-                          {city.nome}
-                        </option>
-                      );
-                    })}
-                  ></Select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="Button"
-                  onClick={submitRegister}
-                >
-                  Cadastar
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+            <button type="submit" className="Button" onClick={submitRegister}>
+              Cadastar
+            </button>
+          </form>
+        </FormContainer>
+      </ActiveSection>
+    </Box>
   );
 }

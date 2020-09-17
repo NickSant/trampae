@@ -1,23 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import { FiPhoneCall } from 'react-icons/fi';
+import defaultUserImg from "../../assets/user.png";
+import whatsappIcon from "../../assets/whatsapp.svg";
 
-import defaultUserImg from '../../assets/user.png';
+import "./styles.css";
 
-const Service = ({name, city, category, text}) =>{
-    return(
-        <li className="list">
-            <img className="pUser" src={defaultUserImg} alt="user" />
-            <h3 className="nUser">{name}</h3>
-            <h5 className="lUser">{city}</h5>
-            <h3 className="cUser">{category}</h3>
-            <p className="tUser">{text}</p>
-            <button className="btnWhats" >
-                <FiPhoneCall size={25} className="message" />
-            </button>
-        </li>
-    );
-}
-
+const Service = ({ user_name, title, price, city, category, text }) => {
+  return (
+    <li className="list">
+      <img className="pUser" src={defaultUserImg} alt="user" />
+      <h3 className="nUser">{user_name}</h3>
+      <h5 className="lUser">{city}</h5>
+      <h3 className="cUser">{category}</h3>
+  <strong className="tUser">{title}</strong>
+      <p className="tUser">{text}</p>
+      <footer>
+        <strong>
+          Pagamento: R$ <span>{price}</span>
+        </strong>
+        <button className="btnWhats">
+          <img src={whatsappIcon} alt="whatsapp"></img>
+        </button>
+      </footer>
+    </li>
+  );
+};
 
 export default Service;

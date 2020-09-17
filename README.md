@@ -16,7 +16,7 @@ Atualmente, nosso projeto ainda está em desenvolvimento, e como é um projeto d
 
 Em temos atualmente as seguintes etapas completas:
  - [x] ~~Back-end~~
- - [ ]  Front-end
+ - [x]  Front-end
  - [ ]  Mobile
  
 

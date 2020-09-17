@@ -1,140 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
-import "./styles.css";
+import { useAuth } from '../../contexts/authContext'
 
-import logoImg from "../../assets/logo.png";
-import api from "../../services/api";
+import logoImg from '../../assets/logo.png'
+import api from '../../services/api'
 
-import Input from "../../components/Input";
-require('dotenv/config');
+import Input from '../../components/Input'
+import Error from '../../components/Error'
+
+import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
+
+require('dotenv/config')
+
 export default function Logon() {
-  const history = useHistory();
-  // const refSuc = React.createRef();
+	const history = useHistory()
 
-  const [mail, setMail] = useState("");
-  const [pass, setPass] = useState("");
+	const [mail, setMail] = useState('')
+	const [pass, setPass] = useState('')
 
-  const [user, setUser] = useState({});
+	const [user, setUser] = useState({})
 
-  function submit(e) {
+	const { signIn } = useAuth()
+
+	async function submit(e) {
     e.preventDefault();
-    //convertendo para base64 - 'Basic Authentication' no server! - ver UserController
-    // const data = `Basic ${btoa(mail)}:${btoa(pass)}`; btoa() - converte pra 64
-    //maaas, estou convertendo no próprio onChange do input, por questões de segurança
-    const basic = `Basic ${btoa(`${mail}:${pass}`)}`;
 
-    console.log(basic);
+    const isValidated = await signIn({ mail, pass });
 
-    api
-      .post(
-        "/login",
-        {}, //sim, esse objeto vai vazio mesmo, NÃO APAGA MANO!!!!
-        {
-          headers: {
-            authorization: basic,
-          },
-        }
-      )
-      .then((res) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
-        console.log('data',res.data);
+    isValidated ? goToHome() : alert("O login falhou, tente novamente");
+	}
 
-        localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, res.data.token);
-        console.log('user ',res.data.user);
-        setUser(res.data.user);
-        console.log(user);
+	function goToHome() {
+		history.push('/home')
+	}
 
-        setTimeout(() => {
-          alert(`Parabéns ${res.data.name}, logou com sucesso`); //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
-          goToHome();
-        }, 3000);
-      })
-      .catch((e) => {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN_KEY);
-        console.log(e);
-      });
-  }
+	return (
+		<Box>
+			<ActiveSection>
+				<Header>
+					<img src={logoImg} width={125} alt="Trampaê"></img>
+				</Header>
 
-  function goToHome() {
-    history.push('/home');
-  }
+				<FormContainer>
+					<Title> Faça seu login! </Title>
 
-  return (
-    <div className="container">
-      <div className="box">
-        <div className="login">
-          <div className="login-header">
-            <img src={logoImg} alt="Trampaê"></img>
-          </div>
-          <div className="form-container">
-            <h1 className="title"> Faça seu login! </h1>
-            <container>
-              <form>
-                <Input
-                  onChange={ e => setMail(e.target.value)}
-                  type="email"
-                  name="E-mail"
-                />
-                <Input
-                  onChange={ e => setPass(e.target.value)}
-                  type="password"
-                  name="Senha"
-                />
+					<form>
+						<Input onChange={e => setMail(e.target.value)} type="email" name="E-mail" />
+						<Input onChange={e => setPass(e.target.value)} type="password" name="Senha" />
 
-                <button
-                  className="back-link"
-                  onClick={submit}
-                  className="button"
-                  type="submit"
-                >
-                  Entrar
-                </button>
-              </form>
-              <Link to="/forget" className="title">Esqueceu a Senha?</Link>
-            </container>
-          </div>
-        </div>
-        <div className="disabled-register">
-          <h1 className="title"> Ainda não tem Login? </h1>
-          <h3 className="title"> Tá esperando o que?</h3>
-          <Link className="button" to="/register">
-            Registre-se já!
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+						<button className="back-link" onClick={submit} className="button" type="submit">
+							Entrar
+						</button>
+					</form>
+					<Link to="/forget" className="title">
+						Esqueceu a Senha?
+					</Link>
+				</FormContainer>
+			</ActiveSection>
+
+			<DisabledSection>
+				<h1 className="title"> Ainda não tem Login? </h1>
+				<h3 className="title"> Tá esperando o que?</h3>
+				<Link className="button" to="/register">
+					Registre-se já!
+				</Link>
+			</DisabledSection>
+		</Box>
+	)
 }
-
-// CONFLITO - NÃO APAGAR POR ENQUANTO
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import { FiLogIn, FiSun } from "react-icons/fi";
-// import "./styles.css";
-// import logoImg from "../../assets/logo.png";
-// import logonImg from "../../assets/logonImg.png";
-
-// export default function Logon() {
-//   return (
-//     <div className="container">
-//       <div className="box">
-//         <div className="login">
-//           <div className="login-header">
-//             <img src={logoImg} alt="Trampaê"></img>
-//           </div>
-//           <div className="form-container">
-//             <h1 className="title"> Faça seu login! </h1>
-//             <Form />
-//           </div>
-//         </div>
-//         <div className="disabled-register">
-//           <h1 className="title"> Ainda não tem Login? </h1>
-//           <h3 className="title"> tá esperando o que?</h3>
-//           <button className="button"> Registre-se já</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

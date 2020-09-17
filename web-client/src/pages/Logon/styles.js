@@ -1,59 +1,49 @@
-/*Div que estrutura o projeto*/
-.container{
+import styled from "styled-components";
+
+import patternBG from "../../assets/texture-bg.png";
+
+export const Box = styled.div`
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.box{
-  width: 80%;
-  height: 80%;
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 10px;
   background: #ffff;
-  box-shadow: 5px 5px 10px #000000;
-}
+`;
 
-.login{
+export const ActiveSection = styled.div`
   width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
-}
+`;
 
-
-.login .login-header{
+export const Header = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 50%;
   height: 100px;
   padding: 20px;
-}
+`;
 
-.login .login-header img{
-  width: 125px;
-}
-
-.form-container{
+export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 35px;
-}
-.form-container h1{
+  width: 100%;
+  height: 65%;
+`;
+
+export const Title = styled.h1`
   font-size: 40px;
   padding: 10px;
   border-bottom: 5px solid #14b3b0;
-}
+`;
 
-.disabled-register{
+export const DisabledSection = styled.div`
   width: 50%;
   height: 100%;
   display: flex;
@@ -61,21 +51,23 @@
   align-items: center;
   justify-content: center;
   background-color: #121429;
-  background-image: url("../../assets/texture-bg.png");
+  background-image: url(${patternBG});
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.disabled-register h1{
-  margin-bottom: 60px;
-  font-size: 40px;
-  padding: 10px;
-  border-bottom: 5px solid #14b3b0;
-}
-.disabled-register .title{
   color: #ffffff;
-}
 
-.disabled-register .button{
-  width: 60%;
-}
+  h1 {
+    margin-bottom: 60px;
+    font-size: 40px;
+    padding: 10px;
+    border-bottom: 5px solid #14b3b0;
+  }
+
+  h3 {
+      font-size: 20px;
+  }
+
+  .button{
+      width: 60%;
+  }
+`;

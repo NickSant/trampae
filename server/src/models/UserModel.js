@@ -1,6 +1,6 @@
 import db from '../database/connection';
+import { exit } from 'process'
 import Util from '../helpers/Util';
-const {handleError} = new Util();
 class UserModel{
     constructor(){
         this.users = false;
@@ -8,10 +8,12 @@ class UserModel{
 
     async get(filterItems, first=false){//filter -> objeto com os campos do filtro
         try {
-            console.log('first', first)
+            console.log(filterItems)
             if(!first) this.users = await db('users').select('*').where(filterItems);
             if(first) this.users = await db('users').select('*').where(filterItems).first();
 
+            if(typeof this.users === undefined || this.users === null) return false
+            console.log(this.users)
             return this.users;
         }catch(e){
             console.log(e);
@@ -20,8 +22,9 @@ class UserModel{
     }   
 
     async insert(data){
+        let users=false;
         try{
-            this.users = await db('users').insert(data);
+            users = await db('users').insert(data);
             return true;
         }catch(e){
             console.log(e)
@@ -30,17 +33,35 @@ class UserModel{
     }
 
     async update(data, filterItems){
+        let users=false;
         try {
-            this.users = await db('users').update(data).where(filterItems);
+            users = await db('users').update(data).where(filterItems);
+            return true
         } catch (error) {
-            console.log(e);
+            console.log(error);
             return false;
         }
     }
 
     async delete(filterItems){
         try{
-            this.users = await db('users').delete().where(filterItems)
+            users = await db('users').delete().where(filterItems)
+            return true
+        }catch(e){
+            console.log(e)
+            return false;
+        }
+    }
+
+
+    //admin
+    async getAll(){
+        let users=false;
+
+        try{
+            users = await db('users').select('*')
+            users.map(user => delete user.password)
+            return users
         }catch(e){
             console.log(e)
             return false;

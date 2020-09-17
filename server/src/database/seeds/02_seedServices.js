@@ -1,0 +1,28 @@
+exports.seed = async function seed(knex){
+    await knex('services').insert([
+        { id:'1234', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'2344', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'e234', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'fg31', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'g2d2', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'d2t4', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'kkk2', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'dfsg', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'df66', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'6666', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'dflk', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'vkj2', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'fglk', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'dj32', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'dk2e', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'33ks', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'df4f', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'d44f', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'fjdk', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'df2f', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'123d', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'12sd', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'1df4', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+        { id:'d3d4', user_id:'34e4t2', title:'Título monstro', description:'Descrição teste', price:1234, number_participants:3, id_category:1, city:'São Paulo', uf:'SP' },
+    ])
+}

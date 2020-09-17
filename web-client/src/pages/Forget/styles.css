@@ -10,14 +10,13 @@
 }
 
 .box{
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 10px;
   background: #ffff;
-  box-shadow: 5px 5px 10px #000000;
 }
 
 .outra {

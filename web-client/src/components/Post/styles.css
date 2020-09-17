@@ -1,0 +1,101 @@
+
+/* 
+NOME DAS CLASSES: 
+pUser: Picture User  // nUser: Name  User // lUser: Local User // cUser: Category User // tUser: Text User
+*/
+
+/**/
+.Home-container .Grid2 .cases{
+    margin: 80px 0px 16px 30px;
+}
+
+/*Foto do usuário*/
+.Home-container .Grid2 .cases .list .pUser{
+    display: flex;
+    width: 40px;
+    margin: 0px 3px 0px 0px;
+    border-radius: 70%; 
+}
+
+/*Nome do usuário*/
+.Home-container .Grid2 .cases .list .nUser{
+    display: block;
+    color: #14b3b0;
+    margin: -35px 0px 5px 50px;
+}
+
+/*Local do usuáriuo*/
+.Home-container .Grid2 .cases .list .lUser{
+    color: #8d8d8d;
+    margin: -5px 0px 30px 50px;
+}
+
+/*Categoria do serviço do usuário*/
+.Home-container .Grid2 .cases .list .cUser{
+    margin: 0px 0px 0px 0px;
+}
+
+/*Texto do usuário*/
+.Home-container .Grid2 .cases .list .tUser{
+    margin: 20px 0px 20px 0px;
+}
+
+/*Card de casos*/
+.Home-container .Grid2 .cases .list .cases{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+/*Design do card*/
+.Home-container .Grid2 .cases .list{
+    background: #FFF;
+    margin: 10px 0px 0px 25px;
+    padding: 24px;
+    width: 435px;
+    list-style: none;
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0.1);
+}
+
+.Home-container .Grid2 .cases .list footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.Home-container .Grid2 .cases .list footer strong{
+    display:flex;
+    align-items: center;
+}
+
+.Home-container .Grid2 .cases .list footer strong span {
+    font-size: 20px;
+    color: #26a918;
+} 
+
+/*Pra ficar atras do nav*/
+.list::after{
+    position: relative;
+}
+
+/*botão do whats*/
+.Home-container .Grid2 .cases .list .btnWhats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    background-color: #c7c7c7;
+    border-radius: 70px;
+    border: none;
+    transition: ease-in 0.2s;
+}
+
+.Home-container .Grid2 .cases .list .btnWhats:hover{
+    background-color: #26a918;
+}
