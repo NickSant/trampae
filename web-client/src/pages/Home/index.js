@@ -4,8 +4,9 @@ import './stylesGrid1.css'
 import './stylesGrid2.css'
 import './stylesGrid3.css'
 import { Link, useHistory } from 'react-router-dom'
-import { FiHelpCircle, FiLogIn, FiUser, FiTrash } from 'react-icons/fi'
-import ProfileImg from '../../assets/profile.png'
+import { FiHelpCircle, FiLogOut, FiSettings, FiTrash } from 'react-icons/fi'
+
+import defaultUserImg from "../../assets/user.png";
 
 import { useAuth } from '../../contexts/authContext'
 
@@ -31,14 +32,16 @@ export default function Home() {
 
 	const { user } = useAuth()
 
+	console.log(user)
+
 	const history = useHistory()
 
 	useEffect(() => (!Util.isAuthenticated('token') ? history.push('/') : ''), [])
 
 	function clearFilters() {
-    getServicesData();
-    setSelectedUf("");
-    setSelectedCity("");
+		getServicesData()
+		setSelectedUf('')
+		setSelectedCity('')
 	}
 
 	async function concatData(service) {
@@ -116,7 +119,7 @@ export default function Home() {
 				<div className="div-center">
 					<li>
 						<p className="button-pages">
-							<img className="Profile" src={ProfileImg} alt="profile" />
+							<img className="Profile" src={user.image_url.toString().length >= 20 ? user.image_url : defaultUserImg } alt="profile" />
 							<p className="text-button"> Bem vindo, {user.name} </p>
 						</p>
 						<Link to="/aboutus">
@@ -127,14 +130,14 @@ export default function Home() {
 						</Link>
 						<Link to="/register">
 							<p className="button-pages">
-								<FiUser size={30} />
-								<p className="text-button">Cadastro</p>
+								<FiSettings size={30} />
+								<p className="text-button">Configurações</p>
 							</p>
 						</Link>
 						<Link to="/">
 							<p className="button-pages">
-								<FiLogIn size={30} />
-								<p className="text-button">Login</p>
+								<FiLogOut size={30} />
+								<p className="text-button">Sair</p>
 							</p>
 						</Link>
 					</li>
@@ -150,7 +153,13 @@ export default function Home() {
 				) : (
 					<ul className="cases">
 						{services.map(service => {
-							return <Service key={service.id} user_name={service.userData.name} title={service.title} price={service.price} city={service.city} category={service.category} text={service.description} />
+							return <Service 
+							key={service.id} 
+							user_name={service.userData.name} 
+							title={service.title} price={service.price} 
+							city={service.city} category={service.category} 
+							text={service.description} 
+							image={service.userData.image_url} />
 						})}
 					</ul>
 				)}

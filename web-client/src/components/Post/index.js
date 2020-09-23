@@ -3,12 +3,14 @@ import React from "react";
 import defaultUserImg from "../../assets/user.png";
 import whatsappIcon from "../../assets/whatsapp.svg";
 
+
+
 import "./styles.css";
 
-const Service = ({ user_name, title, price, city, category, text }) => {
+const Service = ({ user_name, title, price, city, category, text, image }) => {
   return (
     <li className="list">
-      <img className="pUser" src={defaultUserImg} alt="user" />
+      <img className="pUser" src={image.toString().length >= 20 ? image : defaultUserImg} alt="user" />
       <h3 className="nUser">{user_name}</h3>
       <h5 className="lUser">{city}</h5>
       <h3 className="cUser">{category}</h3>
