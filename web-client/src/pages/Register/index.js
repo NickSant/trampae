@@ -1,84 +1,178 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiArrowLeft, FiCheckSquare } from 'react-icons/fi';
-import './styles.css';
-import logoImg from '../../assets/logo.png';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import logoImg from "../../assets/logo.png";
 
+import Input from "../../components/Input";
+import Select from "../../components/Select";
+
+import api from "../../services/api";
+import ibge from "../../services/ibge";
+
+import {
+  Box,
+  ActiveSection,
+  Header,
+  FormContainer,
+  Title,
+  DisabledSection,
+} from "./styles";
+
+require("dotenv/config");
 
 export default function Register() {
+  const refDiv = React.createRef();
 
-    const styles = {
-        p: {
-            color: '#cff8f9',
-            fontSize: '26px',
-        },
-        cursorPointer: {
-            cursor: 'pointer',
-        }
+  // campos que o frontend envia -> name, email, whatsapp, city, uf, password
+  const [name, changeName] = useState("");
+  const [email, changeMail] = useState("");
+  const [whats, changeWhats] = useState("");
+  const [password, changePass] = useState("");
+
+  const [selectedUf, setSelectedUf] = useState("");
+  const [selectedCity, setSelectedcity] = useState("");
+
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // ibge functions ----------------------------------------------------
+  //get ufs
+
+  useEffect(() => {
+    async function getUfsOnIBGE() {
+      const ufs = await ibge.getUfs();
+      setUfs(ufs);
     }
-    const refDiv = React.createRef();
+    getUfsOnIBGE();
+  }, []);
 
-    function submitRegister(e) {
-        //fazer conexão com api......
-        e.preventDefault();
-        refDiv.current.style.display = 'flex';
-        console.log(refDiv.current)
+  useEffect(() => {
+    async function getCitiesOnIBGE() {
+      const cities = await ibge.getCities(selectedUf);
+      setCities(cities);
+    }
+    getCitiesOnIBGE();
+  }, [selectedUf]);
+
+  //  SUBMIT- -----------------------------
+
+  async function submitRegister(e) {
+    //fazer conexão com api......
+    e.preventDefault();
+    //name, email, whatsapp, city, uf, password
+    const body = {
+      name: name,
+      email: email,
+      whatsapp: whats,
+      password: password,
+      city: selectedCity,
+      uf: selectedUf,
+    };
+
+    console.log(body);
+
+    api
+      .post("/signup", body)
+      .then((res) => {
+        console.log(res, "res");
+        localStorage.removeItem('@Trampae:token');
+        //confirmação
+        localStorage.setItem(
+          '@Trampae:token',
+          `Bearer ${res.data.token}`
+        );
+
         setTimeout(() => {
-            goToHome();
-        }, 1500)
+          goToLogin();
+        }, 2000);
+      })
+      .catch((e) => {
+        localStorage.removeItem('@Trampae:token');
 
-    }
-    function goToHome() {
-        window.location = '/'
-    }
+        const res = e.request;
+        console.log(res, "err");
+        // if(res.status === 401)  alert('Faça o login antes de entrar')
 
+        const { Error } = JSON.parse(res.responseText);
 
-    return (
-        <div className="Register-container">
-            <div className="content">
-                <section>
+        alert(Error);
 
-                    <img className="logo" src={logoImg} alt='Trampâe' />
-                    <h1>Cadastro</h1>
-                    <p>Faça seu cadastro, entre na plataforma e intereja com pessoas por meio de serviços.</p>
-                    <Link className="back-link" to="/">
-                        <FiArrowLeft size={16} color="#14b3b0" />
-                        Já tenho cadastro
-                    </Link>
+        // handleError(e.request.requestText, 3000)
+      });
+  }
+  function goToLogin() {
+    window.location = "/";
+  }
 
-                </section>
-                <form>
-                    <input placeholder="Nome Completo"></input>
-                    <input type="Email" placeholder="E-mail"></input>
+  /*Começo da pagina*/
+  return (
+    <Box>
+      <DisabledSection>
+        <h1>Já tem registro? </h1>
+        <h3>Vem logo, faça login e encontro novos bicos!</h3>
+        <Link className="button" to="/">
+          Login
+        </Link>
+      </DisabledSection>
+      <ActiveSection>
+        <Header>
+          <img src={logoImg} width={125} alt="Trampaê"></img>
+          <h1 className="title"> Registre-se já! </h1>
+        </Header>
+        <FormContainer>
+          <form>
+            <Input
+              type="text"
+              name="Nome Completo"
+              onChange={(e) => changeName(e.target.value)}
+            />
+            <Input
+              type="Email"
+              name="E-mail"
+              onChange={(e) => changeMail(e.target.value)}
+            />
+            <Input
+              type="pasword"
+              name="Senha"
+              onChange={(e) => changePass(e.target.value)}
+            />
+            <Input type="password" name="Confirmar Senha" />
+            <Input
+              type="tel"
+              name="Whatsapp"
+              onChange={(e) => changeWhats(e.target.value)}
+            />
+            <div className="location">
+              <Select
+                onChange={(e) => setSelectedUf(e.target.value)}
+                name="UF"
+                children={ufs.map((uf) => {
+                  return (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  );
+                })}
+              ></Select>
 
-                    <div className="input-password">
-                        <input name="senha" type="password" placeholder="Senha"></input>
-                    </div>
-
-                    <div className="input-password">
-                        <input type="password" placeholder="Confirmar senha"></input>
-                    </div>
-
-                    <input type="tel" placeholder="WhatsApp"></input>
-
-                    <div className="input-group">
-                        <input placeholder="Cidade"></input>
-                        <input placeholder="UF" style={{ width: 80 }}></input>
-                    </div>
-                    <button className="button" onClick={submitRegister}>Cadastar</button>
-                </form>
-
-
-                <div style={styles.cursorPointer} onClick={goToHome} ref={refDiv} className="hide">
-                    <div>
-                        <FiCheckSquare size={100} />
-                        <div>
-                            <h1>Cadastro Concluído com Sucesso!</h1>
-                            <p style={styles.p}>Aguarde para ser redirecionado</p>
-                        </div>
-                    </div>
-                </div>
+              <Select
+                onChange={(e) => setSelectedcity(e.target.value)}
+                name="cidade"
+                children={cities.map((city) => {
+                  return (
+                    <option key={city.id} value={city.nome}>
+                      {city.nome}
+                    </option>
+                  );
+                })}
+              ></Select>
             </div>
-        </div>
-    );
+
+            <button type="submit" className="Button" onClick={submitRegister}>
+              Cadastar
+            </button>
+          </form>
+        </FormContainer>
+      </ActiveSection>
+    </Box>
+  );
 }

@@ -1,80 +1,58 @@
-.new-service-container{
-    background-color: #f5f5f5;
-    width: 2000px;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 100px 100px 100px 100px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.wrapper-box {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #ffff;
+  box-shadow: 5px 5px 10px #000000;
+}
+.wrapper-box header {
+  width: 100%;
+  padding: 0 50px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.new-service-container .content{
-    width: 100%;
-    padding: 96px;
-    background: #f5f5f5;
-    box-shadow: 0 0 100px rgba(0, 0, 0.1);
-    border-radius: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-.new-service-container .content section{
-    width: 100%;
-    max-width: 380px;
-    max-height: 500px;
-    margin-bottom: 110px;
-
-}
-.new-service-container .content section h1{
-    margin: 10px 0 20px;
-    font-size: 32px;
-}
-.new-service-container .content section p{
-    font-size: 18px;
-    color: #737380;
-    line-height: 32px;
-
-}
-.new-service-container .content form{
-    width: 100%;
-    max-width: 450px;
-
+.wrapper-box header img {
+  width: 125px;
 }
 
-.new-service-container form input:focus{
-    border-left-width: 7px;
-    border-left-color:#14b3b0;
-}
-.new-service-container form textarea{
-    margin-top: 5px;
-}
-.new-service-container .content form button{
-    font-size: 19px;
+.wrapper-box header .title {
+    padding: 5px;
+    border-bottom: 5px solid #14b3b0;
 }
 
-.new-service-container form button:hover{
-    background-color:#17d4d2;
+.container .content-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 50px;
+}
+.container .content-wrapper form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.new-service-container .content .hide {
-    background-color:  #14b4bfa4;
-    height: 100vh;
-    width: 160vw;
-    position: fixed;
-    top: 0;
-    left: -440px;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: 400ms;
+.container .content-wrapper form .small-input-wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.new-service-container .content .hide h1{
-    color: black;
-    font-size: 36px;
-    line-height: 42px;
+.container .content-wrapper form .button-wrapper{
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;  
 }
+.container .content-wrapper form .button-wrapper .button{
+  max-width: 150px;
+}
+

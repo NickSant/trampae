@@ -1,39 +1,71 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi'
-import './styles.css';
-import script from "./scripts";
+import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
-import logoImg from '../../assets/logo.png';
-import logonImg from '../../assets/logonImg.png';
+import { useAuth } from '../../contexts/authContext'
+
+import logoImg from '../../assets/logo.png'
+import api from '../../services/api'
+
+import Input from '../../components/Input'
+import Error from '../../components/Error'
+
+import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
+
+require('dotenv/config')
 
 export default function Logon() {
-    return (
-        <div className="logon-container">
-            <section className="form">
-                <nav>
-                    <Link className="rota-link" to="/aboutus">Quem Somos?</Link>
-                </nav>
-                <img className="logo" src={logoImg} alt="logo" />
-                <form>
-                    <h1>Faça seu Login</h1>
-                    <input type="email" placeholder="E-mail" />
-                    <input type="password" placeholder="Senha" />
+	const history = useHistory()
 
-                    <Link className="back-link" to="/home">
-                        <button className="button" type="submit">Entrar</button>
-                    </Link>
+	const [mail, setMail] = useState('')
+	const [pass, setPass] = useState('')
 
-                    <Link className="back-link" to="/register">
-                        <FiLogIn size={16} color="#14b3b0" />
-                    Não tenho cadastro
-                </Link>
-                </form>
-            </section>
-            <div />
-            <div className="img">
-                <img src={logonImg} alt="trabalhador" />
-            </div>
-        </div>
-    );
+	const [user, setUser] = useState({})
+
+	const { signIn } = useAuth()
+
+	async function submit(e) {
+    e.preventDefault();
+
+    const isValidated = await signIn({ mail, pass });
+
+    isValidated ? goToHome() : alert("O login falhou, tente novamente");
+	}
+
+	function goToHome() {
+		history.push('/home')
+	}
+
+	return (
+		<Box>
+			<ActiveSection>
+				<Header>
+					<img src={logoImg} width={125} alt="Trampaê"></img>
+				</Header>
+
+				<FormContainer>
+					<Title> Faça seu login! </Title>
+
+					<form>
+						<Input onChange={e => setMail(e.target.value)} type="email" name="E-mail" />
+						<Input onChange={e => setPass(e.target.value)} type="password" name="Senha" />
+
+						<button className="back-link" onClick={submit} className="button" type="submit">
+							Entrar
+						</button>
+					</form>
+					<Link to="/forget" className="title">
+						Esqueceu a Senha?
+					</Link>
+				</FormContainer>
+			</ActiveSection>
+
+			<DisabledSection>
+				<h1 className="title"> Ainda não tem Login? </h1>
+				<h3 className="title"> Tá esperando o que?</h3>
+				<Link className="button" to="/register">
+					Registre-se já!
+				</Link>
+			</DisabledSection>
+		</Box>
+	)
 }

@@ -1,0 +1,25 @@
+
+
+
+
+
+
+
+nav .btnNewService{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px; 
+    color: #FFF;
+    background-color: #14b3b0;
+    border: none;
+    border-radius: 8px;
+    width: 300px;
+    font-weight: 700;
+    margin: 5px 50px;
+    transition: ease-in 0.2;
+}
+
+nav .btnNewService:hover{
+    opacity: 0.8;
+}

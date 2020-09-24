@@ -11,19 +11,12 @@ export default StyleSheet.create({
         justifyContent:'center',
         //alignItems:'center'
         // position:'relative'
-
     },
-    header:{
-        // flex:1,
-        flexDirection:'row',
-        height:40,
-        justifyContent:'center',
-        alignItems:"center",
-    },
-    
     img_logo:{
-        width:100,
-        height:100,
+        top: 50,
+        left: 80,
+        width:200,
+        height:200,
     },
     p_header:{
         // marginLeft:'auto',
@@ -34,47 +27,65 @@ export default StyleSheet.create({
     title_login:{
         fontWeight:'bold',
         fontSize:25,
+        bottom: 130,
+        color:'#000',
     },
     container_login:{
-        marginTop:40,
-        paddingTop:40,
+        marginTop:-5,
+        paddingTop:100,
+        height:600,
         paddingBottom:40,
         borderRadius:10,
-        backgroundColor:'#14b3b0',
+        backgroundColor:'#fff',
         justifyContent:'center',
-        alignItems:'center',
-        
+        alignItems:'center',  
     },
     input_group:{
         marginTop:7, 
     },
     input:{
+        bottom:100,
         borderStyle:'solid',
-        borderColor:'#222',
-        backgroundColor:'#fff',
-        width:220,
+        borderColor:'#000',
+        backgroundColor:'#f5f5f5',
+        width:300,
         lineHeight:100,
-        height:35,
+        height:50,
         paddingLeft:10,
-        color:'#222',   
-        borderRadius:4
+        color:'#000',
+        borderRadius:8
     },
-    button:{
-        backgroundColor:'#cecece',
-        marginTop:20,
-        paddingHorizontal:20,
-        paddingVertical:10,
-        borderRadius:4
 
+    button_entrar:{
+        backgroundColor:'#14b3b0',
+        marginTop:-70,
+        paddingHorizontal:100,
+        paddingVertical:10,
+        borderRadius:8,
     },
     p_button:{
-        color:'#222',
+        color:'#fff',
         textAlign:'center'
     },
     link_cadastro:{
         marginTop:10
     },
     p_link:{
-        color:'#fff'
+        top:50,
+        left:18,
+        fontSize:20,
+        color:'#000',
+        fontWeight:"bold",
+    },
+    button_cad:{
+        backgroundColor:'#14b3b0',
+        marginTop:100,
+        paddingHorizontal:75,
+        paddingVertical:10,
+        borderRadius:8,
+    },
+    p_cad__button:{
+        color:'#fff',
+        textAlign:'center',
     }
 })

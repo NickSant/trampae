@@ -21,7 +21,7 @@ module.exports = {
       }),
       signUpSchema: Joi.object().keys({
         name: Joi.string().required(),
-        email: Joi.string().email().required(),
+        email: Joi.string().required(),
         password: Joi.string().min(6).required(),
         whatsapp: phoneValidator.phone().mobile().required(),
         city: Joi.string().required(),
