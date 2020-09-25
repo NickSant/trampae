@@ -8,10 +8,9 @@ import crypto from 'crypto'
 import sha1 from 'sha1'
 import UserModel from '../models/UserModel'
 import 'dotenv/config'
-import { exit } from 'process'
 
 
-const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password']
+const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password', 'total_trampos', 'third_party_id', 'image_url', 'hash_url_to_change_pass', 'req_change_pass_time']
 
 const { handleError, clearString, mysqlNowFormat, dateTimeToISO } = new Util()
 const u = new Util()
@@ -43,7 +42,6 @@ export default {
 		return res.json(exists)
 	},
 	async uploadImage(req, res) {
-		console.log('uploadController')
 		try {
 			const [, tipoImg] = req.file.mimetype.split('/')
 
@@ -143,20 +141,11 @@ export default {
 				const now = mysqlNowFormat()
 
 				User.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
-
 					mailer.setMailConfigs(mail, subject, body)
 					mailer.send().then(send => {
 						if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
-
-						// const token = jwt.generateToken({
-						// 	mail_user_id: user.id,
-						// }) //autenticação ->  req.headers.mail_auth!!!!!!!!!!!!!!
-
 						return res.json({
 							message: 'Email enviado com sucesso',
-							// auth_token: token,
-							//no frontend, fazer o mesmo esquema de bearer token,
-							//mas NÃO setar esse token em req.headers.authorization, mas em req.headers.mail_auth!!!!
 							link: link,
 						}).status(200).end()
 					})
