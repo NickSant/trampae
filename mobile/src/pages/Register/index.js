@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput, FlatList, ScrollView } from 'react-native-gesture-handler';
 import {Feather} from '@expo/vector-icons';
 
+
 import estilo from './styles';
-import logoImg from '../../assets/icon.png';
+import logoImg from '../../assets/logo.png';
 
 import api from '../../services/api';
 
@@ -107,14 +108,14 @@ export default function Index(){
 
     return(
         <View style={estilo.container}>
-            <ScrollView collapsable={false}>
                 <View style={estilo.header}>
                     <Image style={estilo.img_logo} source={logoImg}/>
-                    <Text style={estilo.p_header}>Trampaê</Text>
                 </View>
-            
+            <ScrollView collapsable={false}>
                 <View style={estilo.container_login}>
-                    <Text style={estilo.title_login}>Cadastro</Text>
+                    <Text style={estilo.title_login}>Faça seu Cadastro</Text>
+                    <Text numberOfLines={1} style={{
+                        color:'#14b3b0', bottom:140}}>______________________________________</Text>
                     <View style={estilo.input_group}>
                         
                         <TextInput 
@@ -204,10 +205,16 @@ export default function Index(){
                     <TouchableOpacity style={estilo.button}>
                         <Text onPress={submit} style={estilo.p_button}>Cadastrar</Text>
                     </TouchableOpacity>
+                    
                     <TouchableOpacity onPress={backToLogin} style={estilo.link_cadastro}>
-                        <Feather name={'arrow-left'} size={18} color='#fff'/>
-                        <Text style={estilo.p_link}>Voltar para o Login</Text>
+                        <Text style={estilo.p_link}>Já tem login?</Text>
+                        <Text numberOfLines={1} style={{
+                      color:'#14b3b0', top:40}}>___________________________</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={estilo.button_cad}>
+                        <Text onPress={backToLogin} style={estilo.p_button}>Faça seu Login!</Text>
+                    </TouchableOpacity>
+
                 </View>
             </ScrollView>
         </View>

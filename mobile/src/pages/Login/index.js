@@ -112,7 +112,7 @@ export default function Index(){
                     </TouchableOpacity>
 
                     <TouchableOpacity style={estilo.button_cad}>
-                        <Text onPress={submit} style={estilo.p_button}>Registre-se já!</Text>
+                        <Text onPress={goToRegister} style={estilo.p_button}>Registre-se já!</Text>
                     </TouchableOpacity>
 
                 </View>
