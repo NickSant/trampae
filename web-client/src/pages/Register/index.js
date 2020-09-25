@@ -1,178 +1,139 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import logoImg from "../../assets/logo.png";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import logoImg from '../../assets/logo.png'
 
-import Input from "../../components/Input";
-import Select from "../../components/Select";
+import Input from '../../components/Input'
+import Select from '../../components/Select'
 
-import api from "../../services/api";
-import ibge from "../../services/ibge";
+import api from '../../services/api'
+import ibge from '../../services/ibge'
 
-import {
-  Box,
-  ActiveSection,
-  Header,
-  FormContainer,
-  Title,
-  DisabledSection,
-} from "./styles";
+import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
 
-require("dotenv/config");
+require('dotenv/config')
 
 export default function Register() {
-  const refDiv = React.createRef();
+	const [name, changeName] = useState('')
+	const [email, changeMail] = useState('')
+	const [whats, changeWhats] = useState('')
+	const [password, changePass] = useState('')
+	const [imageUrl, setImageUrl] = useState('')
 
-  // campos que o frontend envia -> name, email, whatsapp, city, uf, password
-  const [name, changeName] = useState("");
-  const [email, changeMail] = useState("");
-  const [whats, changeWhats] = useState("");
-  const [password, changePass] = useState("");
+	const [selectedUf, setSelectedUf] = useState('')
+	const [selectedCity, setSelectedcity] = useState('')
 
-  const [selectedUf, setSelectedUf] = useState("");
-  const [selectedCity, setSelectedcity] = useState("");
+	const [ufs, setUfs] = useState([])
+	const [cities, setCities] = useState([])
 
-  const [ufs, setUfs] = useState([]);
-  const [cities, setCities] = useState([]);
+	// ibge functions ----------------------------------------------------
+	//get ufs
 
-  // ibge functions ----------------------------------------------------
-  //get ufs
+	useEffect(() => {
+		async function getUfsOnIBGE() {
+			const ufs = await ibge.getUfs()
+			setUfs(ufs)
+		}
+		getUfsOnIBGE()
+	}, [])
 
-  useEffect(() => {
-    async function getUfsOnIBGE() {
-      const ufs = await ibge.getUfs();
-      setUfs(ufs);
-    }
-    getUfsOnIBGE();
-  }, []);
+	useEffect(() => {
+		async function getCitiesOnIBGE() {
+			const cities = await ibge.getCities(selectedUf)
+			setCities(cities)
+		}
+		getCitiesOnIBGE()
+	}, [selectedUf])
 
-  useEffect(() => {
-    async function getCitiesOnIBGE() {
-      const cities = await ibge.getCities(selectedUf);
-      setCities(cities);
-    }
-    getCitiesOnIBGE();
-  }, [selectedUf]);
+	//  SUBMIT- -----------------------------
 
-  //  SUBMIT- -----------------------------
+	async function submitRegister(e) {
+		e.preventDefault()
 
-  async function submitRegister(e) {
-    //fazer conexão com api......
-    e.preventDefault();
-    //name, email, whatsapp, city, uf, password
-    const body = {
-      name: name,
-      email: email,
-      whatsapp: whats,
-      password: password,
-      city: selectedCity,
-      uf: selectedUf,
-    };
-
-    console.log(body);
-
-    api
-      .post("/signup", body)
-      .then((res) => {
-        console.log(res, "res");
-        localStorage.removeItem('@Trampae:token');
-        //confirmação
-        localStorage.setItem(
-          '@Trampae:token',
-          `Bearer ${res.data.token}`
-        );
-
-        setTimeout(() => {
-          goToLogin();
-        }, 2000);
+		api
+			.post("/signup", {
+        name: name,
+        email: email,
+        whatsapp: whats,
+        password: password,
+        image_url: imageUrl,
+        city: selectedCity,
+        uf: selectedUf,
       })
-      .catch((e) => {
-        localStorage.removeItem('@Trampae:token');
+			.then(res => {
+				console.log(res, 'res')
+				localStorage.removeItem('@Trampae:token')
+				//confirmação
+				localStorage.setItem('@Trampae:token', `Bearer ${res.data.token}`)
 
-        const res = e.request;
-        console.log(res, "err");
-        // if(res.status === 401)  alert('Faça o login antes de entrar')
+				setTimeout(() => {
+					goToLogin()
+				}, 2000)
+			})
+			.catch(e => {
+				localStorage.removeItem('@Trampae:token')
 
-        const { Error } = JSON.parse(res.responseText);
+        alert(e);
+        console.log(e);
+			})
+	}
+	function goToLogin() {
+		window.location = '/'
+	}
 
-        alert(Error);
+	/*Começo da pagina*/
+	return (
+		<Box>
+			<DisabledSection>
+				<h1>Já tem registro? </h1>
+				<h3>Vem logo, faça login e encontro novos bicos!</h3>
+				<Link className="button" to="/">
+					Login
+				</Link>
+			</DisabledSection>
+			<ActiveSection>
+				<Header>
+					<img src={logoImg} width={125} alt="Trampaê"></img>
+					<h1 className="title"> Registre-se já! </h1>
+				</Header>
+				<FormContainer>
+					<form>
+						<Input type="text" name="Nome Completo" onChange={e => changeName(e.target.value)} />
+						<Input type="Email" name="E-mail" onChange={e => changeMail(e.target.value)} />
+						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
+						<Input type="text" name="Link de sua foto" onChange={e => setImageUrl(e.target.value)} />
+						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
+						<div className="location">
+							<Select
+								onChange={e => setSelectedUf(e.target.value)}
+								name="UF"
+								children={ufs.map(uf => {
+									return (
+										<option key={uf} value={uf}>
+											{uf}
+										</option>
+									)
+								})}
+							></Select>
 
-        // handleError(e.request.requestText, 3000)
-      });
-  }
-  function goToLogin() {
-    window.location = "/";
-  }
+							<Select
+								onChange={e => setSelectedcity(e.target.value)}
+								name="cidade"
+								children={cities.map(city => {
+									return (
+										<option key={city.id} value={city.nome}>
+											{city.nome}
+										</option>
+									)
+								})}
+							></Select>
+						</div>
 
-  /*Começo da pagina*/
-  return (
-    <Box>
-      <DisabledSection>
-        <h1>Já tem registro? </h1>
-        <h3>Vem logo, faça login e encontro novos bicos!</h3>
-        <Link className="button" to="/">
-          Login
-        </Link>
-      </DisabledSection>
-      <ActiveSection>
-        <Header>
-          <img src={logoImg} width={125} alt="Trampaê"></img>
-          <h1 className="title"> Registre-se já! </h1>
-        </Header>
-        <FormContainer>
-          <form>
-            <Input
-              type="text"
-              name="Nome Completo"
-              onChange={(e) => changeName(e.target.value)}
-            />
-            <Input
-              type="Email"
-              name="E-mail"
-              onChange={(e) => changeMail(e.target.value)}
-            />
-            <Input
-              type="pasword"
-              name="Senha"
-              onChange={(e) => changePass(e.target.value)}
-            />
-            <Input type="password" name="Confirmar Senha" />
-            <Input
-              type="tel"
-              name="Whatsapp"
-              onChange={(e) => changeWhats(e.target.value)}
-            />
-            <div className="location">
-              <Select
-                onChange={(e) => setSelectedUf(e.target.value)}
-                name="UF"
-                children={ufs.map((uf) => {
-                  return (
-                    <option key={uf} value={uf}>
-                      {uf}
-                    </option>
-                  );
-                })}
-              ></Select>
-
-              <Select
-                onChange={(e) => setSelectedcity(e.target.value)}
-                name="cidade"
-                children={cities.map((city) => {
-                  return (
-                    <option key={city.id} value={city.nome}>
-                      {city.nome}
-                    </option>
-                  );
-                })}
-              ></Select>
-            </div>
-
-            <button type="submit" className="Button" onClick={submitRegister}>
-              Cadastar
-            </button>
-          </form>
-        </FormContainer>
-      </ActiveSection>
-    </Box>
-  );
+						<button type="submit" className="Button" onClick={submitRegister}>
+							Cadastar
+						</button>
+					</form>
+				</FormContainer>
+			</ActiveSection>
+		</Box>
+	)
 }

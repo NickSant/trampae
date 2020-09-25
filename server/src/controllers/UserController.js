@@ -41,7 +41,7 @@ export default {
 	},
 	//create user
 	async create(req, res) {
-		const { name, email, whatsapp, city, uf, password } = req.value.body
+		const { name, email, whatsapp, image_url, city, uf, password } = req.value.body
 		const hashed_pass = await argon2.hash(password)
 
 		const data = req.value.body
@@ -57,6 +57,7 @@ export default {
 				name,
 				email,
 				whatsapp,
+				image_url,
 				city,
 				uf,
 				password: hashed_pass,
@@ -117,6 +118,7 @@ export default {
 				name: result.name,
 				email: result.email,
 				id: result.id,
+				image_url: result.image_url,
 				isAdmin:false
 			}
 			res.json({ user: user, token: token })
