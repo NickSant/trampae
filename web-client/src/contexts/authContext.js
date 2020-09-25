@@ -6,6 +6,16 @@ require('dotenv/config')
 
 const AuthContext = createContext();
 
+
+async function me(token){
+	const res = await api.get('/me', {
+		headers:{
+			authorization: `Bearer ${token}`
+		}
+	})
+	
+	return !res.data ? false : res.data
+}
 function AuthProvider({children}) {
 	const [data, setData] = useState(() => {
 		const token = localStorage.getItem('@Trampae:token')
@@ -21,25 +31,27 @@ function AuthProvider({children}) {
     })
 
 	const signIn = useCallback(async ({ mail, pass }) => {
-        console.log( mail);
-        console.log(pass);
+		//ONLY DEBUG!!
+        // console.log( mail);
+        // console.log(pass);
         const basic = `Basic ${btoa(`${mail}:${pass}`)}`
         
 		try {
-			const response = await api.post(
-				'/login',
-				{},
-				{
-					headers: {
-						authorization: basic,
-					},
+			const response = await api.post('/login',{},{
+				headers: {
+					authorization: basic,
 				}
-            )
+			})
             
-			const { token, user } = response.data
+			const { token } = response.data
+
+			const user = await me(token)
+
+			
 
 			localStorage.setItem('@Trampae:token', token)
-            localStorage.setItem('@Trampae:user', JSON.stringify(user));
+			localStorage.setItem('@Trampae:user', JSON.stringify(user));
+			
 
             api.defaults.headers.authorization = `Bearer ${token}`
             
@@ -50,9 +62,10 @@ function AuthProvider({children}) {
 
 		} catch (error) {
             localStorage.removeItem('@Trampae:token')
-            localStorage.removeItem('@Trampae:user') ;
+            localStorage.removeItem('@Trampae:user')
 
-			console.log(error);
+			console.log(error)
+			window.location = '/'
 		}
 	}, [])
 
@@ -65,4 +78,4 @@ function useAuth() {
 	return context;
 }
 
-export { AuthProvider, useAuth }
+export { AuthProvider, useAuth, me }

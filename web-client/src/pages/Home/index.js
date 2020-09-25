@@ -30,9 +30,10 @@ export default function Home() {
 
 	const [services, setServices] = useState([])
 
+	const [user_img_url, setUrlImg] = useState(`${Util.serverBaseURL()}/uploads/default.png`);
 	const { user } = useAuth()
 
-	console.log(user)
+	
 
 	const history = useHistory()
 
@@ -111,6 +112,13 @@ export default function Home() {
 		console.log(services)
 	}
 
+	
+
+	useEffect(function(){
+		let url = Util.api_base_url(`${user.image_url ? user.image_url : 'uploads/default.png'}`)
+		setUrlImg(url) 
+	},[])
+
 	return (
 		<div className="Home-container">
 			{/*Grid da esquerda*/}
@@ -118,27 +126,27 @@ export default function Home() {
 			<aside className="Grid1">
 				<div className="div-center">
 					<li>
-						<p className="button-pages">
-							<img className="Profile" src={user.image_url.toString().length >= 20 ? user.image_url : defaultUserImg } alt="profile" />
+						<div className="button-pages">
+							<img className="Profile" src={user_img_url } alt="profile" />
 							<p className="text-button"> Bem vindo, {user.name} </p>
-						</p>
+						</div>
 						<Link to="/aboutus">
-							<p className="button-pages">
+							<div className="button-pages">
 								<FiHelpCircle size={30} />
 								<p className="text-button">Quem Somos</p>
-							</p>
+							</div>
 						</Link>
 						<Link to="/register">
-							<p className="button-pages">
+							<div className="button-pages">
 								<FiSettings size={30} />
 								<p className="text-button">Configurações</p>
-							</p>
+							</div>
 						</Link>
-						<Link to="/">
-							<p className="button-pages">
+						<Link to='/'>
+							<div className="button-pages">
 								<FiLogOut size={30} />
 								<p className="text-button">Sair</p>
-							</p>
+							</div>
 						</Link>
 					</li>
 				</div>

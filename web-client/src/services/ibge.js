@@ -30,7 +30,7 @@ export default {
           delete cidade.municipio;
           return cidade;
         });
-        console.log("cidades aqui no ibge", cidades);
+        
         cities = cidades;
 
     }).catch(err => {

@@ -13,7 +13,7 @@ import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } fro
 
 require('dotenv/config')
 
-export default function Logon() {
+const Profile =() => {
 	const history = useHistory()
 
 	const [mail, setMail] = useState('')
@@ -68,3 +68,4 @@ export default function Logon() {
 		</Box>
 	)
 }
+export default Profile;
