@@ -4,12 +4,15 @@ import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
 import argon2, { hash } from 'argon2' //algoritmo de hash
 
-import UserModel from '../models/UserModel'
+
+import Model from '../models/Model'
 import { constants } from 'fs'
 
 const { handleError, clearString, isAdmin } = new Util()
 const mailer = new Mailer()
-const User = new UserModel()
+
+const u = new Model('users')
+const s = new Model('services')
 
 export default {
     async login(req, res){    
@@ -27,7 +30,7 @@ export default {
                 mail:process.env.ADMIN_USER,
                 token_admin: adminToken,
                 isAdmin:true
-            });
+            }).end()
 
         }catch(e){
             handleError(res, 400, e)
@@ -35,13 +38,24 @@ export default {
 
     },
 
-    async listUsers(req, res){
-        const u = await User.getAll()
-        res.json(u)
+    async listUsers(req, res){       
+        const all = await u.all()
+        return res.json(all).end()
     },
 
     async deleteUser(req, res){
+        const { id } = req.body
 
+        const user = await u.get({id},true)
+
+        if(!user || user === undefined || user == '' || user.id !== id) handleError(res, 404, 'Usuário não encontrado')
+
+        const deleted = await u.delete({id})
+
+        if(!deleted) return handleError(res, 400, 'Não foi possível deletar o usuário')
+
+        return res.json({message:`Usuário ${user.name} deletado com sucesso`})
+        
     },
     async listServices(req, res){
         
