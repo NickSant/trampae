@@ -4,16 +4,19 @@ import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
 import argon2, { hash } from 'argon2' //algoritmo de hash
 import crypto from 'crypto'
+import Model from '../models/Model'
 
 
 require('dotenv/config')
 import AdminController from './AdminController'
 
-import UserModel from '../models/UserModel'
+
 
 const { handleError, clearString, isAdmin } = new Util()
+
 const mailer = new Mailer()
-const User = new UserModel()
+
+const u = new Model('users')
 
 const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password']
 
@@ -52,7 +55,7 @@ export default {
 		const token = await jwt.generateToken({ user_id: id }) //gerando token para auth
 
 		try {
-			await User.insert({
+			await u.insert({
 				id,
 				name,
 				email,
@@ -95,8 +98,8 @@ export default {
 
 			console.log('passou validação')
 
-			const result = await User.get({ email: email }, true)
-
+			const result = await u.get({email}, true)
+			
 			console.log(result)
 
 			if (!result || result === undefined) return handleError(res, 401, 'User not Found')

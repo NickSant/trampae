@@ -31,7 +31,7 @@ const Profile =() => {
 			<ActiveSection>
 				<Header>
 					<img src={logoImg} alt="trampae_icon" title="Trampaê"/>
-					<a href="/home">Voltar</a>	
+					<a href="/">Voltar</a>	
 				</Header>
 
 				<FormContainer>

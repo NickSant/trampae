@@ -6,24 +6,26 @@ import argon2, { hash } from 'argon2' //algoritmo de hash
 import fs from 'fs'
 import crypto from 'crypto'
 import sha1 from 'sha1'
-import UserModel from '../models/UserModel'
+
 import 'dotenv/config'
+import Model from '../models/Model'
 
 
 const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password', 'total_trampos', 'third_party_id', 'image_url', 'hash_url_to_change_pass', 'req_change_pass_time']
 
 const { handleError, clearString, mysqlNowFormat, dateTimeToISO } = new Util()
-const u = new Util()
+const util = new Util()
 
 const mailer = new Mailer()
-const User = new UserModel()
+const u = new Model('users')
 
 export default {
 	async profile(req, res) {
 		const { id } = req.params
 		const { id: req_id } = req.auth //id do user autenticado e logado
 
-		const exists = await User.get({ id }, true)
+		
+		const exists = await u.get({id},true)
 
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
 
@@ -69,8 +71,8 @@ export default {
 			//caminho da imagem
 			req.file.path = `uploads/${req.file.filename}`
 
-			await User.update({ image_url: req.file.path }, { id })
-
+			
+			await u.update({id} ,{image_url: req.file.path})
 			console.log('inseriu path image no banco')
 
 			return res.json({
@@ -96,10 +98,12 @@ export default {
 
 		if (typeExists) {
 			try {
-				const result = await User.update({ [type]: [newValue] }, { id: user_id })
+				
+				const result = await u.update({id:user_id}, { [type]: [newValue] })
 				console.log(result, 'result')
 				if (result !== undefined && result !== '') {
-					const newUser = await User.get({ id: user_id }, true)
+					
+					const newUser = await u.get({id}, true)
 
 					delete newUser.password
 					console.log('Succefully Update!')
@@ -116,7 +120,8 @@ export default {
 
 	async forgotPass(req, res) {
 		const { mail } = req.body
-		User.get({ email: mail }, true)
+		
+		u.get({email:mail},true)
 			.then(user => {
 				if(!user) return handleError(res, 400, 'bad_request')
 				delete user.password
@@ -140,7 +145,9 @@ export default {
 
 				const now = mysqlNowFormat()
 
-				User.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
+				
+				u.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
+
 					mailer.setMailConfigs(mail, subject, body)
 					mailer.send().then(send => {
 						if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
@@ -166,22 +173,26 @@ export default {
 		const { urlHash } = req.body
 		const pass = Buffer.from(newPass).toString()
 
-		const user = await User.get({ hash_url_to_change_pass: urlHash }, true)
+		
+		const user = await u.get({hash_url_to_change_pass: urlHash}, true)
 
 		if (!user || user === undefined) return handleError(res, 401, 'Não autorizado.')
 		let reqTime = dateTimeToISO(user.req_change_pass_time)
-		const timeDiff = await u.timestampDiff(reqTime)
+		const timeDiff = await util.timestampDiff(reqTime)
 		if(timeDiff >= 24 ) return handleError(res, 401, 'unauthorized')
 
 		const hashed_pass = await hash(pass)
 
-		const updatedUser = await User.update({ password: hashed_pass }, { id: user.id })
+		
+		const updatedUser = await u.update({id: user.id}, {password: hashed_pass})
 
 		await connection('users').update('password', hashed_pass).where({id: user.id});
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 
-		const currentUser = await User.get({ id: user.id }, true)
+		
+		const currentUser = await u.get({id:user.id}, true)
+
 		delete currentUser.hash_url_to_change_pass
 		delete currentUser.req_change_pass_time
 		delete currentUser.password
