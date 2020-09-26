@@ -21,16 +21,15 @@ export default function Logon() {
 
 	const [user, setUser] = useState({})
 
+	useEffect(()=> localStorage.clear(),[])
+
 	const { signIn } = useAuth()
 
 	async function submit(e) {
-    e.preventDefault();
-
-    const isValidated = await signIn({ mail, pass });
-
-    isValidated ? goToHome() : alert("O login falhou, tente novamente");
+		e.preventDefault();
+		const isValidated = await signIn({ mail, pass });
+		isValidated ? goToHome() : alert("O login falhou, tente novamente");
 	}
-
 	function goToHome() {
 		history.push('/home')
 	}

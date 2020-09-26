@@ -17,7 +17,6 @@ export default (multer({
             //filtrando formatos aceitos
             if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' ){
                 console.log('passou pelo multer')
-                
                 return callback(null, true);
             }
         

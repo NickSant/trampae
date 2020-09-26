@@ -30,13 +30,14 @@ export default function Home() {
 
 	const [services, setServices] = useState([])
 
+	const [user_img_url, setUrlImg] = useState(`${Util.serverBaseURL()}/uploads/default.png`);
 	const { user } = useAuth()
 
-	console.log(user)
+	
 
 	const history = useHistory()
 
-	useEffect(() => (!Util.isAuthenticated('token') ? history.push('/') : ''), [])
+
 
 	function clearFilters() {
 		getServicesData()
@@ -118,28 +119,29 @@ export default function Home() {
 			<aside className="Grid1">
 				<div className="div-center">
 					<li>
-						<p className="button-pages">
-							<img className="Profile" src={user.image_url.toString().length >= 20 ? user.image_url : defaultUserImg } alt="profile" />
+						<div className="button-pages">
+							<img className="Profile" src={user.image_url } alt="profile" />
 							<p className="text-button"> Bem vindo, {user.name} </p>
-						</p>
-						<Link to="/aboutus">
-							<p className="button-pages">
+						</div>
+						<a href="/aboutus">
+							<div className="button-pages">
 								<FiHelpCircle size={30} />
 								<p className="text-button">Quem Somos</p>
-							</p>
-						</Link>
-						<Link to="/register">
-							<p className="button-pages">
+							</div>
+						</a>
+						
+						<a href="/profile">
+							<div className="button-pages">
 								<FiSettings size={30} />
 								<p className="text-button">Configurações</p>
-							</p>
-						</Link>
-						<Link to="/">
-							<p className="button-pages">
+							</div>
+						</a>
+						<a href='/'>
+							<div className="button-pages">
 								<FiLogOut size={30} />
 								<p className="text-button">Sair</p>
-							</p>
-						</Link>
+							</div>
+						</a>
 					</li>
 				</div>
 			</aside>

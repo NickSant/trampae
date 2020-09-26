@@ -21,7 +21,7 @@ export default function Recover() {
 	const { url_hash } = useParams()
 	const his = useHistory()
 	useEffect(async function () {
-		const isAuthorized = await auth.isAuthenticated('mail', url_hash)
+		const isAuthorized = await auth.verifyMailHash(url_hash)
 		if(!isAuthorized) {
 			console.log(isAuthorized)
 			return his.push('/')
@@ -40,8 +40,7 @@ export default function Recover() {
 				url_hash: url_hash,
 			},
 		}
-		api
-			.put('/forgot', body, configs)
+		api.put('/forgot', body, configs)
 			.then(res => {
 				console.log('res', res)
 
