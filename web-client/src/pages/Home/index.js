@@ -37,7 +37,7 @@ export default function Home() {
 
 	const history = useHistory()
 
-	useEffect(() => (!Util.isAuthenticated('token') ? history.push('/') : ''), [])
+
 
 	function clearFilters() {
 		getServicesData()
@@ -112,13 +112,6 @@ export default function Home() {
 		console.log(services)
 	}
 
-	
-
-	useEffect(function(){
-		let url = Util.api_base_url(`${user.image_url ? user.image_url : 'uploads/default.png'}`)
-		setUrlImg(url) 
-	},[])
-
 	return (
 		<div className="Home-container">
 			{/*Grid da esquerda*/}
@@ -127,27 +120,28 @@ export default function Home() {
 				<div className="div-center">
 					<li>
 						<div className="button-pages">
-							<img className="Profile" src={user_img_url } alt="profile" />
+							<img className="Profile" src={user.image_url } alt="profile" />
 							<p className="text-button"> Bem vindo, {user.name} </p>
 						</div>
-						<Link to="/aboutus">
+						<a href="/aboutus">
 							<div className="button-pages">
 								<FiHelpCircle size={30} />
 								<p className="text-button">Quem Somos</p>
 							</div>
-						</Link>
-						<Link to="/register">
+						</a>
+						
+						<a href="/profile">
 							<div className="button-pages">
 								<FiSettings size={30} />
 								<p className="text-button">Configurações</p>
 							</div>
-						</Link>
-						<Link to='/'>
+						</a>
+						<a href='/'>
 							<div className="button-pages">
 								<FiLogOut size={30} />
 								<p className="text-button">Sair</p>
 							</div>
-						</Link>
+						</a>
 					</li>
 				</div>
 			</aside>

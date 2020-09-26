@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState, useHistory } from 'react'
+import Util from '../helpers/Util';
 
 import api from '../services/api'
 
@@ -13,6 +14,8 @@ async function me(token){
 			authorization: `Bearer ${token}`
 		}
 	})
+
+	if(res.data) res.data.image_url = Util.api_base_url(res.data.image_url)
 	
 	return !res.data ? false : res.data
 }

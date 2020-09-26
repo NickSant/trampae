@@ -16,55 +16,38 @@ require('dotenv/config')
 const Profile =() => {
 	const history = useHistory()
 
-	const [mail, setMail] = useState('')
-	const [pass, setPass] = useState('')
+	const { user } = useAuth()
 
-	const [user, setUser] = useState({})
-
-	useEffect(()=> localStorage.clear(),[])
-
-	const { signIn } = useAuth()
-
-	async function submit(e) {
-		e.preventDefault();
-		const isValidated = await signIn({ mail, pass });
-		isValidated ? goToHome() : alert("O login falhou, tente novamente");
-	}
+	const userFields = Array('name', 'email', 'city', 'uf', 'total_trampos', 'whatsapp')
 	function goToHome() {
 		history.push('/home')
 	}
+	useEffect(function(){
+		console.log(user)
+	})
 
 	return (
 		<Box>
 			<ActiveSection>
 				<Header>
-					<img src={logoImg} width={125} alt="Trampaê"></img>
+					<img src={logoImg} alt="trampae_icon" title="Trampaê"/>
+					<a href="/home">Voltar</a>	
 				</Header>
 
 				<FormContainer>
-					<Title> Faça seu login! </Title>
-
-					<form>
-						<Input onChange={e => setMail(e.target.value)} type="email" name="E-mail" />
-						<Input onChange={e => setPass(e.target.value)} type="password" name="Senha" />
-
-						<button className="back-link" onClick={submit} className="button" type="submit">
-							Entrar
-						</button>
-					</form>
-					<Link to="/forget" className="title">
-						Esqueceu a Senha?
-					</Link>
+					<Title> Perfil {user.name}! </Title>
 				</FormContainer>
 			</ActiveSection>
-
 			<DisabledSection>
-				<h1 className="title"> Ainda não tem Login? </h1>
-				<h3 className="title"> Tá esperando o que?</h3>
-				<Link className="button" to="/register">
-					Registre-se já!
-				</Link>
+				<h2>Dados</h2>
+				{userFields.map(field =>(
+					<div>
+						<strong>{field}:</strong> {user[field]}
+					</div>) 
+				)}
+
 			</DisabledSection>
+
 		</Box>
 	)
 }

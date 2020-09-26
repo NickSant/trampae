@@ -10,13 +10,13 @@ export default function Navbar() {
   return (
     <header className="header">
       <nav className="navbar">
-        <Link className="home-link" to="/">
+        <a className="home-link" href="/">
           <img className="logo" src={IconImg} alt="icone" />
-        </Link>
+        </a>
 
-        <Link to="/new-service" className="btnNewService">
+        <a href="/new-service" className="btnNewService">
           Adicionar um novo serviço
-        </Link>
+        </a>
       </nav>
     </header>
   );

@@ -10,6 +10,7 @@ export const Box = styled.div`
   align-items: center;
   border-radius: 10px;
   background: #ffff;
+  padding: repeat(2, 2vh 2vw);
 `;
 
 export const ActiveSection = styled.div`
