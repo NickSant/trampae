@@ -145,8 +145,7 @@ export default {
 
 				const now = mysqlNowFormat()
 
-				
-				u.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
+				u.update({id:user.id}, {hash_url_to_change_pass:urlHash, req_change_pass_time: now}).then((a) => {
 
 					mailer.setMailConfigs(mail, subject, body)
 					mailer.send().then(send => {

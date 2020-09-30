@@ -23,7 +23,6 @@ module.exports = {
         name: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().min(6).required(),
-        image_url: Joi.string(),
         whatsapp: phoneValidator.phone().mobile().required(),
         city: Joi.string().required(),
         uf: Joi.string().length(2).required()
