@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:400,500,700display=swap');
+
 
 *{
     margin: 0;
@@ -6,22 +6,29 @@
     outline: 0;
     box-sizing: border-box;
 }
+html{
+    font-size: 62.5%;
+}
+
+li, a{
+    text-decoration: none;
+    list-style: none;
+}
 
 body{
-    font: 400 14px Ubuntu, sans-serif;
-    background: #14b3b0;
+    font: 400 1.4rem Ubuntu, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
-input, button, textarea{
-    font: 400 18px Ubuntu, sans-serif;
+input, button, textarea, select{
+    font: 400 1.8rem Ubuntu, sans-serif;
 }
 
 button{
     cursor: pointer;
 }
 
-form input{
+form input, select, select option{
     width: 100%;
     height: 60px;
     color: #333;
@@ -29,6 +36,7 @@ form input{
     border-radius: 10px;
     padding: 0 24px;
     transition: linear; 
+    background-color: #FFF;
 }
 
 form input:focus{
@@ -37,13 +45,13 @@ form input:focus{
 form textarea{
     width: 100%;
     resize: vertical;
-    min-height: 230px;
+    min-height: 100px;
+    max-height: 150px;
     color: #333;
     border: 1px solid #dcdce6;
     border-radius: 10px;
     padding: 16px 24px;
     line-height: 24px;
-    
 }
 
 .button{
@@ -60,13 +68,56 @@ form textarea{
     text-decoration: none;
     font-size: 18px;
     line-height: 60px;
-    transition: filter 0.2s;
+    transition: filter 0.5s;
 }
 
 .button:hover{
     filter: brightness(90%);
 }
 
+.secondary{
+    background: none;
+    border: 2px solid #14b3b0;
+    color: #14b3b0;
+}
+.Button{
+    width: 100%;
+    height: 60px;
+    background: #14b3b0;
+    border: 0;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    transition: filter 0.2s;
+}
+.Button:hover{
+    filter: brightness(90%);
+}
+.B-utton{
+    width: 100%;
+    height: 60px;
+    background: #14b3b0;
+    border: 0;
+    border-radius: 10px;
+    color: #FFF;
+    font-weight: 700;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    transition: filter 0.2s;
+}
+.B-utton:hover{
+    filter: brightness(90%);
+}
 .logo{
     width: 250px;
     margin-top: 2vh;
@@ -77,17 +128,48 @@ form textarea{
     align-items: center;
     margin-top: 40px;
     color: black;
-    font-size: 18px;
+    font-size: 1.8rem;
     text-decoration: none;
     font-weight: 500;
-    transition: opacity 0.2s;
+    transition: opacity 0.5s;
 }
-
 
 .back-link svg{
     margin-right: 8px;
 }
 
 .back-link:hover{
+    opacity: 0.8;
+}
+.return-link{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    color: black;
+    font-size: 1.8rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+.ruturn-link svg{
+    margin-right: 8px;
+}
+.return-link:hover{
+    opacity: 0.8;
+}
+.Cback-link{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    color: black;
+    font-size: 1.8rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+.Cback-link svg{
+    margin-right: 8px;
+}
+.Cback-link:hover{
     opacity: 0.8;
 }

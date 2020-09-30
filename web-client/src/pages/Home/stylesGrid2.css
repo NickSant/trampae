@@ -1,0 +1,35 @@
+/*Grid do meio*/
+.Home-container .Grid2{
+    background: #cfcfcf;
+    width: 120%;
+    margin-left: -45px;
+    height: 624px;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+/*ScrollBar*/
+::-webkit-scrollbar{
+    width: 5px;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #cfcfcf;
+}
+
+::-webkit-scrollbar-button{
+    background-color: #cfcfcf;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #cfcfcf;
+}
+
+.Home-container .serviços{
+    background: #cfcfcf;;
+    width: 100%;
+    height: 624px;
+}
+/*Fim do css do Scroll*/
+
+

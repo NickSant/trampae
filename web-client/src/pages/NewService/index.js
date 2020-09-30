@@ -1,32 +1,133 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import './styles.css';
-import { FiArrowLeft } from 'react-icons/fi';
-import logoImg from '../../assets/logo.png';
-export default function Newservice() {
-    return (
-        <div className="new-service-container">
-            <div className="content">
-                <section>
+import React, { useState, useEffect } from "react";
+import InputMask from 'react-input-mask'
+import { Link } from "react-router-dom";
+import "./styles.css";
 
-                    <img className="logo" src={logoImg} alt='Trampâe' />
-                    <h1>Cadastrar Novo Bico</h1>
-                    <p>Cadastre um novo bico e tenha seus problemas de Trâmpo solucionados.</p>
-                    <Link className="back-link" to="/home">
-                        <FiArrowLeft size={16} color="#14b3b0" />
-                        Voltar para Home
-                    </Link>
+import ibge from "../../services/ibge";
+import api from "../../services/api";
 
-                </section>
-                <form>
-                    <input placeholder="Título do Bico"/>
-                    <textarea className="alinha" placeholder="Descrição"/>
-                    <Link className="back-link" to="/home">
-                    <button className="button">Cadastar</button>
-                    </Link>
-                </form>
+import Input from "../../components/Input";
+import Textarea from "../../components/Textarea";
+import Select from "../../components/Select";
+
+import logoImg from "../../assets/logo.png";
+
+export default function NewService() {
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState();
+  const [selectedUf, setSelectedUf] = useState();
+  const [selectedCity, setSelectedCity] = useState();
+
+  const [ufs, setUfs] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    async function getUfs() {
+      const ufs = await ibge.getUfs();
+      setUfs(ufs);
+    }
+    getUfs();
+  });
+  useEffect(() => {
+    async function getCities() {
+      const cities = await ibge.getCities(selectedUf);
+      setCities(cities);
+    }
+    getCities();
+  }, [selectedUf]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const body = {
+      title: title,
+      description: description,
+      price: price,
+      number_participants: 1, //hardcoded
+      id_category: 1, //hardcoded
+      uf: selectedUf,
+      city: selectedCity,
+    };
+
+    api
+      .post("services", body, {})
+      .then(() => {
+        alert("Serviço cadastrado com sucesso");
+
+        window.location = "/home";
+      }).catch((err)=>{
+        alert(err)
+      });
+
+
+  }
+
+  return (
+    <div className="container">
+      <div className="wrapper-box">
+        <header>
+          <img src={logoImg} alt="Trampaê"></img>
+          <h1 className="title">Publique o seu bico!</h1>
+        </header>
+        <div className="content-wrapper">
+          <form>
+            <Input
+              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              name="Título"
+            />
+            <Textarea
+              onChange={(e) => setDescription(e.target.value)}
+              type="text"
+              name="Descrição"
+            />
+            <div className="small-input-wrapper">
+              {/* <Input
+                onChange={(e) => {
+                  const n = e.target.value
+                  if(n > 0) setPrice(n)
+                }}
+                type="number"
+                name="Pagamento"
+              /> */}
+
+              <Select
+                onChange={(e) => setSelectedUf(e.target.value)}
+                name="UF"
+                children={ufs.map((uf) => {
+                  return (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  );
+                })}
+              ></Select>
+              <Select
+                onChange={(e) => setSelectedCity(e.target.value)}
+                name="cidade"
+                children={cities.map((city) => {
+                  return (
+                    <option key={city.id} value={city.nome}>
+                      {city.nome}
+                    </option>
+                  );
+                })}
+              ></Select>
             </div>
-        </div>
 
-     );            
+            <div className="button-wrapper">
+              <Link className="button secondary" to="/home">
+                Voltar
+              </Link>
+              <button onClick={handleSubmit} type="submit" className="button">
+                {" "}
+                Publicar{" "}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }

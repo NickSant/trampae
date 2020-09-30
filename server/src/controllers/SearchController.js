@@ -1,12 +1,12 @@
 import connection from "../database/connection";
 import Util from '../helpers/Util';
-const util = new Util;
+const {handleError} = new Util;
 export default {
   async SearchServices(request, response) {
 
     const { page = 1 } = request.query;
 
-    const { uf, city, cat_id } = request.params;
+    const { uf, city, cat_id } = request.query;
 
     const services = await connection("services")
       .where("uf", uf)
@@ -19,16 +19,17 @@ export default {
     return response.json(services);
   },
   async SearchUsers(request, response) {
-    const { name } = request.params;
+    const { id } = request.query;
+
     try{
-      const users = await connection("users")
-        .where("name", "like", `%${name}%`)
+      const user = await connection("users")
+        .where("id", id)
         .select("*");
 
-      return response.json(users);
+      return response.json(user);
 
     }catch(e){
-      return util.handleError(response, 400, 'Database Error')
+      return handleError(response, 400, 'Database Error')
     }
     
   },

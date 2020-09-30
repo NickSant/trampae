@@ -3,14 +3,11 @@ import {StyleSheet} from 'react-native';
 import Constants from 'expo-constants';
 export default StyleSheet.create({
     container:{
-        //flex:1,
+        flex:1,
         paddingHorizontal:20,
-        paddingTop:Constants.statusBarHeight + 35,
+        paddingTop:Constants.statusBarHeight + 140,
         backgroundColor:'#fff',
-        // flexDirection:'row',
         justifyContent:'center',
-        //alignItems:'center'
-        position:'relative',
         
     },
     header:{
@@ -21,27 +18,27 @@ export default StyleSheet.create({
         alignItems:"center",
     },
     img_logo:{
-        width:100,
-        height:100,
-    },
-    p_header:{
-        // marginLeft:'auto',
-        marginRight:10,
-        fontWeight:'600',
-        fontSize:20
+        top: 20,
+        left: 10,
+        width:200,
+        height:200,
+        marginBottom: 100,
     },
     title_login:{
         fontWeight:'bold',
         fontSize:25,
+        bottom: 130,
+        color:'#000',
     },
     container_login:{
-        marginTop:40,
-        paddingTop:40,
+        marginTop:-5,
+        paddingTop:650,
+        height:750,
         paddingBottom:40,
         borderRadius:10,
-        backgroundColor:'#14b3b0',
+        backgroundColor:'#fff',
         justifyContent:'center',
-        alignItems:'center',
+        alignItems:'center',  
         
     },
     input_group:{
@@ -49,33 +46,53 @@ export default StyleSheet.create({
         
     },
     input:{
+        bottom:100,
         borderStyle:'solid',
-        borderColor:'#222',
-        backgroundColor:'#fff',
-        width:220,
+        borderColor:'#000',
+        backgroundColor:'#f5f5f5',
+        width:300,
         lineHeight:100,
+        height:50,
         paddingLeft:10,
-        height:35,
-        color:'#222',   
-        borderRadius:4
+        color:'#000',
+        borderRadius:8,
+
+        
     },
     button:{
-        backgroundColor:'#ccc',
-        marginTop:30,
-        paddingHorizontal:20,
+        backgroundColor:'#14b3b0',
+        marginTop:-70,
+        paddingHorizontal:100,
         paddingVertical:10,
-        borderRadius:4,
+        borderRadius:8,
+        marginBottom: -20,
     },
     p_button:{
-        color:'#222',
+        color:'#fff',
+        textAlign:'center',
     },
     link_cadastro:{
-        marginTop:10,
-        flexDirection:'row',
-        alignItems:'center',
+        marginTop:10
     },
     p_link:{
-        color:'#fff'
+        top:50,
+        left:25,
+        fontSize:20,
+        color:'#000',
+        fontWeight:"bold",
+        
+    },
+    button_cad:{
+        backgroundColor:'#14b3b0',
+        marginTop:80,
+        marginBottom: 500,
+        paddingHorizontal:75,
+        paddingVertical:10,
+        borderRadius:8,
+    },
+    p_cad__button:{
+        color:'#fff',
+        textAlign:'center',
     }
-
+    
 })

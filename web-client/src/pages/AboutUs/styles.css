@@ -1,93 +1,142 @@
+/*Div que estrutura o projeto*/
 .Aboutus-container{
     background-color: #f5f5f5;
-    width: 97%;
-    max-width: 2000px;
-    height: 280vh;   
+    width: 100%;
+    max-width: 2600px;
+    height: 265vh;
+    margin: 0px 0px 0px 0px;
     border-radius: 0px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    margin-left: 25px;
-    margin-right: 0px;
 }
-.Aboutus-container .alinhar{
-    display: flex ; 
+
+/*Header*/
+.Aboutus-container .align{
+    display: flex; 
     align-items: center;
     justify-content: space-evenly;
 }
-.Aboutus-container .menu{
+
+.Aboutus-container .align .logo{
+    width: 150px;
+    margin-top: 2vh;
+    margin-bottom: 10px;
+    margin-left: 60px;
+}
+
+/*Link para outras paginas*/
+.Aboutus-container nav{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
-.volta-link{
-    margin-left: 50px;
+.Aboutus-container header nav ul {
+    display: flex;
+}
+
+.Aboutus-container .back-link{
+    margin-left: 90px;
     display: flex;
     align-items: center;
     margin-top: 40px;
     font-weight: 500;
-    transition: filter 0.2s;
-    
+    transition: 0.5s;   
 }
-.Aboutus-container a{
-    color: #14b3b0;
-    font-size: 18px;
+
+/*Icones do header*/
+.Aboutus-container nav .back-link .IconsHeader{
+    font-size: 1.8rem;
     font-weight: bold;
     text-decoration: none;
     text-align: right;
     display: flex;
     justify-content: last baseline;
 }
-.block1{
-    width: 80%;
-    text-align: center;
-    background-color: #14b3b0;
-    padding: 20px;
-    margin-left: 130px;
-    border-radius: 20px;
-  
-}
-.block2{
-    width: 80%;
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-    background-color: #f5f5f5;
-    margin-left: 130px;
-    padding: 30px;
+
+.Aboutus-container nav .back-link:hover{
+    color: #14b3b0;
 }
 
-h3{
+
+/*Começo dos textos*/
+/*Quem somos*/
+.Aboutus-container .About-us{
+    width: 80%;
+    height: 450px;
+    text-align: center;
+    background-color: #14b3b0;
+    box-shadow: 0 0 20px rgba(0, 0, 0.1);
+    margin-left: 130px;
+    border-radius: 20px;
+}
+
+.Aboutus-container .About-us .users{
+    width: 100px;
+    margin: 50px 0px 0px 5px;
+    color: #f5f5f5;
+}
+
+.Aboutus-container .About-us h3{
     padding-top: 20px;
     margin-bottom: 30px;
     font-size: 2rem;
-    color:#1C1C1C;
+    color: #FFF;
 }
-p{
 
-    padding: 30px;
-    color: #222222;
-    font-size: 18px;
+
+/*Nossas metas*/
+.Aboutus-container .About-us-Reasons{
+    width: 80%;
+    height: 450px;
+    text-align: center;
+    background-color: #14b3b0;
+    box-shadow: 0 0 20px rgba(0, 0, 0.1);
+    margin-left: 130px;
+    border-radius: 20px;
+}
+
+.Aboutus-container .About-us-Reasons .clipBoard{
+    width: 100px;
+    margin: 50px 0px 0px 5px;
+    color: #f5f5f5;
+}
+
+.Aboutus-container .About-us-Reasons h3{
+    padding-top: 20px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color:#FFF;
+}
+
+
+/*Nossos Objetivos*/
+.Aboutus-container .About-us-Objectives{
+    width: 80%;
+    height: 500px;
+    text-align: center;
+    background-color: #14b3b0;
+    box-shadow: 0 0 20px rgba(0, 0, 0.1);
+    margin-left: 130px;
+    border-radius: 20px;
+}
+
+.Aboutus-container .About-us-Objectives .objectives{
+    width: 100px;
+    margin: 50px 0px 0px 5px;
+    color: #f5f5f5;
+}
+
+.Aboutus-container .About-us-Objectives h3{
+    padding-top: 20px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color:#FFF;
+}
+
+/*Textos dentro das divs*/
+.Aboutus-container .About-us, .About-us-Reasons, .About-us-Objectives p{
+    padding-left: 250px;
+    padding-right: 250px;
+    margin-bottom: 50px;
+    color: #f5f5f5;
+    font-size: 1.8rem;
     line-height: 32px; 
 }    
-
-.logo-1{
-    width: 150px;
-    margin-top: 2vh;
-    margin-bottom: 10px;
-    margin-left: 60px;
-}
-.maos{
-    width: 100px;
-    margin-top: 30px;
-    margin-left: 17px;
-}
-.objetivos{
-    width: 100px;
-    margin-top: 30px;
-    margin-left: 17px;
-}
-.prancheta{
-    width: 100px;
-    margin-top: 30px;
-    margin-left: 17px;
-}
