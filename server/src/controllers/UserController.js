@@ -44,6 +44,7 @@ export default {
 	},
 	//create user
 	async create(req, res) {
+		console.log('criando user...')
 		const { name, email, whatsapp, image_url, city, uf, password } = req.value.body
 		const hashed_pass = await argon2.hash(password)
 
@@ -55,7 +56,7 @@ export default {
 		const token = await jwt.generateToken({ user_id: id }) //gerando token para auth
 
 		try {
-			await u.insert({
+			await connection('users').insert({
 				id,
 				name,
 				email,

@@ -17,7 +17,6 @@ export default function Register() {
 	const [email, changeMail] = useState('')
 	const [whats, changeWhats] = useState('')
 	const [password, changePass] = useState('')
-	const [imageUrl, setImageUrl] = useState('')
 
 	const [selectedUf, setSelectedUf] = useState('')
 	const [selectedCity, setSelectedcity] = useState('')
@@ -48,33 +47,32 @@ export default function Register() {
 
 	async function submitRegister(e) {
 		e.preventDefault()
+		if(password.length < 6) return alert('A senha deve conter no mínimo 6 dígitos!')
 
-		api
-			.post("/signup", {
-        name: name,
-        email: email,
-        whatsapp: whats,
-        password: password,
-        image_url: imageUrl,
-        city: selectedCity,
-        uf: selectedUf,
-      })
-			.then(res => {
-				console.log(res, 'res')
-				localStorage.removeItem('@Trampae:token')
-				//confirmação
-				localStorage.setItem('@Trampae:token', `Bearer ${res.data.token}`)
+		api.post('/signup', {
+			name: name,
+			email: email,
+			whatsapp: whats,
+			password: password,
+			city: selectedCity,
+			uf: selectedUf,
+		})
+		.then(res => {
+			console.log(res, 'res')
+			localStorage.removeItem('@Trampae:token')
+			//confirmação
+			localStorage.setItem('@Trampae:token', `Bearer ${res.data.token}`)
 
-				setTimeout(() => {
-					goToLogin()
-				}, 2000)
-			})
-			.catch(e => {
-				localStorage.removeItem('@Trampae:token')
+			setTimeout(() => {
+				goToLogin()
+			}, 2000)
+		})
+		.catch(e => {
+			localStorage.removeItem('@Trampae:token')
 
-        alert(e);
-        console.log(e);
-			})
+			console.log(e)
+			alert(e)
+		})
 	}
 	function goToLogin() {
 		window.location = '/'
@@ -100,7 +98,7 @@ export default function Register() {
 						<Input type="text" name="Nome Completo" onChange={e => changeName(e.target.value)} />
 						<Input type="Email" name="E-mail" onChange={e => changeMail(e.target.value)} />
 						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
-						<Input type="text" name="Link de sua foto" onChange={e => setImageUrl(e.target.value)} />
+
 						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
 						<div className="location">
 							<Select

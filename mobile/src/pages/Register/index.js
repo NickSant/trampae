@@ -67,7 +67,7 @@ export default function Index(){
 
 
     //submit
-    function submit(){
+    async function submit(){
         AsyncStorage.clear();
         
         //Criar gif para aguardar! no onclick do button!!!
@@ -89,21 +89,17 @@ export default function Index(){
             body:JSON.stringify(body),
         }).then( res =>{
             res.json().then( (data) => {
-
+                console.log(data, 'data')
                 const token = data.token;
                 AsyncStorage.setItem('token',token);
-                ToastAndroid.show(`Usuário ${body.name} criado com sucesso!\nVocê será redirecionado à Home!`, ToastAndroid.LONG )
-                nav.navigate('home')
+                ToastAndroid.show(`Usuário ${body.name} criado com sucesso!\nVocê será redirecionado ao login!`, ToastAndroid.LONG )
+                nav.navigate('login')
             } )
         })
-        .catch(e =>console.log(e))
-
-        // api.post('/signup',body)
-        // .then( res =>{
-        //     console.log(res.data);
-        //     console.log(res.status)
-        // } )
-        // .catch(e => console.log(e)) 
+        .catch(e =>{
+            console.log(e)
+            ToastAndroid.show(`Erro: ${e.Error}`, ToastAndroid.LONG)
+        })
     }
 
     return(
@@ -161,7 +157,7 @@ export default function Index(){
                             onValueChange={ value => setPickedUf(value) }
                             style={estilo.input}
                         >
-                            <Picker.Item label="UF" value="default" />
+                            <Picker.Item label="UF"  value="default" />
                             {ufs.map( uf =>{
                                 return(
                                     <Picker.Item label={uf} value={uf} key={uf} />
@@ -202,8 +198,8 @@ export default function Index(){
                             allowFontScaling={false}
                         />
                     </View>
-                    <TouchableOpacity style={estilo.button}>
-                        <Text onPress={submit} style={estilo.p_button}>Cadastrar</Text>
+                    <TouchableOpacity onPress={submit} style={estilo.button}>
+                        <Text style={estilo.p_button}>Cadastrar</Text>
                     </TouchableOpacity>
                     
                     <TouchableOpacity onPress={backToLogin} style={estilo.link_cadastro}>

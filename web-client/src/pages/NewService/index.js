@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import InputMask from 'react-input-mask'
 import { Link } from "react-router-dom";
 import "./styles.css";
 
@@ -82,11 +83,15 @@ export default function NewService() {
               name="Descrição"
             />
             <div className="small-input-wrapper">
-              <Input
-                onChange={(e) => setPrice(e.target.value)}
+              {/* <Input
+                onChange={(e) => {
+                  const n = e.target.value
+                  if(n > 0) setPrice(n)
+                }}
                 type="number"
                 name="Pagamento"
-              />
+              /> */}
+
               <Select
                 onChange={(e) => setSelectedUf(e.target.value)}
                 name="UF"
