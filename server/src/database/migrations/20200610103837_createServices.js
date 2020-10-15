@@ -5,14 +5,16 @@ exports.up = function(knex) {
         table.decimal('price').notNullable()
         table.string('title').notNullable()
         table.string('description').notNullable()
-        table.integer('number_participants').notNullable()
         table.string('city').notNullable()
         table.string('uf', 2).notNullable()
 
         table.string('user_id').notNullable().references('id').inTable('users')
 
-        table.integer('id_category',10).unsigned()
-        .notNullable().references('id').inTable('category')
+        table.integer('category_id',10).unsigned()
+        .notNullable().references('id').inTable('categories')
+
+        table.integer('service_provider_id').unsigned()
+        .notNullable().references('id').inTable('service_providers')
   })
 }
 
