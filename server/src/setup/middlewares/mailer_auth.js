@@ -5,6 +5,7 @@ import Util from '../../helpers/Util';
 
 import Model from '../../models/Model'
 const u = new Model('users')
+const cp = new Model('change_pass_occurrences')
 
 const {handleError} = new Util;
 
@@ -15,7 +16,13 @@ module.exports = async function mailerAuth(req, res, next){
 
         if(url_hash === undefined || url_hash === null || typeof url_hash === undefined) return handleError(res,401,'incompleted_info')
         
-        const user = await u.get({hash_url_to_change_pass: url_hash}, true)
+        
+        const occurence = await cp.get({hash_url: url_hash}, true)
+
+        
+        if(!occurence.user_id || occurence.user_id === undefined) return handleError(res, 401, 'unauthorized')
+
+        const user = await u.get({id: occurence.user_id}, true)
         console.log(user)
 
         if(!user) return handleError(res, 401, 'unauthorized')
@@ -27,6 +34,6 @@ module.exports = async function mailerAuth(req, res, next){
 
         next()
     }catch(e){
-        return handleError(res, 401, 'unauthorized');
+        return handleError(res, 401, 'unauthorized(catch)');
     }
 }
