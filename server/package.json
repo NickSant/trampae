@@ -8,7 +8,8 @@
     "build": "babel src -s -D -d dist --presets env",
     "start": "node dist/server.js",
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "down":"knex migrate:rollback --all"
   },
   "keywords": [],
   "author": "",

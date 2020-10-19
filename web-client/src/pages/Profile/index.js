@@ -1,54 +1,96 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React from 'react';
+import WhatsAppIcon from '../../assets/whatsapp.svg'; 
+import { 
+  Container,
+  ProfilePicture,
+  ProfileInformation,
+  Bicos,
+  Title,
+  Stars,
+  StarIcon,
+  IconLocation,
+  IconJob,
+  InformationsAboutPerson
+  } from './styles';
+import NavBar from '../../components/Navbar';
+import ProfileImg from '../../assets/user.png';
 
-import { useAuth } from '../../contexts/authContext'
 
-import logoImg from '../../assets/logo.png'
-import api from '../../services/api'
+//---Começo do Front-end---//
+function Profile() {
+  return(
+    <Container>
+      <NavBar />
 
-import Input from '../../components/Input'
-import Error from '../../components/Error'
+      <ProfilePicture>
+        <img src={ProfileImg} alt="user" />
+      </ProfilePicture>
 
-import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
+      <ProfileInformation>
+        <h1>João da Silva (JS) </h1>
+        <p>Web Developer Junior HTML | CSS | JavaScript | ReactJS | Node.JS | </p>
+        <hr />
 
-require('dotenv/config')
+      <InformationsAboutPerson>
+        <IconLocation />
+        <strong>São Bernardo do Campo</strong><span>SP</span>
 
-const Profile =() => {
-	const history = useHistory()
+        <IconJob />
+        <strong>Total de trampos realizados: </strong><span>3</span>
 
-	const { user } = useAuth()
+        <img src={WhatsAppIcon}alt="whats" />
+        <span>(11)978221343</span>
+      </InformationsAboutPerson>
 
-	const userFields = Array('name', 'email', 'city', 'uf', 'total_trampos', 'whatsapp')
-	function goToHome() {
-		history.push('/home')
-	}
-	useEffect(function(){
-		console.log(user)
-	})
+        <hr />
 
-	return (
-		<Box>
-			<ActiveSection>
-				<Header>
-					<img src={logoImg} alt="trampae_icon" title="Trampaê"/>
-					<a href="/">Voltar</a>	
-				</Header>
+        <Bicos>
+          <Title>Lavar Roupa</Title>
+        <Stars>
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+        </Stars>
+        </Bicos>
 
-				<FormContainer>
-					<Title> Perfil {user.name}! </Title>
-				</FormContainer>
-			</ActiveSection>
-			<DisabledSection>
-				<h2>Dados</h2>
-				{userFields.map(field =>(
-					<div>
-						<strong>{field}:</strong> {user[field]}
-					</div>) 
-				)}
+        <Bicos>
+          <Title>Design no DreamWeaver</Title>
+        <Stars>
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+        </Stars>
+        </Bicos>
 
-			</DisabledSection>
+        <Bicos>
+          <Title>Limpar Quintal</Title>
+        <Stars>
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+        </Stars>
+        </Bicos>
 
-		</Box>
-	)
+        <Bicos>
+          <Title>Limpar cachorro do vizinho</Title>
+        <Stars>
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+          <StarIcon />
+        </Stars>
+        </Bicos>
+
+      </ProfileInformation>
+  </Container>
+  );
 }
+
 export default Profile;
