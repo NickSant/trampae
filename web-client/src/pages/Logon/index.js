@@ -33,17 +33,15 @@ export default function Logon() {
 	const { signIn } = useAuth()
 
 	async function submit(e) {
-		e.preventDefault();
-		const isValidated = await signIn({ mail, pass });
-		isValidated ? goToHome() : alert("Email ou senha incorretos, tente novamente!");
+		e.preventDefault()
+		if(!mail.includes('@') || !mail.includes('.')) return alert('E-mail inválido!')
+		else if(mail === undefined || mail === '' || pass === undefined || pass === '') return alert('Credenciais inválidas')
+		const isValidated = await signIn({ mail, pass })
+		isValidated ? goToHome() : alert("Email ou senha incorretos, tente novamente!")
 	}
 	function goToHome() {
 		history.push('/home')
 	}
-
-	//---Final API---//
-
-
 
 	//---Começo do Front-end---//
 	return (

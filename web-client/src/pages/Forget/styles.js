@@ -89,7 +89,7 @@ export const InputEmail = styled.input`
   border: none;
   border-radius: 10px;
   padding: 24px;
-  transition: linear; 
+  transition: linear;  
     
   &:focus{
     border-left: 10px solid #14b3b0;

@@ -4,7 +4,12 @@ import routes from './routes';
 import path from 'path';
 require('dotenv').config();
 
+const port = process.env.PORT;
+const host = process.env.HOST;
+
 const app = express();
+
+
 app.use(express.json());
 app.use(cors());
 
@@ -16,10 +21,6 @@ app.use('/uploads', express.static(path.resolve(__dirname,'..','uploads')));
 app.use(routes); 
 
 
-
-
-const port = process.env.PORT;
-const host = process.env.HOST;
 app.listen(port, ()=>{   
     console.log(`Running server at http://${host}:${port}`);
 });
