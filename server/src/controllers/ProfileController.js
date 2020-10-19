@@ -145,9 +145,7 @@ export default {
 					<small>OBS: o link expira em 24h.</small>
 				`
 
-				const now = mysqlNowFormat()
-
-				
+				const now = mysqlNowFormat()				
 
 				cp.insert({user_id: user.id, hash_url: urlHash, created_at: now}).then( a => {
 					mailer.setMailConfigs(mail, subject, body)
