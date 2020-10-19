@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
+import "./styles.js";
+import { 
+      Container, 
+      ContainerLeft, 
+      FormContainer, 
+      InputEmail 
+      } from './styles'; 
+
+import LogoImg from "../../assets/logo.png";
+
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-
-import "./styles.css";
-
-import logoImg from "../../assets/logo.png";
 import api from "../../services/api";
 
-import Input from "../../components/Input";
+
+
+
+//---Começo API---//
 require('dotenv/config');
 
 export default function Forget() {
@@ -51,35 +60,23 @@ export default function Forget() {
     history.push('/');
   }
 
+//---Final API---//
+
+//---Começo do Front-end---//
   return (
-    <div className="container">
-      <div className="box">
-        <div className="outra">
-          <div className="login-header">
-            <img src={logoImg} alt="Trampaê"></img>
-          </div>
-          <div className="form-container">
-            <h1 className="title"> Digite seu email! </h1>
-          
-            <form>
-              <Input
-                onChange={ e => setMail(e.target.value)}
-                type="email"
-                name="E-mail"
-              />
-              <button
-                className="back-link"
-                onClick={submit}
-                className="button"
-                type="submit"
-              >
-                Entrar
-              </button>
-            </form>
-            
-          </div>
-        </div>
-      </div>
-    </div>
+      <Container>
+        
+        <ContainerLeft>
+          <h1>Recupere sua senha e junte-se a nossa comunidade!</h1>
+        </ContainerLeft>
+             
+        <FormContainer>
+          <img src={LogoImg} alt="Logo" />
+          <h1>Digite Seu email Aqui!</h1>
+          <InputEmail placeholder="E-mail"/>
+          <a>Solicitar troca de senha</a>
+          <a href="/">Voltar para o login!</a>
+        </FormContainer>
+      </Container>
   );
 }

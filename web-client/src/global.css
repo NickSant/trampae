@@ -1,11 +1,28 @@
-
-
 *{
     margin: 0;
     padding: 0;
     outline: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --primary: #14b3b0;
+    --secundary: #121429;
+    --black: #000;
+    --gray: #333;
+    --light-gray: #cccccc;
+    --white: #fff;
+    --ice: #f5f5f5;
+    --red: #ff0000;
+    --green: #50cc5d;
+    --dark-green: #3bad47;
+    --yellow: #edcb07;
+    --orange: #ed5909;
+    --purple: #5e0ee8;
+    --gmail: #b53527;
+    --blue: #0073b2;
+}
+
 html{
     font-size: 62.5%;
 }

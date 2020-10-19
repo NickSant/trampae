@@ -148,6 +148,7 @@ export default {
 				const now = mysqlNowFormat()
 
 				
+
 				cp.insert({user_id: user.id, hash_url: urlHash, created_at: now}).then( a => {
 					mailer.setMailConfigs(mail, subject, body)
 					mailer.send().then(send => {
