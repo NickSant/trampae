@@ -37,10 +37,8 @@ export default function Forget() {
         // temporário
         console.log('erro');
       }
-
       localStorage.clear();
       const mail_auth_token = res.data.auth_token;
-      localStorage.setItem( process.env.REACT_APP_TOKEN_MAIL , mail_auth_token);
 
       setTimeout(() => { 
 

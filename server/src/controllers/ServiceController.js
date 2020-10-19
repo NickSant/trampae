@@ -66,7 +66,7 @@ export default {
 				city,
 				uf,
 				user_id,
-				id_category
+				category_id: id_category
 			})
 		} catch (e) {
 			return handleError(response, 400, `Create Service Error: ${e}`)

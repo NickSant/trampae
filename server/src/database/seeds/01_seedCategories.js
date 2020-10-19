@@ -1,5 +1,5 @@
 exports.seed = async function seed(knex){
-    await knex('category').insert([
+    await knex('categories').insert([
         { title:'Pedreiro'},
         { title:'Doméstico'},
         { title:'Agricultura'},

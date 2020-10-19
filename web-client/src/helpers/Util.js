@@ -29,13 +29,9 @@ class Util{
         try{
             const response = await api.post('/verfiy-url-hash',{not_middleware:true}, {headers:{url_hash: urlHash}})
             console.log(response,'res')
-            if( response !== undefined && response !== null || !response.Error){
 
-                localStorage.setItem(process.env.REACT_APP_IS_AUTH_CHANGE_PASS, response.data.auth)
-                this.authStatus = true
-            }else{
-                this.authStatus = false
-            }
+            return response !== undefined && response !== null && !response.Error ? true : false
+            
         }catch( { response } ){
             console.log(response)
             alert(response.data.Error)

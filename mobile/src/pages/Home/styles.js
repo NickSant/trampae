@@ -1,6 +1,27 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import Constants from 'expo-constants';
+import React from 'react'
+import {StyleSheet} from 'react-native'
+
+import Constants from 'expo-constants'
+
+import styled from 'styled-components'
+
+const barHeight = Constants.statusBarHeight + 35;
+
+export const Container = styled.View`
+    flex:1;
+
+    padding-top: ${barHeight}px;
+    padding-left:20px;
+    padding-right:20px;
+
+    margin-bottom:10px;
+
+    Text{
+        color:blue !important;
+
+    }
+`;
+
 export default StyleSheet.create({
     container:{
         flex:1,
