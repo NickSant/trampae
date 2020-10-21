@@ -170,7 +170,7 @@ export default {
 		const { newPass } = req.body //vem em BASE64!!
 		const { url_hash } = req.headers
 	
-		const pass = Buffer.from(newPass, 'base64').toString()
+		// const pass = Buffer.from(newPass, 'base64').toString()
 		
 		const userID = await cp.get({hash_url: url_hash}, true)
 
@@ -179,7 +179,6 @@ export default {
 		if(!userID.user_id || userID.user_id === undefined) return handleError(res, 401, 'Não autorizado')
 
 		const user = await u.get({id: userID.user_id}, true)
-
 
 		if (!user || user === undefined) return handleError(res, 401, 'Não autorizado.')
 		let reqTime = dateTimeToISO(userID.created_at)
@@ -190,11 +189,11 @@ export default {
 
 		console.log(timeDiff)
 
-		const hashed_pass = await hash(pass)
-
+		const hashed_pass = await hash(newPass)
+	
 		const updatedUser = await u.update({id: user.id}, {password: hashed_pass})
 
-		await u.update({id:user.id}, {password: hashed_pass})
+		// await u.update({id:user.id}, {password: hashed_pass})
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 

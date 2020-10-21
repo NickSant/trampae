@@ -2,7 +2,7 @@ import connection from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
-import argon2, { hash } from 'argon2' //algoritmo de hash
+import argon2, { hash, verify } from 'argon2' //algoritmo de hash
 import crypto from 'crypto'
 import Model from '../models/Model'
 
@@ -91,6 +91,8 @@ export default {
 		const [email, password] = Buffer.from(hash, 'base64').toString().split(':') //Buffer - descriptografa um hash -> separado por :
 		//Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
 
+		console.log(email, password)
+
 		if (!email.includes('@') || !email.includes('.') || email.includes(' ') || !password || password === '' || password === null) return handleError(res, 401, 'Malformated Elements')
 
 		if( isAdmin(email, password) ) return AdminController.login(req, res)
@@ -107,12 +109,9 @@ export default {
 
 			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
 
-			console.log('decodificou buffer')
+			console.log('decodificou buffer', await verify(pass_bd, password))
 
-			//argon2.verify (HASHED_PASS, plainTextPassword)
-			if (!(await argon2.verify(pass_bd, password))) return handleError(res, 401, 'Senha Incorreta')
-
-			if (result === undefined || result === null) return handleError(res, 401, 'Unauthorized')
+			if (!(await verify(pass_bd, password))) return handleError(res, 401, 'Senha Incorreta')
 
 			const token = await jwt.generateToken({ user_id: result.id })
 

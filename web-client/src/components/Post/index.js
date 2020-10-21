@@ -3,14 +3,16 @@ import React from 'react';
 import { Card, InformationsAboutUser, UserImage, UserName, UserCity, InforomationsAboutService, Title, Description, MoneyAndNumber, Money, ButtonWhatsApp } from './styles';
 import userImg from '../../assets/user.png';
 import WhatsAppIcon from '../../assets/whatsapp.svg';
+import { useHistory } from 'react-router-dom';
 
 function Post() {
+  const hist = useHistory()
   return(
     <Card>
 
       <InformationsAboutUser>
         <UserImage>
-          <img src={userImg} alt="userphoto" />
+          <img onClick={() => hist.push('profile')} src={userImg} alt="userphoto" />
         </UserImage>
 
         <UserName>
@@ -38,7 +40,7 @@ function Post() {
           </button>
         </ButtonWhatsApp>
       </MoneyAndNumber>
-    </Card>
+    </Card> 
   );
 }
 

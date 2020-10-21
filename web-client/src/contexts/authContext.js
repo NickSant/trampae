@@ -31,12 +31,13 @@ function AuthProvider({children}) {
 		}
 
 		return {}
-    })
-
+	})
+		
 	const signIn = useCallback(async ({ mail, pass }) => {
 		//ONLY DEBUG!!
-        // console.log( mail);
-        // console.log(pass);
+        console.log( mail);
+		console.log(pass);
+		
         const basic = `Basic ${btoa(`${mail}:${pass}`)}`
         
 		try {
@@ -45,6 +46,8 @@ function AuthProvider({children}) {
 					authorization: basic,
 				}
 			})
+
+			console.log(response)
             
 			const { token } = response.data
 
