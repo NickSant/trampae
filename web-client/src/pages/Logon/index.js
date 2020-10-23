@@ -22,37 +22,48 @@ import {
 
 //---Começo API---//
 import 'dotenv/config'
+import { useCallback } from 'react'
+import Util from '../../helpers/Util'
+
+
+
 
 export default function Logon() {
 	const history = useHistory()
 
+
 	const [mail, setMail] = useState('')
 	const [pass, setPass] = useState('')
+
 
 	const [user, setUser] = useState({})
 
 	useEffect(() => localStorage.clear(), [])
+
+
 
 	const { signIn } = useAuth()
 
 	async function submit(e) {
 		e.preventDefault()
 		
-		// if(!mail.includes('@') || !mail.includes('.')) return toast.error('Credenciais')
-		// else if(mail === undefined || mail === '' || pass === undefined || pass === '') return toast.error('Credenciais inválidas');
-		const a = await validate.login(mail, pass)
-		
-		const isValidated = await signIn({ mail, pass })
+		validate.login(mail, pass).then( async res => {
+			if(!res || res.errors || res.message) return false
+			
+			const userExists = await signIn({ mail, pass })
+			if(userExists) goToHome()
+			else toast.error('Email e (ou) senha incorreto(s)')
 
-		console.log(isValidated)
-		// isValidated ? goToHome() : toast('Credenciais inválidas')
-		
+		})
+		.catch((e) => console.log(e))
+
 	}
 	function goToHome() {
-		history.push('/home')
+		const user = Util.getUser()
+		toast.success(`Boa ${user.name}`)
+		setInterval(() => history.push('/home') , 3000)
 	}
 
-	//---Começo do Front-end---//
 	return (
 		<Container>
 			<ActiveSection>

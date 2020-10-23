@@ -11,7 +11,7 @@ export const NavBar = styled.header`
   width: 100%;
   padding: 3rem;
   position: fixed;
-  z-index:10000;
+  z-index:1;
   /* box-shadow: 1px 2px 7px var(--black); */
   border-bottom: 1px solid #cecece;
   background: var(--white);

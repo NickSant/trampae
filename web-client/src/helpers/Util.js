@@ -43,13 +43,9 @@ class Util{
 
     }
 
-
-    static async getValidationsErrors(err){
-        let validationErrors = {}
-        err.inner.forEach( error => {
-            validationErrors[error.path] = error.message
-        })
-        return validationErrors
+    static getUser(){
+        const user = JSON.parse(localStorage.getItem('@Trampae:user'))
+        return !user ? false : user;
     }
 }
 export default Util
