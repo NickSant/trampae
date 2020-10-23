@@ -23,9 +23,6 @@ function TalkWithUs() {
 					<img src={LandingImg} size={30} alt="Landing" />
 					<Title>Fale conosco e ajude a nossa plataforma a ser cada vez melhor</Title>
 				</ContainerBanner>
-
-				
-				
 				<img src={WhatsAppIcon} alt="whats" />
 				<IconEmail />
 				<IconPhone />

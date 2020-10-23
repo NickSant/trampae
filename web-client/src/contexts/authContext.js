@@ -35,8 +35,7 @@ function AuthProvider({children}) {
 		
 	const signIn = useCallback(async ({ mail, pass }) => {
 		//ONLY DEBUG!!
-        console.log( mail);
-		console.log(pass);
+        
 		
         const basic = `Basic ${btoa(`${mail}:${pass}`)}`
         
@@ -47,13 +46,9 @@ function AuthProvider({children}) {
 				}
 			})
 
-			console.log(response)
-            
 			const { token } = response.data
 
 			const user = await me(token)
-
-			
 
 			localStorage.setItem('@Trampae:token', token)
 			localStorage.setItem('@Trampae:user', JSON.stringify(user));

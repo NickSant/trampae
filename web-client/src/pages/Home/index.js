@@ -13,52 +13,68 @@ import {
 	ButtonFilter
 } from './styles.js'
 
+
 import NavBar from '../../components/Navbar';
 import Post from '../../components/Post';
 import Select from '../../components/Select';
 
+
+
 //--Começo do Front-end---//
 export default function Home() {
+
 	return (
-		<Container>
+		<>
 			<NavBar />
+			<main>
+				<Container>
 
-			<ContainerLeft />
+					<ContainerLeft />
 
-			<ContainerMiddle>
+					<ContainerMiddle>
 
-				<ContainerPosts>
-					<Post />
-					<Post />
-				</ContainerPosts>
+						<ContainerPosts>
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+							<Post />
+						</ContainerPosts>
 
-			</ContainerMiddle>
+					</ContainerMiddle>
 
-			<ContainerRight />
+					<ContainerRight />
 
-			{/* Filtro */}
-			<Modal>	
-				<Filtro>
-					<Header>
-						<h1>Filtro</h1>
-						<IconTrash />
-					</Header>
+					{/* Filtro */}
+					<Modal>	
+						<Filtro>
+							<Header>
+								<h1>Filtro</h1>
+								<IconTrash />
+							</Header>
 
-					<Selects>
-						<h1>Estado</h1>
-						<Select />
-						<h1>Cidade</h1>
-						<Select />
-					</Selects>
+							<Selects>
+								<h1>Estado</h1>
+								<Select />
+								<h1>Cidade</h1>
+								<Select />
+							</Selects>
 
-					<ButtonFilter>
-						<button>Filtrar</button>
-					</ButtonFilter>
-				</Filtro>
-			</Modal>
-			{/* Filtro */}
-			
-		</Container>
+							<ButtonFilter>
+								<button>Filtrar</button>
+							</ButtonFilter>
+						</Filtro>
+					</Modal>
+					{/* Filtro */}
+					
+				</Container>
+			</main>	
+		</>
 	);
 
 }

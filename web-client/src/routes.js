@@ -24,9 +24,10 @@ export default function Routes() {
 
                 <PrivateRoute exact={true} component={Home} path="/home" />
                 <PrivateRoute exact={true} component={Profile} path="/profile" />
+
                 <Route exact={true} component={Recover} path="/recover/:url_hash"/>
 
-                <Route path="/*" component={() =>(<div> NOT FOUND COMPONENT!!! </div>)} />
+                <Route path="/*" component={() =>(<div> <h1>404!!!</h1>  </div>)} />
             </Switch>
         </BrowserRouter>
     )
