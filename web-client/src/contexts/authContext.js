@@ -66,7 +66,6 @@ function AuthProvider({children}) {
             localStorage.removeItem('@Trampae:user')
 
 			console.log(error)
-			window.location = '/'
 		}
 	}, [])
 

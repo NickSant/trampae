@@ -34,7 +34,7 @@ export default function Home() {
 					<ContainerMiddle>
 
 						<ContainerPosts>
-							<Post />
+							<Post user={{id:1, a:'b'}} />
 							<Post />
 							<Post />
 							<Post />

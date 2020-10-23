@@ -4,7 +4,10 @@ import { useAuth } from '../../contexts/authContext'
 import api from '../../services/api'
 import logoImg from '../../assets/logo.png'
 import Input from '../../components/Input'
-import Error from '../../components/Error'
+
+import validate from '../../helpers/validators'
+
+import {toast, ToastContainer} from 'react-toastify'
 
 import {
 	Container,
@@ -18,7 +21,7 @@ import {
 
 
 //---Começo API---//
-require('dotenv/config')
+import 'dotenv/config'
 
 export default function Logon() {
 	const history = useHistory()
@@ -34,10 +37,16 @@ export default function Logon() {
 
 	async function submit(e) {
 		e.preventDefault()
-		if(!mail.includes('@') || !mail.includes('.')) return alert('E-mail inválido!')
-		else if(mail === undefined || mail === '' || pass === undefined || pass === '') return alert('Credenciais inválidas')
+		
+		// if(!mail.includes('@') || !mail.includes('.')) return toast.error('Credenciais')
+		// else if(mail === undefined || mail === '' || pass === undefined || pass === '') return toast.error('Credenciais inválidas');
+		const a = await validate.login(mail, pass)
+		
 		const isValidated = await signIn({ mail, pass })
-		isValidated ? goToHome() : alert("Email ou senha incorretos, tente novamente!")
+
+		console.log(isValidated)
+		// isValidated ? goToHome() : toast('Credenciais inválidas')
+		
 	}
 	function goToHome() {
 		history.push('/home')

@@ -5,8 +5,10 @@ import userImg from '../../assets/user.png';
 import WhatsAppIcon from '../../assets/whatsapp.svg';
 import { useHistory } from 'react-router-dom';
 
-function Post() {
+function Post({user, serviceTitle, serviceDescription, servicePrice}) {
   const hist = useHistory()
+
+  console.log(user)
   return(
     <Card>
 

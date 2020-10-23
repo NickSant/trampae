@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import api from '../services/api'
 import { me } from '../contexts/authContext'
+import { ValidationError } from 'yup'
 
 class Util{
 
@@ -40,6 +41,15 @@ class Util{
             return false
         }
 
+    }
+
+
+    static async getValidationsErrors(err){
+        let validationErrors = {}
+        err.inner.forEach( error => {
+            validationErrors[error.path] = error.message
+        })
+        return validationErrors
     }
 }
 export default Util
