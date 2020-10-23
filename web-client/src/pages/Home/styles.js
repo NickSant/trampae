@@ -7,6 +7,11 @@ export const Container = styled.div`
     height: 100vh;
     width: 100%;
     background: var(--white);
+
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 `;
 
 export const ContainerLeft = styled.div`
@@ -32,7 +37,7 @@ export const ContainerMiddle = styled.div`
     height: 100%;
     background-color: var(--ice);
 
-    overflow-y: scroll;
+    overflow-y: auto;
     ::-webkit-scrollbar { 
         width: 1px;
     }
@@ -49,6 +54,8 @@ export const ContainerPosts = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    
 `;
 
 export const ContainerRight = styled.div`

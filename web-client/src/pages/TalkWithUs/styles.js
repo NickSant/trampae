@@ -5,10 +5,17 @@ import styled, {css} from 'styled-components';
 export const Container = styled.div`
     display: flex;
     justify-content: space-between;  
+    /* padding-left:5%;
+    padding-right:5%; */
     flex-direction: column;
     width: 100%;
     height: 100%;
     background-color: var(--ice);
+
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 
     //Horizontal Line//
     > hr {
@@ -36,6 +43,13 @@ export const Container = styled.div`
     }
 `;
 
+
+export const Social = styled.div`
+    h3{
+
+    }
+`
+
 //---Container por volta de tudo---//
 export const ContainerBanner = styled.div`
     display: flex;
@@ -48,8 +62,10 @@ export const ContainerBanner = styled.div`
 
     //LandingImg
     > img {
-        width: 50rem;
-        height: 50rem;
+        margin-top:1rem;
+        max-width: 50rem;
+        max-height: 50rem;
+        
 
         @media(max-width: 780px) {
             display: flex;

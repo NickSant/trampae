@@ -17,25 +17,34 @@ export const Container = styled.div`
             height: 100%;
             flex-direction: column; 
         }
+
+
     
-    > img {
-        width: 30rem;
-        height: 30rem;
-        margin-bottom: -15rem;
-        padding: 2rem;
+    .logoDiv {
+        display:block;
+        img {
+            max-width: 30rem;
+            height: 30rem;
+            
+            padding: 2rem;
+        }
     }
+    
 `;
 
 
 //-----QUEM SOMOS------//
-export const ContainerAboutUs = styled.div`
+
+export const ContainerPost = styled.div`
     width: 90%;
-    height: 45rem;
+    height: 100%;
     margin-bottom: 50px;
-    margin-top: 10rem;
+    &:first-child{
+        margin-top: 100rem !important;
+    }
     text-align: center;
     background-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 0, 0.1);
+    /* box-shadow: 0 0 20px rgba(0, 0, 0.1); */
     border-radius: 20px;
 
     > h3 {
@@ -58,12 +67,16 @@ export const ContainerAboutUs = styled.div`
     }
 
     > p {
-    padding-left: 2rem;
-    padding-right: 2rem;   
-    margin-bottom: 2rem;
-    color: var(--ice);
-    font-size: 1.8rem;
-    line-height: 32px;
+        padding-left: 2rem;
+        padding-right: 2rem;   
+        margin-bottom: 2rem;
+        color: var(--ice);
+        font-size: 1.8rem;
+        line-height: 32px;
+        text-align:justify;
+
+        padding-left:8%;
+        padding-right:8%;
 
         @media(max-width: 1024px) {
                 display: flex;
@@ -99,160 +112,8 @@ export const ContainerAboutUs = styled.div`
                 border-radius: 0;
                 box-shadow: 0 0 0;
     }
-`;
-//------FINAL QUEM SOMOS-------//
+`
 
-
-//------NOSSAS MOTIVAÇÕES-----//
-export const ContainerOurReasons = styled.div`
-    width: 90%;
-    height: 450px;
-    margin-bottom: 40px;
-    text-align: center;
-    background-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 0, 0.1);
-    border-radius: 20px;
-
-    > h3 {
-    margin-bottom: 30px;
-    font-size: 2rem;
-    color:var(--white);
-
-        @media(max-width: 1024px) {
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            border-radius: 0;
-        }
-
-        @media(max-width: 500px) {
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            border-radius: 0;
-        }
-    }
-
-    > p {
-    padding-left: 2rem;
-    padding-right: 2rem;   
-    margin-bottom: 2rem;
-    color: var(--ice);
-    font-size: 1.8rem;
-    line-height: 32px; 
-
-    
-        @media(max-width: 1024px) {
-                display: flex;
-                text-align: center;
-                justify-content: center;
-                font-size: 1rem;
-        }
-
-        @media(max-width: 500px) {
-                display: flex;
-                text-align: justify;
-                font-size: 10px;
-                padding-left: 5rem;
-                padding-right: 3rem;   
-                margin-bottom: 1rem;
-        }
-    }
-
-    //REPONSIVIDADE DO CONTAINER//
-    @media(max-width: 1024px) {
-                display: flex;
-                flex-direction: column; 
-                width: 100%;
-                height: auto;
-                border-radius: 0;
-                box-shadow: 0 0 0;
-    }
-
-    @media(max-width: 500px) {
-                display: flex;
-                width: 120%;
-                height: auto;
-                border-radius: 0;
-                box-shadow: 0 0 0;
-    }
-
-`;
-//-----FINAL NOSSAS MOTIVAÇÕES------//
-
-
-//------NOSSOS OBJETIVOS------//
-export const ContainerOurObjectives = styled.div`
-    width: 90%;
-    height: 500px;
-    margin-bottom: 50px;
-    text-align: center;
-    background-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 0, 0.1);
-    border-radius: 20px;
-
-    > h3 {
-    margin-bottom: 30px;
-    font-size: 2rem;
-    color:var(--white);
-        
-        @media(max-width: 1024px) {
-            display: flex;
-            text-align: center;
-            justify-content: center;
-        }
-
-        @media(max-width: 500px) {
-            display: flex;
-            text-align: center;
-            justify-content: center;
-        }
-    }
-
-    > p {
-        
-    padding-left: 2rem;
-    padding-right: 2rem;   
-    margin-bottom: 2rem;
-    color: var(--ice);
-    font-size: 1.8rem;
-    line-height: 32px; 
-
-    
-        @media(max-width: 1024px) {
-                display: flex;
-                text-align: center;
-                justify-content: center;
-                font-size: 1rem;
-        }
-    
-        @media(max-width: 500px) {
-                display: flex;
-                text-align: justify;
-                font-size: 10px;
-                padding-left: 5rem;
-                padding-right: 3rem;   
-                margin-bottom: 1rem;
-        }
-    }
-
-    @media(max-width: 1024px) {
-                display: flex;
-                flex-direction: column; 
-                width: 100%;
-                height: auto; 
-                border-radius: 0;
-                box-shadow: 0 0 0;      
-    }
-
-    @media(max-width: 500px) {
-                display: flex;
-                width: 120%; 
-                height: auto;
-                border-radius: 0;
-                box-shadow: 0 0 0;
-    }
-`;
 //------FINAL NOSSOS OBJETIVOS------//
 
 

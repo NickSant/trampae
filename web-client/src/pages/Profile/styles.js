@@ -9,6 +9,11 @@ export const Container = styled.div`
     flex-direction: column;
     background: var(--ice);
 
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
     @media(max-width: 840px) and (max-height: 840px) {
         display: flex;
         flex-direction: column;
@@ -49,14 +54,14 @@ export const ProfileInformation = styled.div`
         text-align: center;
         padding: 1rem;
         font-weight: bold;
-        margin-left: 2%;
+        
     }
 
     p {
         color: var(--gray);
         text-align: center;
         padding: 1rem;
-        margin-left: 2%;
+        
     }
 `;
 //---FIM DO NOME E DESCRIÇÃO---//
@@ -64,13 +69,13 @@ export const ProfileInformation = styled.div`
 //---INFORMAÇÕES---//
 export const InformationsAboutPerson = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     padding: 2rem;
 
     //ICONE DO WHATS
-    > img {
+     img {
         width: 50px;
         height: 50px;
         padding: 1rem;
@@ -78,7 +83,15 @@ export const InformationsAboutPerson = styled.div`
         background-color: var(--green);
     }
 
-    > strong, span {
+    > div{
+        display: flex;
+        align-items: center;
+        strong, span{
+            margin-left:5px;
+        }
+    }
+
+     strong, span {
         font-size: 16px;
         margin-bottom: 1px;
         color: var(--gray);
@@ -97,7 +110,7 @@ export const Bicos = styled.div`
     height: auto;
     margin: 2rem auto 0 auto;
     border-radius: 10px;
-    box-shadow: 1px 1px 7px var(--black);
+    border:1px solid #cecece;
     background: var(--white);
 `;
 
@@ -107,7 +120,7 @@ export const Title = styled.h1`
     text-align: center;
     padding: 1rem;
     font-weight: bold;
-    margin-left: 2%;
+    /* margin-left: 2%; */
 `;
 
 //---ICONE ESTRELA---//

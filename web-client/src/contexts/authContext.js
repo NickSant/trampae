@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState, useHistory } from 'react'
+import { toast } from 'react-toastify';
 import Util from '../helpers/Util';
 
 import api from '../services/api'
@@ -15,6 +16,7 @@ async function me(token){
 		}
 	})
 
+
 	if(res.data) res.data.image_url = Util.api_base_url(res.data.image_url)
 	
 	return !res.data ? false : res.data
@@ -27,16 +29,15 @@ function AuthProvider({children}) {
 		if (token && user) {
 			api.defaults.headers.authorization = `Bearer ${token}`
 
-			return { token, user: JSON.parse(user) }
+			console.log(user)
+			return { token, user }
 		}
 
 		return {}
-    })
-
+	})
+		
 	const signIn = useCallback(async ({ mail, pass }) => {
-		//ONLY DEBUG!!
-        // console.log( mail);
-        // console.log(pass);
+
         const basic = `Basic ${btoa(`${mail}:${pass}`)}`
         
 		try {
@@ -45,12 +46,10 @@ function AuthProvider({children}) {
 					authorization: basic,
 				}
 			})
-            
+
 			const { token } = response.data
 
 			const user = await me(token)
-
-			
 
 			localStorage.setItem('@Trampae:token', token)
 			localStorage.setItem('@Trampae:user', JSON.stringify(user));
@@ -61,14 +60,11 @@ function AuthProvider({children}) {
             setData({ token, user });
 
             return true;
-            
 
 		} catch (error) {
             localStorage.removeItem('@Trampae:token')
-            localStorage.removeItem('@Trampae:user')
-
-			console.log(error)
-			window.location = '/'
+			localStorage.removeItem('@Trampae:user')
+			toast.error(`Erro...`)
 		}
 	}, [])
 

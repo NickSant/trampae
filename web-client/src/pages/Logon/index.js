@@ -4,7 +4,10 @@ import { useAuth } from '../../contexts/authContext'
 import api from '../../services/api'
 import logoImg from '../../assets/logo.png'
 import Input from '../../components/Input'
-import Error from '../../components/Error'
+
+import validate from '../../helpers/validators'
+
+import {toast, ToastContainer} from 'react-toastify'
 
 import {
 	Container,
@@ -18,32 +21,49 @@ import {
 
 
 //---Começo API---//
-require('dotenv/config')
+import 'dotenv/config'
+import { useCallback } from 'react'
+import Util from '../../helpers/Util'
+
+
+
 
 export default function Logon() {
 	const history = useHistory()
 
+
 	const [mail, setMail] = useState('')
 	const [pass, setPass] = useState('')
+
 
 	const [user, setUser] = useState({})
 
 	useEffect(() => localStorage.clear(), [])
 
+
+
 	const { signIn } = useAuth()
 
 	async function submit(e) {
 		e.preventDefault()
-		if(!mail.includes('@') || !mail.includes('.')) return alert('E-mail inválido!')
-		else if(mail === undefined || mail === '' || pass === undefined || pass === '') return alert('Credenciais inválidas')
-		const isValidated = await signIn({ mail, pass })
-		isValidated ? goToHome() : alert("Email ou senha incorretos, tente novamente!")
+		
+		validate.login(mail, pass).then( async res => {
+			if(!res || res.errors || res.message) return false
+			
+			const userExists = await signIn({ mail, pass })
+			if(userExists) goToHome()
+			else toast.error('Email e (ou) senha incorreto(s)')
+
+		})
+		.catch((e) => console.log(e))
+
 	}
 	function goToHome() {
-		history.push('/home')
+		const user = Util.getUser()
+		toast.success(`Boa ${user.name}`)
+		setInterval(() => history.push('/home') , 3000)
 	}
 
-	//---Começo do Front-end---//
 	return (
 		<Container>
 			<ActiveSection>

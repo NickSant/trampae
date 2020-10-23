@@ -10,7 +10,9 @@ export const Card = styled.div`
     width: 500px;
     height: auto;
     border-radius: 4px;
-    box-shadow: 1px 2px 7px var(--black);
+    /* box-shadow: 1px 2px 7px var(--black); */
+    border:1px solid #cecece;
+    
 `;
 
 //---Informações sobre usuário---//
@@ -65,7 +67,7 @@ export const InforomationsAboutService = styled.div`
     flex-direction: column;
     width: 100%;
     height: 105px;
-    padding: 1rem;
+    padding: 5rem;
     background-color: var(--white);
 
     @media(max-width: 1000px) {
@@ -103,7 +105,7 @@ export const MoneyAndNumber = styled.div`
     background-color: var(--ice);
     width: 100%;
     height: auto;
-    padding: 1rem;
+    padding: 5rem;
 
     @media(max-width: 1000px) {
         display: flex;

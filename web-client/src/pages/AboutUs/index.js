@@ -1,9 +1,10 @@
 import React from 'react';
 import { 
     Container,
-    ContainerAboutUs, 
-    ContainerOurReasons, 
-    ContainerOurObjectives,  
+    // ContainerAboutUs, 
+    // ContainerOurReasons, 
+    // ContainerOurObjectives,  
+    ContainerPost,
     IconsContainer,
     Footer,
     IconsFooter,
@@ -21,9 +22,11 @@ export default function AboutUs() {
     return (
         <Container>
             <NavBar />
-            <img src={TrampaeLogo} alt="Logo" />
+            <div className="logoDiv">
+                <img src={TrampaeLogo} alt="Logo" />
+            </div>
             {/* QUEM SOMOS */}
-            <ContainerAboutUs>
+            <ContainerPost>
                 <IconsContainer>
                 <FiUsers size={50} className="users" />
                 </IconsContainer>
@@ -31,10 +34,10 @@ export default function AboutUs() {
                 <p className="p">Somos uma plataforma digital que busca unir pessoas interessadas por um serviço informal e pessoas que oferecem esses "bicos".</p>
                 <p className="p">Sabemos que muitas vezes necessitamos de alguém que saiba realizar um determinado serviço em nossas casas 
                 e ou trabalho. Para isso é necessário chamar alguém que saiba resolver tal problema.</p>
-            </ContainerAboutUs>
+            </ContainerPost>
 
             {/*NOSSAS MOTIVAÇÕES*/}
-            <ContainerOurReasons>
+            <ContainerPost>
                 <IconsContainer>
                 <FiClipboard size={50} className="clipBoard" />
                 </IconsContainer>
@@ -44,10 +47,10 @@ export default function AboutUs() {
                     uma vez que, existem pessosas capacitadas a fazerem seviços. Por isso criamos um método
                     ágil e prático, facilitando a vida de pessoas que necessitam de um emprego de forma instantânea.
                 </p>
-            </ContainerOurReasons>
+            </ContainerPost>
 
             {/*NOSSOS OBJETIVOS*/}
-            <ContainerOurObjectives>
+            <ContainerPost>
                 <IconsContainer>
                 <FiCheckCircle size={50} className="objectives" />
                 </IconsContainer>
@@ -57,7 +60,7 @@ export default function AboutUs() {
                     o maior número de pessoas que estejam disponibilizando bicos para a população.
                     Dessa forma, abrir o comércio de uma maneira totalmente inovadora, incentivando pessoas com diferentes tipos de dons,
                     exercendo diferentes tipos de trampos para no fim, seus bicos serem valorizados. </p>
-            </ContainerOurObjectives>
+            </ContainerPost>
 
 
             {/* FOOTER */}

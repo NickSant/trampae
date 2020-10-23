@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 import { FiSearch, FiHome, FiUser, FiHelpCircle, FiPhoneCall, FiUserPlus, FiLogOut } from 'react-icons/fi';
 
+
 export const NavBar = styled.header`
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,7 +11,9 @@ export const NavBar = styled.header`
   width: 100%;
   padding: 3rem;
   position: fixed;
-  box-shadow: 1px 2px 7px var(--black);
+  z-index:1;
+  /* box-shadow: 1px 2px 7px var(--black); */
+  border-bottom: 1px solid #cecece;
   background: var(--white);
 
   @media(max-width: 530px) {
@@ -21,7 +25,7 @@ export const NavBar = styled.header`
 //---Container da esquerda---//
 export const ContainerLeft = styled.div`
     width: 30rem;
-    height: 7rem;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     background-color: var(--white);
@@ -47,7 +51,7 @@ export const ContainerLeft = styled.div`
 
     > p {
       color: #697078;
-      font-size: 13px;
+      font-size: 10px;
 
       @media(max-width: 1120px) {
       display: none;
@@ -120,7 +124,7 @@ export const ContainerMiddle = styled.div`
 //---Container da direita---//
 export const ContainerRight = styled.div`
     width: 30rem;
-    height: 7rem;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     background-color: var(--white);
@@ -165,6 +169,8 @@ export const IconSearch = styled(FiSearch)`
   padding: 5px;
   border-radius: 50%;
   color: #697078;
+
+  
 
   &:hover{
       color: var(--black);
