@@ -6,11 +6,8 @@ import argon2, { hash } from 'argon2' //algoritmo de hash
 import crypto from 'crypto'
 import Model from '../models/Model'
 
-
 require('dotenv/config')
 import AdminController from './AdminController'
-
-
 
 const { handleError, clearString, isAdmin } = new Util()
 
@@ -39,7 +36,6 @@ export default {
 			return item
 		})
 
-
 		return res.json(res_user)
 	},
 	//create user
@@ -67,12 +63,14 @@ export default {
 			})
 			console.log(data)
 		} catch (e) {
-			console.log(e.sqlMessage)
-			if (e.sqlMessage.includes('users_email_unique')) {
-				return handleError(res, 406, 'Duplicated email')
-			} else if (e.sqlMessage.includes('users_whatsapp_unique')) {
-				return handleError(res, 406, 'Duplicated Whatsapp')
+			if (e.sqlMessage) {
+				if (e.sqlMessage.includes('users_email_unique')) {
+					return handleError(res, 406, 'Duplicated email')
+				} else if (e.sqlMessage.includes('users_whatsapp_unique')) {
+					return handleError(res, 406, 'Duplicated Whatsapp')
+				}
 			}
+
 			return handleError(res, 400, `Database Error: ${e}`)
 		}
 
@@ -92,14 +90,13 @@ export default {
 
 		if (!email.includes('@') || !email.includes('.') || email.includes(' ') || !password || password === '' || password === null) return handleError(res, 401, 'Malformated Elements')
 
-		if( isAdmin(email, password) ) return AdminController.login(req, res)
+		if (isAdmin(email, password)) return AdminController.login(req, res)
 
 		try {
-
 			console.log('passou validação')
 
-			const result = await u.get({email}, true)
-			
+			const result = await u.get({ email }, true)
+
 			console.log(result)
 
 			if (!result || result === undefined) return handleError(res, 401, 'User not Found')
@@ -122,7 +119,7 @@ export default {
 				email: result.email,
 				id: result.id,
 				image_url: result.image_url,
-				isAdmin:false
+				isAdmin: false,
 			}
 			res.json({ user: user, token: token })
 		} catch (err) {
