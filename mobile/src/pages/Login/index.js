@@ -26,8 +26,13 @@ export default function Index(){
     const [mail, setMail] = useState('');
     const [pass, setPass] = useState('');
 
+
     function submit(){
+        ToastAndroid.show('Iniciando Login', ToastAndroid.LONG)
+
         AsyncStorage.clear();
+        if(mail === undefined || mail === null || mail == '') return ToastAndroid.show('O email é obrigatório!', ToastAndroid.LONG)
+        if(mail === undefined || pass === null || pass == '') return ToastAndroid.show('A senha é obrigatória!', ToastAndroid.LONG)
         const hash = `Basic ${base64.encode(`${mail}:${pass}`)}`;
 
         fetch(`${api}/login`,{
@@ -55,6 +60,7 @@ export default function Index(){
                 
             })
             .catch(e =>{
+                ToastAndroid.show(`Erro: ${e.Error}`, ToastAndroid.LONG)
                 console.log(e);
             })
         })
@@ -102,8 +108,8 @@ export default function Index(){
                             placeholder='Senha'
                         />
                     </View>
-                    <TouchableOpacity style={estilo.button_entrar}>
-                        <Text onPress={submit} style={estilo.p_button}>Entrar</Text>
+                    <TouchableOpacity onPress={submit} style={estilo.button_entrar}>
+                        <Text style={estilo.p_button}>Entrar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={goToRegister} style={estilo.link_cadastro}>
                         <Text style={estilo.p_link}>Ainda não tem login?</Text>
@@ -111,8 +117,8 @@ export default function Index(){
                         color:'#14b3b0', top:40}}>__________________________________</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={estilo.button_cad}>
-                        <Text onPress={goToRegister} style={estilo.p_button}>Registre-se já!</Text>
+                    <TouchableOpacity onPress={goToRegister} style={estilo.button_cad}>
+                        <Text style={estilo.p_button}>Registre-se já!</Text>
                     </TouchableOpacity>
 
                 </View>

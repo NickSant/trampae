@@ -19,6 +19,8 @@ const util = new Util()
 const mailer = new Mailer()
 const u = new Model('users')
 
+const cp = new Model('change_pass_occurrences')
+
 export default {
 	async profile(req, res) {
 		const { id } = req.params
@@ -143,11 +145,9 @@ export default {
 					<small>OBS: o link expira em 24h.</small>
 				`
 
-				const now = mysqlNowFormat()
+				const now = mysqlNowFormat()				
 
-				
-				u.update({hash_url_to_change_pass:urlHash, req_change_pass_time: now},{id:user.id}).then( (a) =>{
-
+				cp.insert({user_id: user.id, hash_url: urlHash, created_at: now}).then( a => {
 					mailer.setMailConfigs(mail, subject, body)
 					mailer.send().then(send => {
 						if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
@@ -156,8 +156,7 @@ export default {
 							link: link,
 						}).status(200).end()
 					})
-
-				})
+				} )
 				.catch(e =>{
 					handleError(res, 400, e)
 				})
@@ -168,36 +167,43 @@ export default {
 			})
 	},
 	async changePass(req, res) {
-		// const { mail_auth: auth_user } = req //setado no middleware mailer
 		const { newPass } = req.body //vem em BASE64!!
-		const { urlHash } = req.body
-		const pass = Buffer.from(newPass).toString()
-
+		const { url_hash } = req.headers
+	
+		// const pass = Buffer.from(newPass, 'base64').toString()
 		
-		const user = await u.get({hash_url_to_change_pass: urlHash}, true)
+		const userID = await cp.get({hash_url: url_hash}, true)
+
+		if(userID.status) return handleError(res, 401, 'Senha já atualizada!')
+
+		if(!userID.user_id || userID.user_id === undefined) return handleError(res, 401, 'Não autorizado')
+
+		const user = await u.get({id: userID.user_id}, true)
 
 		if (!user || user === undefined) return handleError(res, 401, 'Não autorizado.')
-		let reqTime = dateTimeToISO(user.req_change_pass_time)
+		let reqTime = dateTimeToISO(userID.created_at)
+
 		const timeDiff = await util.timestampDiff(reqTime)
+
 		if(timeDiff >= 24 ) return handleError(res, 401, 'unauthorized')
 
-		const hashed_pass = await hash(pass)
+		console.log(timeDiff)
 
-		
+		const hashed_pass = await hash(newPass)
+	
 		const updatedUser = await u.update({id: user.id}, {password: hashed_pass})
 
-		await connection('users').update('password', hashed_pass).where({id: user.id});
+		// await u.update({id:user.id}, {password: hashed_pass})
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 
-		
-		const currentUser = await u.get({id:user.id}, true)
+		const currentUser = await u.get({id:user.id}, true)		
 
-		delete currentUser.hash_url_to_change_pass
-		delete currentUser.req_change_pass_time
 		delete currentUser.password
 
 		console.log(updatedUser)
+
+		await cp.update({user_id: currentUser.id}, {status: true})
 
 		return res.json({
 			currentUser: currentUser,

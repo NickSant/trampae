@@ -1,10 +1,10 @@
 import 'dotenv/config'
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-//os método da classe com o es6, precisam ser estático - está dando pau
-//um método estático não precisa da instância de um objeto pra ser usado!!
 import api from '../services/api'
 import { me } from '../contexts/authContext'
+import { ValidationError } from 'yup'
+
 class Util{
 
     static api_base_url(op=false){
@@ -15,33 +15,37 @@ class Util{
         return `${process.env.REACT_APP_HOST_API}:${process.env.REACT_APP_PORT_API}`
     }
 
-    static isAuthenticated(){        
+    static async isAuthenticated(){        
         if(localStorage.length === 0 ) return false 
         
-        const token = localStorage.getItem('@Trampae:token');
+        const token = localStorage.getItem('@Trampae:token')
         
-        if( typeof token !== undefined && token !== null && token !== '') return true
-       
-        return false
+        if( typeof token === undefined || token === null || token === '') return false
+
+        const localUser = localStorage.getItem('@Trampae:user')
+        if(!localUser || localUser === '' || typeof localUser !== 'object' || !localUser.id || !localUser.email) return false
+        
+        return true
     }
     static async verifyMailHash(urlHash){
         if(!urlHash) return false
         try{
             const response = await api.post('/verfiy-url-hash',{not_middleware:true}, {headers:{url_hash: urlHash}})
             console.log(response,'res')
-            if( response !== undefined && response !== null || !response.Error){
 
-                localStorage.setItem(process.env.REACT_APP_IS_AUTH_CHANGE_PASS, response.data.auth)
-                this.authStatus = true
-            }else{
-                this.authStatus = false
-            }
+            return response !== undefined && response !== null && !response.Error ? true : false
+            
         }catch( { response } ){
             console.log(response)
             alert(response.data.Error)
             return false
         }
 
+    }
+
+    static getUser(){
+        const user = JSON.parse(localStorage.getItem('@Trampae:user'))
+        return !user ? false : user;
     }
 }
 export default Util

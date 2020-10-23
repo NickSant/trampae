@@ -18,13 +18,13 @@ exports.up = function(knex) {
         table.string('whatsapp')
         table.unique('whatsapp')
 
-        table.integer('total_trampos').defaultTo(0)
+        // table.integer('total_trampos').defaultTo(0)
 
         table.boolean('is_verified_mail').defaultTo(false).notNullable()
 
-        table.string('hash_url_to_change_pass')
-        table.unique('hash_url_to_change_pass')
-        table.timestamp('req_change_pass_time').defaultTo(knex.fn.now())
+        // table.string('hash_url_to_change_pass')
+        // table.unique('hash_url_to_change_pass')
+        // table.timestamp('req_change_pass_time').defaultTo(knex.fn.now())
 
   })
 }

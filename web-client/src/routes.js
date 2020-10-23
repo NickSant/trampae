@@ -9,6 +9,7 @@ import Forget from './pages/Forget'
 import Recover from './pages/Recover'
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
+import TalkWithUs from './pages/TalkWithUs'
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -18,12 +19,15 @@ export default function Routes() {
                 <Route path="/new-service" exact={true} component={NewService} />
                 <Route path="/aboutus" exact={true} component={AboutUs} />
                 <Route path="/forget" exact={true} component={Forget} />
+                <Route path="/profile" exact={true} component={Profile} />
+                <Route path="/talkwithus" exact={true} component={TalkWithUs} />
 
                 <PrivateRoute exact={true} component={Home} path="/home" />
                 <PrivateRoute exact={true} component={Profile} path="/profile" />
+
                 <Route exact={true} component={Recover} path="/recover/:url_hash"/>
 
-                <Route path="/*" component={() =>(<div> NOT FOUND COMPONENT!!! </div>)} />
+                <Route path="/*" component={() =>(<div> <h1>404!!!</h1>  </div>)} />
             </Switch>
         </BrowserRouter>
     )

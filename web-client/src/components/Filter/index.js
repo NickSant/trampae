@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 
-import { Container, Title } from "./styles";
-import Select from "../Select";
-import ibge from "../../services/ibge";
+import { Container, Title, Card, Select, TrashIcon } from './styles';
 
-export default function Filter() {
-  const [ufs, setUfs] = useState([]);
-  const [cities, setCities] = useState([]);
+function Filter() {
+  return(
+      <Container>
+        <Card>
+        <Title>Filtrar Bicos</Title>
+        <TrashIcon />
+        <p>Estado</p>
+        <Select />
+        <p>Cidade</p>
+        <Select />
 
-  const [selected]
-
-  
-
-  return (
-    <Container>
-      <Title> Filtrar Bicos </Title>
-      <Select
-        onChange={(e) => setSelectedUf(e.target.value)}
-        name="UF"
-        children={ufs.map((uf) => {
-          return (
-            <option key={uf} value={uf}>
-              {uf}
-            </option>
-          );
-        })}
-      />
-    </Container>
+        <button>Filtrar</button>
+        </Card>
+      </Container>
   );
 }
+
+export default Filter;

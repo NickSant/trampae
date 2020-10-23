@@ -63,7 +63,6 @@ class Model{
         try{
             const updated = await db(this.table).update(data).where(filterItems)
             if(!updated || updated === undefined || updated == '') return false
-
         }catch(e){
             throw new Error(e)
         }

@@ -6,9 +6,11 @@
   "scripts": {
     "server": "nodemon -w src --exec \"babel-node src/server.js --presets env\"",
     "build": "babel src -s -D -d dist --presets env",
-    "start": "node dist/server.js",
+    "prod": "node dist/server.js",
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "db:down":"knex migrate:rollback --all"
+
   },
   "keywords": [],
   "author": "",

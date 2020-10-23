@@ -1,54 +1,101 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import WhatsAppIcon from '../../assets/whatsapp.svg'
+import { Container, ProfilePicture, ProfileInformation, Bicos, Title, Stars, StarIcon, IconLocation, IconJob, InformationsAboutPerson } from './styles'
+import NavBar from '../../components/Navbar'
+import ProfileImg from '../../assets/user.png'
 
-import { useAuth } from '../../contexts/authContext'
 
-import logoImg from '../../assets/logo.png'
-import api from '../../services/api'
-
-import Input from '../../components/Input'
-import Error from '../../components/Error'
-
-import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
-
-require('dotenv/config')
-
-const Profile =() => {
-	const history = useHistory()
-
-	const { user } = useAuth()
-
-	const userFields = Array('name', 'email', 'city', 'uf', 'total_trampos', 'whatsapp')
-	function goToHome() {
-		history.push('/home')
-	}
-	useEffect(function(){
-		console.log(user)
-	})
-
+//---Começo do Front-end---//
+function Profile() {
+	// const [user, setUser] = useState({})
+	const user = JSON.parse(localStorage.getItem('@Trampae:user')) 
+	// useEffect( () =>{
+	// 	setUser(JSON.parse(localStorage.getItem('@Trampae:user'))) 
+	// 	console.log(user)
+	// }, [] )
+	
 	return (
-		<Box>
-			<ActiveSection>
-				<Header>
-					<img src={logoImg} alt="trampae_icon" title="Trampaê"/>
-					<a href="/">Voltar</a>	
-				</Header>
+		<>
+			<NavBar />
+			<Container>
 
-				<FormContainer>
-					<Title> Perfil {user.name}! </Title>
-				</FormContainer>
-			</ActiveSection>
-			<DisabledSection>
-				<h2>Dados</h2>
-				{userFields.map(field =>(
-					<div>
-						<strong>{field}:</strong> {user[field]}
-					</div>) 
-				)}
+				<ProfilePicture>
+					<img src={ProfileImg} alt="user" />
+				</ProfilePicture>
 
-			</DisabledSection>
+				<ProfileInformation>
+				
+					<h1>  </h1>
+					<p> Web Developer Junior HTML | CSS | JavaScript | ReactJS | Node.JS </p>
+					<hr />
+					
+					<InformationsAboutPerson>
+						<div>
+							<IconLocation />
+							<strong>São Bernardo do Campo</strong>
+							<span>SP</span>
+						</div>
 
-		</Box>
+						<div>
+							<IconJob />
+							<strong>Total de trampos realizados: </strong>
+							<span>3</span>
+						</div>
+						<div>
+							<img src={WhatsAppIcon} alt="whats" />
+							<span>(11)978221343</span>
+						</div>
+					</InformationsAboutPerson>
+
+					<hr />
+
+					<Bicos>
+						<Title>Lavar Roupa</Title>
+						<Stars>
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+						</Stars>
+					</Bicos>
+
+					<Bicos>
+						<Title>Design no DreamWeaver</Title>
+						<Stars>
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+						</Stars>
+					</Bicos>
+
+					<Bicos>
+						<Title>Limpar Quintal</Title>
+						<Stars>
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+						</Stars>
+					</Bicos>
+
+					<Bicos>
+						<Title>Limpar cachorro do vizinho</Title>
+						<Stars>
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+							<StarIcon />
+						</Stars>
+					</Bicos>
+				</ProfileInformation>
+			</Container>
+		</>
 	)
 }
-export default Profile;
+
+export default Profile
