@@ -34,7 +34,8 @@ module.exports = {
         number_participants: Joi.number(),
         id_category: Joi.number(),
         city: Joi.string().required(),
-        uf: Joi.string().length(2).required()
+        uf: Joi.string().length(2).required(),
+        service_provider_id: Joi.string().default(null)
       })
     } 
 }

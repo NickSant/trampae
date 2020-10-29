@@ -13,8 +13,7 @@ exports.up = function(knex) {
         table.integer('category_id',10).unsigned()
         .notNullable().references('id').inTable('categories')
 
-        table.integer('service_provider_id').unsigned()
-        .notNullable().references('id').inTable('service_providers')
+        table.integer('service_provider_id').unsigned().references('id').inTable('service_providers').defaultTo(null)
   })
 }
 

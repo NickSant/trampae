@@ -34,7 +34,7 @@ routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session:
 
 //listar usuários - development - 
 routes.get('/user', UserController.index)
-//Listar serviços - development
+//Listar serviços - development 
 routes.get('/services', ServiceController.index)
 
 //ROTAS EM QUE É NECESSÁRIO AUTH-----------------------------------------------------------------------------
@@ -62,37 +62,33 @@ routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
 routes.get('/search/services', authMiddleware, SearchController.SearchServices)
-routes.get('/search/:id', authMiddleware, SearchController.SearchUsers)
+routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
 
 //rotas admin
-routes.get('/isadmin', adminMiddleware ,(req, res) =>{
-	if(req.headers.isAdmin) 
-		return res.json({isAdmin:true})
-	else
-		return res.json({isAdmin:false})
-})
+routes.get('/isadmin', adminMiddleware ,(req, res) => res.json({isAdmin: req.headers.isAdmin ? true : false}) )
 
 routes.get('/admin/users', adminMiddleware, AdminController.listUsers)
 routes.delete('/admin/users', adminMiddleware, AdminController.deleteUser)
 
 routes.get('admin/services', adminMiddleware, AdminController.listServices)
 routes.delete('admin/services', adminMiddleware, AdminController.deleteService)
+
 //404 routes
 routes.get('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.post('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.put('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.delete('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 
 export default routes

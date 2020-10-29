@@ -29,14 +29,17 @@ export default {
 	},
 	async delete(request, response) {
 		const { id } = request.params
-		const { id: user_id } = request.auth //NÃO ESQUECER DE PASSAR ESSE PARAM NO HEADER
-		try {
-			const service = await connection('services').where('id', id).select('user_id').first()
-		} catch (e) {
-			response.json({ db_error: `erro: ${e}` })
-		}
 
-		if (service.user_id !== user_id) return handleError(response, 401, 'Unauthorized')
+		const { id: user_id } = request.auth //param criado no middleware!
+		
+		
+		const service = await connection('services').where('id', id).first()
+
+		if(service.length <= 0) handleError(response, 400, 'Serviço não encontrado')
+		
+
+		if (service.user_id !== user_id) return handleError(response, 401, 'unauthorized_to_delete_service')
+
 		try {
 			await connection('services')
 				.where({
@@ -44,13 +47,13 @@ export default {
 					user_id: user_id,
 				})
 				.delete()
-			return response.status(204).send()
+			return response.status(204).json({message: `Serviço deletado com sucesso!`})
 		} catch (e) {
 			return handleError(response, 400, `Delete Service Error: ${e}`)
 		}
 	},
 	async create(request, response) {
-		const { title, description, price, number_participants, id_category, city, uf } = request.body
+		const { title, description, price, id_category, city, uf } = request.body
 
 		const data = request.body
 		console.log(data)
@@ -62,7 +65,6 @@ export default {
 				title,
 				description,
 				price,
-				number_participants,
 				city,
 				uf,
 				user_id,
