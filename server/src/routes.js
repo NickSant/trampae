@@ -68,6 +68,7 @@ routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
+routes.put('/services/:id', authMiddleware, ServiceController.edit)
 
 //rotas admin
 routes.get('/isadmin', adminMiddleware ,(req, res) => res.json({isAdmin: req.headers.isAdmin ? true : false}) )
