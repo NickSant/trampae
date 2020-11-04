@@ -34,7 +34,7 @@ routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session:
 
 //listar usuários - development - 
 routes.get('/user', UserController.index)
-//Listar serviços - development
+//Listar serviços - development 
 routes.get('/services', ServiceController.index)
 
 //ROTAS EM QUE É NECESSÁRIO AUTH-----------------------------------------------------------------------------
@@ -43,6 +43,7 @@ routes.get('/services', ServiceController.index)
 //pra todas as próximas rotas, o servidor vai passar por esse middleware pra verificar se o token do usuário, passado pelo Bearer da requisição é válido
 // logo, em todas preciso passar no header da req, um authorization do tipo Bearer!!!!
 
+//para INVALIDAR o token: no lado do client!
 routes.get('/me', authMiddleware, (req, res) => res.send(req.auth))
 //rota para usar no client, que busca qual usuário foi autenticado. (ver arquivo auth.js)
 //de acordo com o bearer token
@@ -62,37 +63,34 @@ routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
 routes.get('/search/services', authMiddleware, SearchController.SearchServices)
-routes.get('/search/:id', authMiddleware, SearchController.SearchUsers)
+routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
+routes.put('/services/:id', authMiddleware, ServiceController.edit)
 
 //rotas admin
-routes.get('/isadmin', adminMiddleware ,(req, res) =>{
-	if(req.headers.isAdmin) 
-		return res.json({isAdmin:true})
-	else
-		return res.json({isAdmin:false})
-})
+routes.get('/isadmin', adminMiddleware ,(req, res) => res.json({isAdmin: req.headers.isAdmin ? true : false}) )
 
 routes.get('/admin/users', adminMiddleware, AdminController.listUsers)
 routes.delete('/admin/users', adminMiddleware, AdminController.deleteUser)
 
 routes.get('admin/services', adminMiddleware, AdminController.listServices)
 routes.delete('admin/services', adminMiddleware, AdminController.deleteService)
+
 //404 routes
 routes.get('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.post('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.put('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 routes.delete('*', (req, res) => {
-	res.send(`Cannot found endpoint: ${req.url}`).status(404)
+	res.json(`Cannot found endpoint: ${req.url}`).status(404)
 })
 
 export default routes

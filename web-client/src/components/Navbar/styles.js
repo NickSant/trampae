@@ -11,7 +11,7 @@ export const NavBar = styled.header`
   width: 100%;
   padding: 3rem;
   position: fixed;
-  z-index:1;
+  z-index:1; 
   /* box-shadow: 1px 2px 7px var(--black); */
   border-bottom: 1px solid #cecece;
   background: var(--white);
@@ -88,9 +88,7 @@ export const LogoTrampae = styled.image`
     margin-right: -10px;
     }
 `;
-//---Fim da logo---//
 
-//---Imagem perfil---//
 export const Profile = styled.image`
     > a {
 
@@ -104,9 +102,7 @@ export const Profile = styled.image`
       }
     }
 `;
-//---Fim imagem perfil---//
 
-//---Container do meio---//
 export const ContainerMiddle = styled.div`
     width: 45rem;
     height: 7rem;
@@ -119,9 +115,7 @@ export const ContainerMiddle = styled.div`
     display: none;
     }
 `;
-//---Fim do container do meio---//
 
-//---Container da direita---//
 export const ContainerRight = styled.div`
     width: 30rem;
     height: 100%;

@@ -7,36 +7,35 @@ import { useHistory } from 'react-router-dom';
 
 function Post({user, serviceTitle, serviceDescription, servicePrice}) {
   const hist = useHistory()
-
-  console.log(user)
   return(
     <Card>
-
+ 
       <InformationsAboutUser>
         <UserImage>
-          <img onClick={() => hist.push('profile')} src={userImg} alt="userphoto" />
+          <img onClick={() => hist.push('profile')} src={user.image_url} alt="userphoto" />
         </UserImage>
 
         <UserName>
-          <h1>João Pedro</h1>
+          <h1>{user.name}</h1>
         </UserName>
 
         <UserCity>
-          <h1>São Bernardo do Campo</h1>
+          <h1>{user.city}</h1>
         </UserCity>
       </InformationsAboutUser>
 
       <InforomationsAboutService>
-        <Title>Limpeza</Title>
-        <Description>Limpa minha casa por favor!</Description>
+        <Title>{serviceTitle}</Title>
+        <Description>{serviceDescription}</Description>
       </InforomationsAboutService>
 
       <MoneyAndNumber>
         <Money>
-        <strong>R$ </strong><span>77,00</span>
+        <strong>R$ </strong><span>{servicePrice}</span>
         </Money>
 
         <ButtonWhatsApp>
+          <a>Ver mais</a>
           <button>
             <img src={WhatsAppIcon} alt="WhatsApp" />
           </button>
