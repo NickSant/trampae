@@ -53,9 +53,8 @@ export const ContainerPosts = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-
-    
+    padding-top:130%;
+    flex-direction: column;    
 `;
 
 export const ContainerRight = styled.div`

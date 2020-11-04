@@ -10,7 +10,6 @@ export const Card = styled.div`
     width: 500px;
     height: auto;
     border-radius: 4px;
-    /* box-shadow: 1px 2px 7px var(--black); */
     border:1px solid #cecece;
     
 `;

@@ -29,7 +29,6 @@ export default function Home() {
 					<ContainerLeft />
 
 					<ContainerMiddle>
-
 						<ContainerPosts>
 							<Post 
 								user={{id:1, a:'b'}} 
@@ -55,13 +54,19 @@ export default function Home() {
 								servicePrice={77}
 								serviceTitle={'LIMPEZA AQUI EM CASA'}
 							/>
+							<Post 
+								user={{id:1, a:'b'}} 
+								serviceDescription={''} 
+								servicePrice={77}
+								serviceTitle={'LIMPEZA AQUI EM CASA'}
+							/>
+
 						</ContainerPosts>
 
 					</ContainerMiddle>
 
 					<ContainerRight />
 
-					{/* Filtro */}
 					<Modal>	
 						<Filtro>
 							<Header>
@@ -81,7 +86,6 @@ export default function Home() {
 							</ButtonFilter>
 						</Filtro>
 					</Modal>
-					{/* Filtro */}
 					
 				</Container>
 			</main>	

@@ -43,6 +43,7 @@ routes.get('/services', ServiceController.index)
 //pra todas as próximas rotas, o servidor vai passar por esse middleware pra verificar se o token do usuário, passado pelo Bearer da requisição é válido
 // logo, em todas preciso passar no header da req, um authorization do tipo Bearer!!!!
 
+//para INVALIDAR o token: no lado do client!
 routes.get('/me', authMiddleware, (req, res) => res.send(req.auth))
 //rota para usar no client, que busca qual usuário foi autenticado. (ver arquivo auth.js)
 //de acordo com o bearer token

@@ -9,7 +9,7 @@ function Post({user, serviceTitle, serviceDescription, servicePrice}) {
   const hist = useHistory()
   return(
     <Card>
-
+ 
       <InformationsAboutUser>
         <UserImage>
           <img onClick={() => hist.push('profile')} src={user.image_url} alt="userphoto" />
