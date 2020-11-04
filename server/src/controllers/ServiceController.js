@@ -4,8 +4,13 @@ import crypto from 'crypto'
 import * as jwt from '../setup/jwt'
 
 import Util from '../helpers/Util'
+import Model from '../models/Model'
 
 const { handleError } = new Util()
+
+const sv = new Model('services')
+
+
 
 export default {
 	async index(request, response) {
@@ -29,14 +34,17 @@ export default {
 	},
 	async delete(request, response) {
 		const { id } = request.params
-		const { id: user_id } = request.auth //NÃO ESQUECER DE PASSAR ESSE PARAM NO HEADER
-		try {
-			const service = await connection('services').where('id', id).select('user_id').first()
-		} catch (e) {
-			response.json({ db_error: `erro: ${e}` })
-		}
 
-		if (service.user_id !== user_id) return handleError(response, 401, 'Unauthorized')
+		const { id: user_id } = request.auth //param criado no middleware!
+		
+		
+		const service = await sv.get({id}, true)
+
+		if(service.length <= 0) handleError(response, 400, 'Serviço não encontrado')
+		
+
+		if (service.user_id !== user_id) return handleError(response, 401, 'unauthorized_to_delete_service')
+
 		try {
 			await connection('services')
 				.where({
@@ -44,25 +52,24 @@ export default {
 					user_id: user_id,
 				})
 				.delete()
-			return response.status(204).send()
+			return response.status(204).json({message: `Serviço deletado com sucesso!`})
 		} catch (e) {
 			return handleError(response, 400, `Delete Service Error: ${e}`)
 		}
 	},
 	async create(request, response) {
-		const { title, description, price, number_participants, id_category, city, uf } = request.body
+		const { title, description, price, id_category, city, uf } = request.body
 
 		const data = request.body
 		console.log(data)
 		const { id: user_id } = request.auth
 		const id = crypto.randomBytes(4).toString('HEX')
 		try {
-			await connection('services').insert({
+			await sv.insert({
 				id,
 				title,
 				description,
 				price,
-				number_participants,
 				city,
 				uf,
 				user_id,
@@ -73,4 +80,27 @@ export default {
 		}
 		return response.json({ service_id: id })
 	},
+
+	async edit(req, res){
+		const { id } = req.params
+
+		const { id:user_id } = req.auth
+		const { field, newValue } = req.body
+
+		try {
+			
+			if(!field || !newValue) return handleError(res, 400, 'Campo ou novo valor não passado!')
+	
+			const service = await sv.get({id, user_id}, true)
+
+			if(!service || service.length <= 0 || !service.id ) return handleError(res, 400, `Não foi possível editar o serviço.`)
+
+			sv.update({ id: service.id }, { [field]: newValue })
+
+			return res.json({message: 'Serviço atualizado com sucesso!'}).end()
+			
+		} catch (error) {
+			return handleError(res, 400, error)
+		}
+	}
 }

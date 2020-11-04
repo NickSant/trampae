@@ -84,9 +84,7 @@ export default function Register() {
 	function goToLogin() {
 		window.location = '/'
 	}
-//---Fim API---//
 
-//---Começo do Front-end---//
 	return (
 		<Container>
 			<DisabledSection>
