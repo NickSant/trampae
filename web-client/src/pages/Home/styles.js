@@ -2,153 +2,130 @@ import styled from 'styled-components';
 import { FiTrash } from 'react-icons/fi'; 
 
 export const Container = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    height: 100vh;
-    width: 100%;
-    background: var(--white);
-
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-`;
-
-export const ContainerLeft = styled.div`
-    background-color: var(--ice);
-    margin: 6rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-
-    @media(max-width: 1000px) {
-        display: none;
-    }
-`;
-
-//---Container Onde ficam os posts---//
-export const ContainerMiddle = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    background-color: var(--ice);
-
-    overflow-y: auto;
-    ::-webkit-scrollbar { 
-        width: 1px;
-    }
-
-    @media(max-width: 1000px) {
-        display: flex;
-        width: 100vw;
-    }
-`;
-
-//---Container em volta dos posts---//
-export const ContainerPosts = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top:130%;
-    flex-direction: column;    
-`;
-
-export const ContainerRight = styled.div`
-    background-color: var(--ice);
-    margin: 6rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-
-    @media(max-width: 1000px) {
-        display: none;
-    }
-`;
-
-//---Filtro---//
-export const Modal = styled.div`
-    display: none;
-    justify-content: center;
-    align-items: center;
     width: 100vw;
-    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f5f5;
+`;
+
+
+export const SideBar = styled.div`
+    width: 28vw;
+    height: calc(100vh - 4rem);
     position: fixed;
-    top: 0;
-    background-color: #ddddddef;
-    transition: 500ms;
-`;
+    top: 4rem;
+    left: 0;
 
-export const Filtro = styled.div`
-    width: 550px;
-    height: auto;
-    border-radius: 10px;
-    background-color: var(--white);
-    border: 3px solid var(--light-gray);
-`;
-
-export const Header = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--ice);
-    padding: 1rem;
-    border-radius: 10px;    
-`;
-
-export const IconTrash = styled(FiTrash)`
-    width: 2rem;
-    height: 2rem;
-
-    &:hover{
-        fill: var(--red);
-        color: var(--black);
-    }
-`;
-
-export const Selects = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
-    background-color: var(--white);
-    padding: 1rem;
+    align-items: center;
+    justify-content: space-around;
 
-    > h1 {
-        color: var(--primary);
-        font-size: 20px;
-        margin-top: 1rem;
+    padding: 5px 10px;
+
+    background: var(--primary);
+
+    .navItem{
+        width: 100%;
+        height: 100%;
+        margin: 5px 0;
+
+        border-radius: 5px;
+        transition: ease 0.5s;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 10px;
+
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--white);
+        text-align: left;
+
+        .profilePic{
+            border-radius: 50px;
+            width: 3rem;
+            height: 3rem;
+            margin-right: 20px;
+        }
+
+        svg {
+            width: 30px;
+            margin-right: 20px;
+        }
+
+
+        &:hover{
+            background: #0b8c8a;
+            cursor: pointer;
+        }
+        
+
     }
 `;
 
-export const ButtonFilter = styled.div`
+export const MainContent = styled.div`
+    width: 35vw;
+    height: calc(100vh - 4rem);
+    position: fixed;
+    top: 4rem;
+    padding: 10px 0;
+
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background-color: var(--ice);
 
-    > button {
-    width: 60%;
-    height: 10vh;
-    margin-top: 1rem;
-    border-radius: 10px;
-    border: none;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
-    background-color: var(--primary);
-    color: var(--white);
-
-        @media(max-width: 840px) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }   
+    &::-webkit-scrollbar{
+        display: none;
     }
+`;
+
+export const FilterContainer = styled.div`
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    margin: 10px 10px 0 0;
+
+    width: 28vw;
+
+    border: 0.5px solid var(--light-gray);
+    border-radius: 10px;
+    padding: 10px;
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--light-gray);
+
+        strong {
+            font-size: 1.2rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    label {
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    button {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        height: 3.5rem;
+
+    }
+    
+
 `;

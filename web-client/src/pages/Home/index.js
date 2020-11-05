@@ -1,95 +1,67 @@
-import React from 'react';
-import {
-	Container,
-	ContainerRight,
-	ContainerMiddle,
-	ContainerLeft,
-	ContainerPosts,
-	Modal,
-	Filtro,
-	Header,
-	IconTrash,
-	Selects,
-	ButtonFilter
-} from './styles.js'
+import React from 'react'
 
+import Post from '../../components/Post'
+import Select from '../../components/Select'
+import Navbar from '../../components/Navbar'
 
-import NavBar from '../../components/Navbar';
-import Post from '../../components/Post';
-import Select from '../../components/Select';
+import { Container, SideBar, MainContent, FilterContainer } from './styles.js'
+
+import { FiSearch, FiHome, FiUsers, FiSettings, FiPhoneCall, FiUserPlus, FiLogOut, FiTrash } from 'react-icons/fi'
+import profilePic from '../../assets/ZecaUrubu.png'
 
 //--Começo do Front-end---//
 export default function Home() {
 	return (
-		<>
-			<NavBar />
-			<main>
-				<Container>
+		<Container>
+			<Navbar />
+			<SideBar>
+				<div className="navItem">
+					<img src={profilePic} alt="user" className="profilePic" />
+					Flavinho do Pneu
+				</div>
+				<div className="navItem">
+					<FiUsers size={"1.8rem"}/>
+					Fale conosco
+				</div>
+				<div className="navItem">
+					<FiPhoneCall size={"1.8rem"}/>
+					Sobre nós
+				</div>
+				<div className="navItem">
+					<FiSettings size={"1.8rem"}/>
+					Configurações
+				</div>
+				<div className="navItem">
+					<FiLogOut size={"1.8rem"}/>
+					Sair
+				</div>
+			</SideBar>
 
-					<ContainerLeft />
+			<MainContent>
+				<Post />
+				<Post />
+				<Post />
+				<Post />
+				<Post />
+				<Post />
+				<Post />
 
-					<ContainerMiddle>
-						<ContainerPosts>
-							<Post 
-								user={{id:1, a:'b'}} 
-								serviceDescription={''} 
-								servicePrice={77}
-								serviceTitle={'LIMPEZA AQUI EM CASA'}
-							/>
-							<Post 
-								user={{id:1, a:'b'}} 
-								serviceDescription={''} 
-								servicePrice={77}
-								serviceTitle={'LIMPEZA AQUI EM CASA'}
-							/>
-							<Post 
-								user={{id:1, a:'b'}} 
-								serviceDescription={''} 
-								servicePrice={77}
-								serviceTitle={'LIMPEZA AQUI EM CASA'}
-							/>
-							<Post 
-								user={{id:1, a:'b'}} 
-								serviceDescription={''} 
-								servicePrice={77}
-								serviceTitle={'LIMPEZA AQUI EM CASA'}
-							/>
-							<Post 
-								user={{id:1, a:'b'}} 
-								serviceDescription={''} 
-								servicePrice={77}
-								serviceTitle={'LIMPEZA AQUI EM CASA'}
-							/>
+			</MainContent>
 
-						</ContainerPosts>
+			<FilterContainer>
+				<header>
+					<strong>Filtrar bicos</strong>
+					<FiTrash />
+				</header>
 
-					</ContainerMiddle>
+				<label>Estado: </label>
+				<Select />
 
-					<ContainerRight />
+				<label>Cidade: </label>
+				<Select />
 
-					<Modal>	
-						<Filtro>
-							<Header>
-								<h1>Filtro</h1>
-								<IconTrash />
-							</Header>
-
-							<Selects>
-								<h1>Estado</h1>
-								<Select />
-								<h1>Cidade</h1>
-								<Select />
-							</Selects>
-
-							<ButtonFilter>
-								<button>Filtrar</button>
-							</ButtonFilter>
-						</Filtro>
-					</Modal>
-					
-				</Container>
-			</main>	
-		</>
-	);
-
+				<button className="button">Filtrar</button>
+			</FilterContainer>
+		</Container>
+	)
 }
