@@ -1,48 +1,48 @@
-import React from 'react';
+import React from 'react'
 
-import { Card, InformationsAboutUser, UserImage, UserName, UserCity, InforomationsAboutService, Title, Description, MoneyAndNumber, Money, ButtonWhatsApp } from './styles';
-import userImg from '../../assets/user.png';
-import WhatsAppIcon from '../../assets/whatsapp.svg';
-import { useHistory } from 'react-router-dom';
+import { Container } from './styles'
+import userImg from '../../assets/user.png'
+import WhatsAppIcon from '../../assets/whatsapp.svg'
+import { useHistory } from 'react-router-dom'
 
-function Post({user, serviceTitle, serviceDescription, servicePrice}) {
-  const hist = useHistory()
-  return(
-    <Card>
- 
-      <InformationsAboutUser>
-        <UserImage>
-          <img onClick={() => hist.push('profile')} src={user.image_url} alt="userphoto" />
-        </UserImage>
+import { AiOutlineWhatsApp } from 'react-icons/ai'
 
-        <UserName>
-          <h1>{user.name}</h1>
-        </UserName>
+function Post({ user, serviceTitle, serviceDescription, servicePrice }) {
+	const hist = useHistory()
+	return (
+		<Container>
+			<header>
+				<div className="userInfo">
+					<img src={userImg} alt="User" />
+					<div>
+						<strong> Aldair Fagundes </strong>
+						<span> São Bernardo do Campo </span>
+					</div>
+				</div>
+        <strong> Trabalho Doméstico </strong>
+			</header>
 
-        <UserCity>
-          <h1>{user.city}</h1>
-        </UserCity>
-      </InformationsAboutUser>
+			<div className="content">
+				<strong> Ajuda com trabalhos </strong>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+			</div>
 
-      <InforomationsAboutService>
-        <Title>{serviceTitle}</Title>
-        <Description>{serviceDescription}</Description>
-      </InforomationsAboutService>
+			<footer>
+				<div>
+					<strong>Pagamento: </strong>
+					<span>R$ 300</span>
+				</div>
+				
+				<button>
+					<strong> Ver detalhes </strong>
+				</button>
 
-      <MoneyAndNumber>
-        <Money>
-        <strong>R$ </strong><span>{servicePrice}</span>
-        </Money>
-
-        <ButtonWhatsApp>
-          <a>Ver mais</a>
-          <button>
-            <img src={WhatsAppIcon} alt="WhatsApp" />
-          </button>
-        </ButtonWhatsApp>
-      </MoneyAndNumber>
-    </Card> 
-  );
+				<button>
+					<strong>Whatsapp</strong> <AiOutlineWhatsApp size={"1.5rem"}/>
+				</button>
+			</footer>
+		</Container>
+	)
 }
 
-export default Post;
+export default Post
