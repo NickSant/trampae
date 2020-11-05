@@ -1,158 +1,128 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const Card = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 2rem 0 0 0;
-    background-color: var(--white);
-    border: 1px solid var(--light-gray);
-    width: 500px;
-    height: auto;
-    border-radius: 4px;
-    border:1px solid #cecece;
-    
-`;
+export const Container = styled.div`
+	width: 100%;
+	padding: 5px 10px 0;
 
-//---Informações sobre usuário---//
-export const InformationsAboutUser = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: var(--ice);
-    width: 100%;
-    height: 85px;
-    padding: 1rem;
+	border-radius: 5px;
+	background: var(--white);
+	border: 0.5px solid var(--light-gray);
 
-    @media(max-width: 1000px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 100px;
-    }
-`;
+	margin-bottom: 10px;
 
-export const UserImage = styled.image`
-    width: 5rem;
-    height: 5rem;
-    
-    img {
-        border-radius: 50%;
-        width: 5rem;
-        height: 5rem;
+	span,
+	strong {
+		color: rgba(0, 0, 0, 0.7);
+	}
 
-        &:hover{
-            border: 2px solid var(--white);
-        }
-    }
-`;
+	header {
+		width: 100%;
+		height: 4rem;
 
-export const UserName = styled.h1`
-    font-size: 10px;
-    color: var(--primary);
-`;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-export const UserCity = styled.h1`
-    font-size: 8px;
-    color: var(--gray); 
-`;
-//---Fim informações sobre usuário---//
+		.userInfo {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: left;
 
-//---Informações sobre o serviço---//
-export const InforomationsAboutService = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    height: 105px;
-    padding: 5rem;
-    background-color: var(--white);
+			img {
+				width: 2.5rem;
+				height: 2.5rem;
+				border-radius: 30px;
+			}
 
-    @media(max-width: 1000px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 100px;
-    }   
-`;
+			div {
+				display: flex;
+				flex-direction: column;
+				padding: 0 5px;
+				line-height: 1.2rem;
 
-//--Titulo Bico---//
-export const Title = styled.div`
-    text-align: left;
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--primary);
-`;
+				strong {
+					font-size: 0.9rem;
+				}
 
-//---Descrição bico---//
-export const Description = styled.div`
-    text-align: left;
-    font-size: 13px;
-    font-weight: bold;
-    color: var(--black);
-    margin-top: 2rem;
-`;
-//---Fiminformações sobre o serviço---//
+				span {
+					font-size: 0.6rem;
+					color: var(--gray);
+				}
+			}
+		}
 
-//---Informações sobre dinheiro e número---//
-export const MoneyAndNumber = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--ice);
-    width: 100%;
-    height: auto;
-    padding: 5rem;
+		strong {
+			font-size: 0.8rem;
+			color: var(--primary);
+			font-weight: 700;
+		}
+	}
 
-    @media(max-width: 1000px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 100px;
-    }   
-`;
+	.content {
+		display: flex;
+		flex-direction: column;
 
-export const Money = styled.div`
-    > strong {
-        font-size: 15px;
-        color: var(--green);
-    }
+		strong {
+			font-size: 0.9rem;
+			padding: 5px 0;
+		}
 
-    > span {
-        font-size: 15px;
-        color: var(--black);
-    }
-`;
+		p {
+			font-size: 0.7rem;
+			color: rgba(0, 0, 0, 0.9);
+			line-height: 1rem;
+		}
+	}
 
-export const ButtonWhatsApp = styled.div`
+	footer {
+		height: 3rem;
 
-    > button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 70px;
-        height: 40px;
-        padding: 5px;
-        border: none;
-        border-radius: 50px;  
-        background-color: var(--green);
-        transition: background-color 0.2s;
-        
-        &:hover{
-            background-color: var(--dark-green); 
-        }
+		margin-top: 10px;
+		border-top: 1px solid var(--light-gray);
 
-        > img {
-            width: 20px;
-            height: 20px;
-        }
-    }
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
 
-    @media(max-width: 1000px) {
-        margin-top: 10px;
-    }   
-`;
-//---Fim informações sobre dinheiro e número---//
+		div,
+		button {
+			width: 50%;
+			height: 100;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			strong {
+				font-size: 0.75rem;
+				transition: ease 0.5s;
+			}
+
+			span {
+				font-size: 0.8rem;
+				color: var(--green);
+				font-weight: 700;
+			}
+
+			img {
+				width: 1.8rem;
+				height: 1.8rem;
+				padding: 0 3px;
+			}
+
+			transition: ease 0.5s;
+		}
+
+		button:hover {
+			color: var(--green);
+			strong {
+				color: var(--green);
+			}
+			img {
+				fill: var(--green);
+				color: var(--green);
+			}
+		}
+	}
+`

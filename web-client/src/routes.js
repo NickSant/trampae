@@ -10,6 +10,7 @@ import Recover from './pages/Recover'
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
 import TalkWithUs from './pages/TalkWithUs'
+
 export default function Routes() {
     return (
         <BrowserRouter>
