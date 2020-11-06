@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import Post from '../../components/Post'
 import Select from '../../components/Select'
@@ -15,10 +16,10 @@ export default function Home() {
 		<Container>
 			<Navbar />
 			<SideBar>
-				<div className="navItem">
+				<Link to="/profile" className="navItem">
 					<img src={profilePic} alt="user" className="profilePic" />
 					Flavinho do Pneu
-				</div>
+				</Link>
 				<div className="navItem">
 					<FiUsers size={"1.8rem"}/>
 					Fale conosco
