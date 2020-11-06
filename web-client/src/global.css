@@ -24,7 +24,7 @@
 }
 
 html{
-    font-size: 62.5%;
+    font-size: 1.5vw;
 }
 
 li, a{
@@ -87,11 +87,11 @@ form textarea{
     justify-content: center;
     text-decoration: none;
     font-size: 18px;
-    transition: filter 0.5s;
+    transition: ease 0.5s;
 }
 
 .button:hover{
-    filter: brightness(90%);
+    opacity: 0.8;
 }
 
 .secondary{
