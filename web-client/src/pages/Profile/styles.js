@@ -1,160 +1,139 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 import { FiStar, FiMapPin, FiBriefcase } from 'react-icons/fi'
-import CoverBG from "../../assets/cover.jpg";
 
 export const Container = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: var(--ice);
+	width: 100vw;
 
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+	margin-top: 4rem;
+	display: flex;
+	justify-content: center;
+`
 
-    @media(max-width: 840px) and (max-height: 840px) {
-        display: flex;
-        flex-direction: column;
-    }
-`;
+export const ProfileInfo = styled.div`
+	width: 25vw;
+	height: 80vh;
 
-//---PROFILE E COVER ---//
-export const ProfilePicture = styled.div`
-    width: 100%;
-    height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--secundary);
-    background-image: url(${CoverBG});
+	margin: 1rem 1rem 0 0;
+	border-radius: 10px;
+	border: 0.5px solid var(--light-gray);
 
-    > img {
-        width: 15rem;
-        height: 15rem;
-        margin-top: 2%;
-        border: 3.75px solid var(--white);
-        background: var(--gray);
-        border-radius: 50%;
-    }
-`;
-//---FIM DO PROFILE E COVER---//
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-//---NOME E DESCRIÇÃO---//
-export const ProfileInformation = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: var(--ice);
-    justify-content: center;
-    margin-bottom: 1rem;
+	overflow: hidden;
 
-    > h1 {
-        color: var(--black);
-        text-align: center;
-        padding: 1rem;
-        font-weight: bold;
-        
-    }
+	.profilePic {
+		width: 6rem;
+		height: 6rem;
+		border-radius: 30px;
+		position: relative;
+		top: -3rem;
+	}
 
-    p {
-        color: var(--gray);
-        text-align: center;
-        padding: 1rem;
-        
-    }
-`;
-//---FIM DO NOME E DESCRIÇÃO---//
+	.background {
+		width: 100%;
+		z-index: -2;
+		position: relative;
+		top: 0;
+	}
 
-//---INFORMAÇÕES---//
-export const InformationsAboutPerson = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: row;
-    padding: 2rem;
+	.profileInfo {
+		width: 100%;
+		margin-top: -2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
 
-    //ICONE DO WHATS
-     img {
-        width: 50px;
-        height: 50px;
-        padding: 1rem;
-        border-radius: 8px;
-        background-color: var(--green);
-    }
+		strong {
+			font-size: 1.2rem;
+			opacity: 0.9;
+		}
 
-    > div{
-        display: flex;
-        align-items: center;
-        strong, span{
-            margin-left:5px;
-        }
-    }
+		span {
+			font-size: 0.9rem;
+			color: var(--gray);
+		}
 
-     strong, span {
-        font-size: 16px;
-        margin-bottom: 1px;
-        color: var(--gray);
-        margin: 1rem 0 1rem 0;
-    }
-`;
-//---FIM DAS INFORMAÇÕES---//
+		.bio {
+			color: var(--gray);
+			font-size: 0.7rem;
+			line-height: 1rem;
+			border-top: 1px solid var(--light-gray);
+			padding: 15px 10px;
+			text-align: justify;
+		}
 
-//---BICOS---//
-export const Bicos = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    width: 70vw;
-    height: auto;
-    margin: 2rem auto 0 auto;
-    border-radius: 10px;
-    border:1px solid #cecece;
-    background: var(--white);
-`;
+		.info-item {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			height: 2.8rem;
+			width: 100%;
+			cursor: pointer;
 
-//--TITULO DOS BICOS---//
-export const Title = styled.h1`
-    color: var(--black);
-    text-align: center;
-    padding: 1rem;
-    font-weight: bold;
-    /* margin-left: 2%; */
-`;
+			transition: ease 0.5s;
 
-//---ICONE ESTRELA---//
-export const Stars = styled.h1`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
+			&:hover {
+				background: #c1c1c1;
+			}
+		}
+	}
+`
 
-export const StarIcon = styled(FiStar)`
-    display: flex;
-    flex-direction: row;
-    width: 40px;
-    height: 40px;
-    padding: 1rem;
-    fill: var(--yellow);
-    color: var(--yellow);
-`;
+export const ProfileStats = styled.div`
+	width: 50vw;
+	height: 100%;
 
-//---ICONE MAP POINT ---//
-export const IconLocation = styled(FiMapPin)`
-    width: 50px;
-    height: 50px;
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: var(--orange);
-`;
+	.split-section {
+		width: 100%;
+		margin-top: 1rem;
+		border: 0.5px solid var(--light-gray);
+		border-radius: 10px;
 
-//---ICONE MALA ---//
-export const IconJob = styled(FiBriefcase)`
-     width: 50px;
-    height: 50px;
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: var(--purple);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 5px 10px;
 
-`;
+		hr {
+			width: 90%;
+			border: none;
+			height: 1px;
+			margin: 5px 0;
+			background: var(--light-gray);
+		}
+
+		.item-line {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 100%;
+			padding: 5px 0;
+
+			div {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+				width: 49%;
+				height: 3rem;
+				padding: 0 5px;
+				cursor: pointer;
+				transition: ease 0.5s;
+
+				span {
+					font-size: 0.9rem;
+				}
+
+				&:hover {
+					border-bottom: 1px solid var(--primary);
+					color: var(--primary);
+					fill: var(--primary);
+				}
+			}
+		}
+	}
+`
