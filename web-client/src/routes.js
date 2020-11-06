@@ -8,14 +8,20 @@ import NewService from './pages/NewService'
 import Forget from './pages/Forget'
 import Recover from './pages/Recover'
 import Profile from './pages/Profile'
-import PrivateRoute from './components/PrivateRoute'
 import TalkWithUs from './pages/TalkWithUs'
+
+import PrivateRoute from './components/PrivateRoute'
+import Logout from './components/Logout'
+import Util from './helpers/Util'
 
 export default function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={Logon} />
+                <Route path="/" exact render={() =>{
+                    return( Util.isAuthenticated() ? <Home /> : <Logon /> )
+                }}/>
+                <Route path="/logout" exact component={Logout} />
                 <Route path="/register" exact={true} component={Register} />
                 <Route path="/new-service" exact={true} component={NewService} />
                 <Route path="/aboutus" exact={true} component={AboutUs} />

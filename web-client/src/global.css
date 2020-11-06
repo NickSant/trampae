@@ -23,8 +23,14 @@
     --blue: #0073b2;
 }
 
+::selection{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+
 html{
-    font-size: 62.5%;
+    font-size: 1.5vw;
 }
 
 li, a{
@@ -39,12 +45,19 @@ body{
 
 input, button, textarea, select{
     font: 400 1.8rem Ubuntu, sans-serif;
+    font-size: max( 12px, 22px);
+    padding: 24px;
+}
+.select{
+    font-size: max( 12px, 22px);
+    
 }
 
 button{
     cursor: pointer;
     border: 0;
     background: none;
+    
 }
 
 form input, select, select option{
@@ -53,13 +66,14 @@ form input, select, select option{
     color: #333;
     border: 1px solid #dcdce6;
     border-radius: 10px;
-    padding: 0 24px;
+    
     transition: linear; 
     background-color: #FFF;
 }
 
 form input:focus{
     border-left: 10px solid #14b3b0;
+    
 }
 form textarea{
     width: 100%;

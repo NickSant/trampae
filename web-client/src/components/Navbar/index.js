@@ -9,7 +9,9 @@ import ProfileImg from '../../assets/profile.png'
 export default function Navbar() {
 	return (
 		<Container>
-			<img src={trampaeIcon} alt="Logo"/>
+			<a href="/home">
+				<img src={trampaeIcon} alt="Logo"/>
+			</a>
 
 			<Link to="/create-post">
 				<button className="button">

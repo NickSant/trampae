@@ -1,43 +1,40 @@
-import axios from "axios";
+import axios from 'axios'
+import { components } from 'react-select/src/components'
 
 export default {
-  async getUfs() {
-    let ufs = [];
-    await axios
-      .get(
-        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
-      )
-      .then((response) => {
-        const siglas = response.data.map((estado) => estado.sigla);
+	async getUfs() {
+		let ufs = []
+		const siglas = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
+		.then(response => {
+			return response.data.map(estado => {
+				return { value: estado.sigla, label: estado.sigla }
+			})
+		}).catch(e => {})
+		console.log(siglas)
+		return siglas
+	},
 
-        ufs = siglas;
-      });
+	// Buscando as cidades da uf selecionada
 
-    return ufs;
-  },
+	async getCities(selectedUf) {
+		let cities = []
 
-  // Buscando as cidades da uf selecionada
+		await axios
+			.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`)
+			.then(response => {
+				const cidades = response.data.map(cidade => {
+					delete cidade.municipio
 
-  async getCities(selectedUf) {
-    let cities = [];
+					return cidade
+				})
 
-     await axios
-      .get(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/distritos?orderBy=nome`
-      )
-      .then((response) => {
-        const cidades = response.data.map((cidade) => {
-          delete cidade.municipio;
-          return cidade;
-        });
-        
-        cities = cidades;
+				cities = cidades
+			})
+			.catch(err => {
+				alert('Deu erro aqui bosta')
+				console.log(err)
+			})
 
-    }).catch(err => {
-        alert("Deu erro aqui bosta");
-        console.log(err)
-    })
-
-    return cities;
-  },
-};
+		return cities
+	},
+}

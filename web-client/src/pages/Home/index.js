@@ -33,7 +33,9 @@ export default function Home() {
 				</div>
 				<div className="navItem">
 					<FiLogOut size={"1.8rem"}/>
-					Sair
+					<a href="/logout">
+						Sair
+					</a>
 				</div>
 			</SideBar>
 
@@ -45,7 +47,6 @@ export default function Home() {
 				<Post />
 				<Post />
 				<Post />
-
 			</MainContent>
 
 			<FilterContainer>

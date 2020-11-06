@@ -38,6 +38,7 @@ export default function Register() {
 		async function getUfsOnIBGE() {
 			const ufs = await ibge.getUfs()
 			setUfs(ufs)
+			
 		}
 		getUfsOnIBGE()
 	}, [])
@@ -89,7 +90,7 @@ export default function Register() {
 		<Container>
 			<DisabledSection>
 				<h1>Já tem registro?</h1>
-				<h3>Vem logo, faça login e encontro novos bicos!</h3>
+				<h3>Vem logo, faça login e encontre novos bicos!</h3>
 				<Link className="button" to="/">Login</Link>
 			</DisabledSection>
 
@@ -109,27 +110,17 @@ export default function Register() {
 					
 						<div className="location">
 							<Select
+								className="select"
 								onChange={e => setSelectedUf(e.target.value)}
 								name="UF"
-								children={ufs.map(uf => {
-									return (
-										<option key={uf} value={uf}>
-											{uf}
-										</option>
-									)
-								})}>
+								options={ ufs }>
 							</Select>
 		
 							<Select
+								className="select"
 								onChange={e => setSelectedcity(e.target.value)}
 								name="cidade"
-								children={cities.map(city => {
-									return (
-										<option key={city.id} value={city.nome}>
-											{city.nome}
-										</option>
-									)
-								})}>
+								options={ cities }>
 							</Select>
 						</div>
 
