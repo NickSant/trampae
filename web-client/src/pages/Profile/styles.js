@@ -120,20 +120,110 @@ export const ProfileStats = styled.div`
 				justify-content: space-between;
 				width: 49%;
 				height: 3rem;
-				padding: 0 5px;
+				padding: 0 10px;
 				cursor: pointer;
 				transition: ease 0.5s;
+				border-radius: 5px;
 
 				span {
 					font-size: 0.9rem;
 				}
 
 				&:hover {
-					border-bottom: 1px solid var(--primary);
+					background: #f0f0f0;
 					color: var(--primary);
 					fill: var(--primary);
 				}
 			}
+		}
+
+		.service-item {
+			width: 100%;
+
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+
+			padding: 5px 10px;
+
+			.votingPerson {
+				width: 40%;
+				display: flex;
+				align-items: center;
+				justify-content: left;
+
+				div {
+					display: flex;
+					flex-direction: column;
+					align-items: left;
+
+					padding: 0 5px;
+
+					strong {
+						font-size: 0.9rem;
+						line-height: 1.1rem;
+					}
+
+					span {
+						font-size: 0.7rem;
+						color: var(--gray);
+					}
+				}
+
+				.profilePic {
+					width: 3rem;
+					height: 3rem;
+					border-radius: 30px;
+				}
+			}
+
+			.service-info {
+				width: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				strong {
+					font-size: 0.9rem;
+					line-height: 1.2rem;
+				}
+
+				span {
+					font-size: 1.3rem;
+					color: var(--yellow);
+					fill: var(--yellow);
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+			}
+		}
+	}
+
+	.scrollable {
+		height: 12.5rem;
+
+		overflow: scroll;
+		overflow-x: hidden;
+
+		&::-webkit-scrollbar {
+			width: 0.5em;
+			height: 90%;
+		}
+
+		&::-webkit-scrollbar-track {
+			display: none;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 3px;
+			background-color: var(--primary);
+			outline: none;
+		}
+
+		::-webkit-scrollbar-corner{
+			border-radius: 5px;
 		}
 	}
 `
