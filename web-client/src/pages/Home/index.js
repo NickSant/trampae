@@ -20,22 +20,22 @@ export default function Home() {
 					<img src={profilePic} alt="user" className="profilePic" />
 					Flavinho do Pneu
 				</Link>
-				<div className="navItem">
-					<FiUsers size={"1.8rem"}/>
-					Fale conosco
-				</div>
-				<div className="navItem">
+				<Link to="/talkwithus"className="navItem">
 					<FiPhoneCall size={"1.8rem"}/>
+					Fale conosco
+				</Link>
+				<Link to="/aboutus" className="navItem">
+					<FiUsers size={"1.8rem"}/>
 					Sobre nós
-				</div>
-				<div className="navItem">
+				</Link>
+				<Link className="navItem">
 					<FiSettings size={"1.8rem"}/>
 					Configurações
-				</div>
-				<div className="navItem">
+				</Link>
+				<Link to="/" className="navItem">
 					<FiLogOut size={"1.8rem"}/>
 					Sair
-				</div>
+				</Link>
 			</SideBar>
 
 			<MainContent>
