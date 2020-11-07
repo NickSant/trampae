@@ -1,141 +1,87 @@
-import styled from 'styled-components';
-import patternBG from "../../assets/texture-bg.png";
+import styled from 'styled-components'
+import patternBG from '../../assets/texture-bg.png'
 
 export const Container = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background: var(--white);
+	width: 100vw;
+	height: 100vh;
 
-      @media(max-width: 840px) {
-        display: flex;
-        flex-direction: column;
-      }
-`;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+
+	.title {
+		padding: 5px 0;
+		border-bottom: 0.2rem solid var(--primary);
+	}
+`
 
 export const DisabledSection = styled.div`
-  width: 50%;
-  height: 105vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-    
-  background-color: var(--secundary);
-  background-image: url(${patternBG});
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: var(--white);
+	width: 40%;
+	height: 100%;
 
-  h1 {
-    margin-bottom: 60px;
-    font-size: 40px;
-    padding: 10px;
-    border-bottom: 5px solid var(--primary);
-  }
+	background-image: url(${patternBG});
+	background-size: cover;
+	background-color: var(--secundary);
 
-  @media(max-width: 840px) {
-    display: none;
-  }
-`;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	color: var(--white);
+
+	.title {
+		font-size: 2.2rem;
+	}
+
+	p {
+		padding: 1rem 0;
+		font-size: 1rem;
+		line-height: 1.3rem;
+	}
+
+	span {
+		padding: 2rem 0;
+		font-size: 0.8rem;
+		color: var(--primary);
+		fill: var(--primary);
+		display: flex;
+		align-items: center;
+		transition: ease 0.3s;
+
+		&:hover {
+			filter: brightness(90%);
+		}
+	}
+`
 
 export const ActiveSection = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
+	width: 60%;
+	height: 100%;
+
+	display: flex;
   flex-direction: column;
-  background: var(--white);
-`;
+  justify-content: flex-end;
+	align-items: center;
 
+	padding: 10px 20px;
 
-export const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 10rem;
-  padding: 5rem;
-  background-color: var(--white);
+	.Logo {
+		width: 8rem;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    margin-top: -1.5rem;
+	}
+`
 
-    @media(max-width: 840px) {
-      display: flex;
-      align-self: center;
-      justify-content: center;
-      width: 100vw;
-    }
+export const FormGroup = styled.form`  
+  height: 80%;
 
-    @media(max-width: 399px) {
-      display: flex;
-      align-self: center;
-      justify-content: center;
-    }
+  input, select, textarea {
+    margin-bottom: 5px;
+  } 
 
-    @media(max-width: 280px) {
-      img {
-        display: flex;
-        margin-right: 2rem;
-        }
-    }
-`;
-
-export const FormContainer = styled.form`
-  width: 100%;
-  height: 100%;
-  background-color: var(--white);
-  padding: 3rem;
-      
-  > button {
-    width: 100%;
-    height: 10vh;
-    margin-top: 1rem;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: var(--primary);
-    color: var(--white);
-    transition: background-color 0.2s;
-
-    &:hover{
-      background-color: var(--blue);
-    }
-  }
-
-  > a {
-    width: 100%;
-    height: 10vh;
-    margin-top: 1rem;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: var(--primary);
-    color: var(--white);
-    transition: background-color 0.2s;
-
-    &:hover{
-      background-color: var(--blue);
-    }
-
-  }
-      
-    @media(max-width: 840px) {
-      display: block;
-      align-items: center;
-      justify-content: center;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    @media(max-width: 399px) {
-      display: block;
-      align-items: center;
-      justify-content: center;
-    } 
-
-`;
-
+  
+`
