@@ -1,13 +1,12 @@
 import axios from 'axios'
-import { components } from 'react-select/src/components'
 
 export default {
 	async getUfs() {
 		let ufs = []
 		const siglas = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome')
 		.then(response => {
-			return response.data.map(estado => {
-				return { value: estado.sigla, label: estado.sigla }
+			return response.data.map( estado => {
+				return { id: estado.id, value: estado.sigla, title: estado.nome }
 			})
 		}).catch(e => {})
 		console.log(siglas)
@@ -24,8 +23,7 @@ export default {
 			.then(response => {
 				const cidades = response.data.map(cidade => {
 					delete cidade.municipio
-
-					return cidade
+					return {id: cidade.id, name: cidade.nome}
 				})
 
 				cities = cidades
@@ -34,6 +32,8 @@ export default {
 				alert('Deu erro aqui bosta')
 				console.log(err)
 			})
+
+		console.log(cities)
 
 		return cities
 	},

@@ -47,6 +47,7 @@ export default function Register() {
 		async function getCitiesOnIBGE() {
 			const cities = await ibge.getCities(selectedUf)
 			setCities(cities)
+			
 		}
 		getCitiesOnIBGE()
 	}, [selectedUf])
@@ -113,14 +114,30 @@ export default function Register() {
 								className="select"
 								onChange={e => setSelectedUf(e.target.value)}
 								name="UF"
-								options={ ufs }>
+								children={ ufs.map(( uf  ) =>(
+									<option 
+										key={uf.id} 
+										value={uf.value} 
+										title={uf.title}
+									>
+										{uf.value}
+									</option>
+								))}>
 							</Select>
 		
 							<Select
 								className="select"
 								onChange={e => setSelectedcity(e.target.value)}
 								name="cidade"
-								options={ cities }>
+								children={ cities.map((city) => (
+									<option 
+										key={city.id}
+										value={city.name}
+										title={city.name}
+									>
+										{city.name}
+									</option>
+								)) }>
 							</Select>
 						</div>
 
