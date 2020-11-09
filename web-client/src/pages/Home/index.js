@@ -33,12 +33,12 @@ export default function Home() {
 					Configurações
 				</Link>
 	
-					<FiLogOut size={"1.8rem"}/>
 
-					<a href="/logout">
-						Sair
-					</a>
-				</div>
+				<a href="/logout">
+					<FiLogOut size={"1.8rem"}/>
+					Sair
+				</a>
+				
 
 			</SideBar>
 
