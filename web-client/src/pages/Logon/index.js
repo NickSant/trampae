@@ -20,12 +20,10 @@ import {
 } from './styles'
 
 
-//---Começo API---//
+
 import 'dotenv/config'
 import { useCallback } from 'react'
 import Util from '../../helpers/Util'
-
-
 
 
 export default function Logon() {
@@ -100,4 +98,3 @@ export default function Logon() {
 		</Container>
 	)
 }
-//---Fianl Front-end---//

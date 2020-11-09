@@ -10,12 +10,9 @@ const AuthContext = createContext();
 
 
 async function me(token){
-	const res = await api.get('/me', {
-		headers:{
-			authorization: `Bearer ${token}`
-		}
-	})
-
+	const res = await api.get('/me', {headers:{
+		authorization: `Bearer ${token}`
+	}})
 
 	if(res.data) res.data.image_url = Util.api_base_url(res.data.image_url)
 	
@@ -29,7 +26,6 @@ function AuthProvider({children}) {
 		if (token && user) {
 			api.defaults.headers.authorization = `Bearer ${token}`
 
-			console.log(user)
 			return { token, user }
 		}
 
@@ -54,7 +50,6 @@ function AuthProvider({children}) {
 			localStorage.setItem('@Trampae:token', token)
 			localStorage.setItem('@Trampae:user', JSON.stringify(user));
 			
-
             api.defaults.headers.authorization = `Bearer ${token}`
             
             setData({ token, user });
@@ -62,8 +57,7 @@ function AuthProvider({children}) {
             return true;
 
 		} catch (error) {
-            localStorage.removeItem('@Trampae:token')
-			localStorage.removeItem('@Trampae:user')
+            localStorage.clear()
 			toast.error(`Erro...`)
 		}
 	}, [])

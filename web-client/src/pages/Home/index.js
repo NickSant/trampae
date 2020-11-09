@@ -32,10 +32,14 @@ export default function Home() {
 					<FiSettings size={"1.8rem"}/>
 					Configurações
 				</Link>
-				<Link to="/" className="navItem">
+	
 					<FiLogOut size={"1.8rem"}/>
-					Sair
-				</Link>
+
+					<a href="/logout">
+						Sair
+					</a>
+				</div>
+
 			</SideBar>
 
 			<MainContent>
@@ -46,7 +50,6 @@ export default function Home() {
 				<Post />
 				<Post />
 				<Post />
-
 			</MainContent>
 
 			<FilterContainer>

@@ -7,8 +7,7 @@ import { BottomTabBar } from '@react-navigation/bottom-tabs';
 export default function App() {
   return (
     <>
-      <Routes/>
-      {/* <BottomTabBar /> */}
+      <Routes/>      
     </>
   );
 }

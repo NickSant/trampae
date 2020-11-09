@@ -57,15 +57,18 @@ export const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 65%;
+  height: 100%;
+
+
+
 
   > form {
     margin-top: 1rem;
     padding: 1rem;
+    max-width:400px;
 
     > button {
       width: 100%;
-      height: 10vh;
       margin-top: 1rem;
       border-radius: 10px;
       border: none;

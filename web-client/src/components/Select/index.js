@@ -1,12 +1,13 @@
-import React from "react";
-import { Container } from "./styles.js";
+import React from "react"
+import AsyncSelect from 'react-select/async'
 
-export default function Select({ onChange, name, children }) {
-  return (
-    <Container>
-    <select placeholder={name} onChange={onChange}>
-        {children}
-      </select>
-      </Container>
+export default function Select({ onChange, name, children, options ,...rest }) {
+  return (    
+    <AsyncSelect 
+      placeholder={name} 
+      onChange={onChange}  
+      loadOptions={options}
+      {...rest}
+    />
   );
 }
