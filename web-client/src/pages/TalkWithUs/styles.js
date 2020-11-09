@@ -1,130 +1,94 @@
-import  { FiPhone, FiMail } from 'react-icons/fi';
+import { FiPhone, FiMail } from 'react-icons/fi'
 
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
-    display: flex;
-    justify-content: space-between;  
-    /* padding-left:5%;
-    padding-right:5%; */
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    background-color: var(--ice);
+	width: 100vw;
 
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
 
-    //Horizontal Line//
-    > hr {
-        height: 2px;
-        background-color: var(--light-gray);
-    }
+	.landing {
+		width: 100vw;
+		height: calc(100vh - 4rem);
+		margin-top: 4rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-    //---Icone Whatsapp---//
-    > img {
-        width: 90%;
-        height: 15rem;
-        align-self: center;
-        margin-bottom: 2rem;
-        padding: 5rem;
-        border-radius: 10px;
-        margin-top: 2rem;
-        background-color: var(--green);
-        cursor: pointer;
-        transition: background-color 0.2s;
+		img {
+			width: 25rem;
+			height: 25rem;
+		}
 
-        &:hover{
-        background-color: #3eb54a;
-        border: 1px solid var(--gray);
-        }
-    }
-`;
+		strong {
+			font-size: 3.3rem;
+			color: var(--primary);
+			text-align: center;
+			line-height: 5rem;
+			width: 100%;
+		}
 
+		.indicator {
+			position: relative;
+			top: 11rem;
+			right: 3rem;
 
-export const Social = styled.div`
-    h3{
+			background: var(--primary);
+			color: #fff;
+			border-radius: 30px;
 
-    }
+			height: 2.5rem;
+			width: 2.8rem;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			animation: ease 3s infinite bounce;
+		}
+	}
+
+	.devsInfos {
+		width: 100vw;
+		margin-top: 5rem;
+
+		.devs {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+            justify-content: center;
+            
+		}
+	}
+
+	@keyframes bounce {
+		0%,
+		20%,
+		50%,
+		80%,
+		100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-25px);
+		}
+		60% {
+			transform: translateY(-15px);
+		}
+	}
 `
 
-//---Container por volta de tudo---//
-export const ContainerBanner = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;  
-    padding: 8rem;
-    width: 100%;
-    height: 100%;
-    background-color: var(--ice);
+export const DevCard = styled.div`
+	width: 14rem;
+	height: 20rem;
 
-    //LandingImg
-    > img {
-        margin-top:1rem;
-        max-width: 50rem;
-        max-height: 50rem;
-        
-
-        @media(max-width: 780px) {
-            display: flex;
-            margin-top: 10rem;
-            width: 40rem;
-            height: 40rem;
-        }
-    }
-
-    //RESPONSIVIDADE DO CONTAINER
-    @media(max-width: 780px) {
-        display: flex;
-        flex-direction: column;
-    }
-`;
-
-export const Title = styled.h1`
-    color: var(--primary);
-    font-size: 50px;
-
-    @media(max-width: 780px) {
-        display: flex;
-        margin-top: 2rem;
-        text-align: center;
-        font-size: 40px;
-    }
-`;
-
-//Estilo dos icones
-const iconCSS = css`
-    width: 90%;
-    height: 15rem;
-    align-self: center;
-    margin-bottom: 2rem;
-    padding: 5rem;
-    border-radius: 10px;
-    cursor: pointer;
-`;
-
-//---Icone Email---//
-export const IconEmail = styled(FiMail)` 
-    ${iconCSS}
-    background-color: var(--gmail);
-    transition: background-color 0.2s;
-
-    &:hover{
-        background-color: #de4231;
-        border: 1px solid var(--gray);
-    }  
-`;
-
-//---Icone Telefone---//
-export const IconPhone = styled(FiPhone)`
-    ${iconCSS}
-    background-color: var(--blue);
-    transition: background-color 0.2s;
-    
-    &:hover{
-        background-color: var(--primary);
-        border: 1px solid var(--gray);
-    }
-`;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 5px;
+	border: 1px solid var(--light-gray);
+`
