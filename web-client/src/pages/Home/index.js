@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import Post from '../../components/Post'
 import Select from '../../components/Select'
@@ -15,28 +16,30 @@ export default function Home() {
 		<Container>
 			<Navbar />
 			<SideBar>
-				<div className="navItem">
+				<Link to="/profile" className="navItem">
 					<img src={profilePic} alt="user" className="profilePic" />
 					Flavinho do Pneu
-				</div>
-				<div className="navItem">
-					<FiUsers size={"1.8rem"}/>
-					Fale conosco
-				</div>
-				<div className="navItem">
+				</Link>
+				<Link to="/talkwithus"className="navItem">
 					<FiPhoneCall size={"1.8rem"}/>
+					Fale conosco
+				</Link>
+				<Link to="/aboutus" className="navItem">
+					<FiUsers size={"1.8rem"}/>
 					Sobre nós
-				</div>
-				<div className="navItem">
+				</Link>
+				<Link className="navItem">
 					<FiSettings size={"1.8rem"}/>
 					Configurações
-				</div>
-				<div className="navItem">
+				</Link>
+	
 					<FiLogOut size={"1.8rem"}/>
+
 					<a href="/logout">
 						Sair
 					</a>
 				</div>
+
 			</SideBar>
 
 			<MainContent>
