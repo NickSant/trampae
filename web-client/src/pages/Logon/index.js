@@ -66,7 +66,7 @@ export default function Logon() {
 		<Container>
 			<ActiveSection>
 				<Header>
-					<img src={logoImg} width={125} alt="Trampaê"></img>
+					<img src={logoImg} alt="Trampaê"></img>
 				</Header>
 
 				<FormContainer>
@@ -76,7 +76,7 @@ export default function Logon() {
 						<Input onChange={e => setMail(e.target.value)} type="email" name="E-mail" />
 						<Input onChange={e => setPass(e.target.value)} type="password" name="Senha" />
 
-						<button onClick={submit} type="submit">Entrar</button>
+						<button onClick={submit} type="submit" className="button">Entrar</button>
 					</form>
 
 					<Link to="/forget">
@@ -89,11 +89,13 @@ export default function Logon() {
 
 
 			<DisabledSection>
-				<Title> Ainda não tem Login? </Title>
-					<h1> Tá esperando o que?</h1>
-				<Link className="button" to="/register">
-					Registre-se já!
-				</Link>
+				<div>
+					<Title> Ainda não tem Login? </Title>
+					<h2> Tá esperando o que?</h2>
+					<Link className="button secondary" to="/register">
+						Registre-se já!
+					</Link>
+				</div>
 			</DisabledSection>
 		</Container>
 	)

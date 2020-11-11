@@ -31,6 +31,11 @@ export const Header = styled.header`
   height: 15vh;
   padding: 20px;
 
+  img{
+    width: 8rem;
+    height: 8rem;
+  }
+
   @media(max-width: 400px) {
     display: flex;
     align-self: center;
@@ -60,67 +65,29 @@ export const FormContainer = styled.div`
   height: 100%;
 
 
-
-
   > form {
     margin-top: 1rem;
     padding: 1rem;
-    max-width:400px;
+    width: 70%;
 
     > button {
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 10px;
-      border: none;
-      background-color: var(--primary);
-      color: var(--white);
+     margin-top: 1.2rem;
     }
   }
 `;
 
 export const Title = styled.h1`
-  font-size: 3.5rem;
-  padding: 10px;
+  font-size: 2rem;
+  padding: 5px;
   border-bottom: 5px solid var(--primary);
-
-  @media(max-width: 600px) {
-    display: flex;
-    font-size: 20px;
-    margin-top: 5rem;
-    line-height: 90%;
-  }
-
-  @media(min-width: 600px) {
-    display: flex;
-    font-size: 30px;
-  }
-
-  @media(max-width: 338px) {
-    font-size: 15px;
-  }
 `;
 
-export const ForgotPassword = styled.div`
+export const ForgotPassword = styled.p`
   text-decoration: none;
+  font-size: 0.8rem;
   display: flex;
-  margin-top: 3rem;  
+  margin-top: 0.6rem;  
   color: #14b3b0;
-
-  @media(max-width: 600px) {
-    display: flex;
-    font-size: 20px;
-    margin-top: 5rem;
-    line-height: 90%;
-  } 
-
-  @media(min-width: 600px) {
-    display: flex;
-    font-size: 16px;
-  }
-
-  @media(max-width: 338px) {
-    font-size: 15px;   
-  }
 `;
 
 export const DisabledSection = styled.div`
@@ -135,45 +102,18 @@ export const DisabledSection = styled.div`
   background-size: cover;
   color: var(--white);
 
-  @media(max-width: 600px) {
+  div{
+    width: 75%;
+    height: 60%;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    h2{
+      font-size: 1.2rem;
+    }
+
+    
   }
-
-  h1 {
-    margin-bottom: 4rem;
-    font-size: 20px;
-    padding: 1rem;
-
-    @media(max-width: 600px) {
-      display: flex;
-      font-size: 20px;
-      margin-top: 5rem;
-      line-height: 90%;
-    } 
-
-    @media(min-width: 600px) {
-      display: flex;
-      font-size: 25px;
-    }
-
-    @media(max-width: 338px) {
-      font-size: 15px;
-    }
-  }
-
-    //---Botão Registre-se Já!---//
-    .button {
-      width: 60%;
-      height: 10vh;
-      margin-top: 1rem;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      background-color: var(--primary);
-      color: var(--white);
-    }
 `;
