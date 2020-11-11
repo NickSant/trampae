@@ -26,7 +26,7 @@ function DevCard({ name, location, photoUrl, linkInstagram, linkLinkedin, linkGi
 						<RiLinkedinBoxFill size={'1.8rem'} />
 					</a>
 					<a href={linkGithub} target="_blank">
-						<RiGithubFill size={'1.8rem'} />
+						<RiGithubFill size={'1.8rem'} /> 
 					</a>
 				</div>
 			</div>
