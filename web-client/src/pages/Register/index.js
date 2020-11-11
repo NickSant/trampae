@@ -143,7 +143,7 @@ export default function Register() {
 
 						<button type="submit" className="button" onClick={submitRegister}>
 							Cadastar
-						</button>
+						</button> 
 					</form>
 				</FormContainer>
 			</ActiveSection>
