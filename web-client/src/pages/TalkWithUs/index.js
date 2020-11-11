@@ -62,7 +62,7 @@ function TalkWithUs() {
 
 					<DevCard 
 						name={'Vinícius Olímpio'}
-						location={'São Bernardo do Campo - SP'} 	
+						location={'Mauá - SP'} 	
 						photoUrl={ViniAvatar} 
 						linkInstagram={'https://www.instagram.com/viniolimpio3/'}
 						linkLinkedin={'https://www.linkedin.com/in/vin%C3%ADcius-ol%C3%ADmpio-01749a177/'}
