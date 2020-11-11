@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
     input{
       margin: 3px auto;
-      padding:26px;
-      font-size: max( 12px, 22px);
+      font-size: 1.2rem;
+      padding: 1.4rem 1.4rem;
     }
     border: none;
     display: flex;

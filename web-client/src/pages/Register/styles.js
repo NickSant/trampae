@@ -9,14 +9,6 @@ export const Container = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	background: var(--white);
-
-	margin-right: auto;
-	margin-left: auto;
-
-	@media (max-width: 840px) {
-		display: flex;
-		flex-direction: column;
-	}
 `
 
 export const DisabledSection = styled.div`
@@ -32,36 +24,20 @@ export const DisabledSection = styled.div`
 	background-size: cover;
 	color: var(--white);
 
-	@media (max-width: 840px) {
-		display: none;
-	}
+	padding: 0 2.5rem;
 
 	h1 {
-		margin-bottom: 5%;
+		margin-bottom: 3rem;
 
-		padding: 10px;
+		padding: 5px;
 		border-bottom: 5px solid var(--primary);
 		font-size: 2rem;
 	}
 
 	h3 {
-		font-size: 20px;
-		margin-bottom: 1rem;
-	}
-
-	.button {
-		width: 60%;
-		height: 10vh;
-		margin-top: 1rem;
-		border-radius: 10px;
-		border: none;
-
-		background-color: var(--primary);
-		color: var(--white);
-
-		@media (max-width: 840px) {
-			display: flex;
-		}
+		font-size: 1.2rem;
+		margin-bottom: 2rem;
+		text-align: center;
 	}
 `
 
@@ -79,39 +55,19 @@ export const Header = styled.header`
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	height: 10rem;
-
-	@media (max-width: 840px) {
-		display: flex;
-		align-self: center;
-		justify-content: center;
-		background-color: var(--white);
-		width: 100vw;
-	}
-
-	@media (max-width: 399px) {
-		display: flex;
-		align-self: center;
-		justify-content: center;
-	}
-
-	@media (max-width: 280px) {
-		img {
-			display: flex;
-			margin-right: 2rem;
-		}
-	}
+	height: 5rem;
+	padding: 1rem 2rem;
 
 	h1 {
-		margin-left: auto;
-		margin-right: 2rem;
-		padding: 1rem;
+		padding: 5px;
 		font-size: 2rem;
+		font-size: 1.4rem;
 		border-bottom: 2px solid var(--primary);
+	}
 
-		@media (max-width: 840px) {
-			display: none;
-		}
+	img {
+		width: 6rem;
+		height: 6rem;
 	}
 `
 
@@ -122,15 +78,6 @@ export const FormContainer = styled.div`
 	flex-direction: column;
 	background: var(--white);
 	padding: 0 5%;
-
-	@media (max-width: 840px) {
-		display: flex;
-		align-self: center;
-		padding: 2rem;
-		justify-content: center;
-		background-color: var(--white);
-		width: 100vw;
-	}
 
 	form {
 		width: 100%;
@@ -146,25 +93,9 @@ export const FormContainer = styled.div`
 		.select:first-child {
 			margin-right:5px;
 		}
-
-		.select{
-			width:100%;
-		}
-
-		@media (max-width: 840px) {
-			display: flex;
-			flex-direction: column;
-			margin-top: -2rem;
-		}
 	}
 
-	.button {
-		width: 100%;
-		height: 10vh;
+	.button{
 		margin-top: 1rem;
-		border-radius: 10px;
-		border: none;
-		background-color: var(--primary);
-		color: var(--white);
 	}
 `

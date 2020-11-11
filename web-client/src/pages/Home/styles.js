@@ -63,7 +63,10 @@ export const SideBar = styled.div`
             background: #0b8c8a;
             cursor: pointer;
         }
-        
+    }
+
+    @media (max-width: 599px){
+        display: none;
 
     }
 `;
@@ -85,6 +88,11 @@ export const MainContent = styled.div`
 
     &::-webkit-scrollbar{
         display: none;
+    }
+
+    @media (max-width: 599px){
+        width: 100%;
+        padding: 1.5rem;
     }
 `;
 
@@ -125,6 +133,10 @@ export const FilterContainer = styled.div`
         font-size: 1.2rem;
         height: 3.5rem;
 
+    }
+
+    @media (max-width: 599px){
+        display: none;
     }
     
 

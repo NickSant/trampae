@@ -29,8 +29,8 @@ export default function Routes() {
                 <Route path="/profile" exact={true} component={Profile} />
                 <Route path="/talkwithus" exact={true} component={TalkWithUs} />
 
-                <PrivateRoute exact={true} component={Home} path="/home" />
-                <PrivateRoute exact={true} component={Profile} path="/profile" />
+                <Route exact={true} component={Home} path="/home" />
+                <Route exact={true} component={Profile} path="/profile" />
 
                 <Route exact={true} component={Recover} path="/recover/:url_hash"/>
 
