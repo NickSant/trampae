@@ -1,0 +1,51 @@
+version: '3'
+
+services: 
+    db:
+        restart: unless-stopped
+        # command: npm run migrate 
+        container_name: db
+        image: mysql:5.7
+        command: --init-file ./src/database/init.sql
+        environment: 
+            - MYSQL_ROOT_PASSWORD=senha
+            - MYSQL_DATABASE=trampae_db
+        ports: 
+            - 33061:3306
+        volumes: 
+            - dbdata:/data/db    
+            
+    # administrador mysql
+    adminer:
+        image: phpmyadmin/phpmyadmin        
+        restart: always
+        ports: 
+            - 8080:80
+        networks:
+            - mysql-compose-network
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=root
+            - PMA_PORT=3306
+            - MYSQL_ROOT_PASSWORD=senha
+            - PMA_PASSWORD=pass
+        links:
+            - db
+    # nodejs:
+    #     command: npm run migrate && npm run seed 
+    #     build: 
+    #         context: ./src
+    #         dockerfile: Dockerfile
+    #     image: nodejs
+    #     container_name: api_node
+    #     restart: unless-stopped
+    #     env_file: .env
+
+    
+
+volumes: 
+    dbdata:
+
+networks: 
+    mysql-compose-network:
+        driver: bridge

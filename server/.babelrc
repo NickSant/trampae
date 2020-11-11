@@ -2,7 +2,8 @@
     "presets": [
         ["env",{
             "targets":{
-                "node":"current"
+                "node":"current",
+                "esmodules":true
             }
         }]
     ]

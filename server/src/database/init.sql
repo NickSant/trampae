@@ -1,0 +1,4 @@
+DROP DATABASE IF EXISTS trampae_db;
+
+CREATE DATABASE IF NOT EXISTS trampae_db;
+USE trampae_db;
