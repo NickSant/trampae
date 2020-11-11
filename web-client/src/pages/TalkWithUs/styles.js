@@ -9,10 +9,10 @@ export const Container = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
+	overflow-x: hidden;
 
 	.landing {
-		width: 100vw;
+		width: 100%;
 		height: calc(100vh - 4rem);
 		margin-top: 4rem;
 		display: flex;
@@ -20,8 +20,8 @@ export const Container = styled.div`
 		justify-content: center;
 
 		img {
-			width: 25rem;
-			height: 25rem;
+			width: 24rem;
+			height: 24rem;
 		}
 
 		strong {
@@ -53,15 +53,26 @@ export const Container = styled.div`
 	}
 
 	.devsInfos {
-		width: 100vw;
+		width: 100%;
 		margin-top: 5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		
+
+		h1 {
+			font-size: 3rem;
+			color: var(--primary);
+		}
 
 		.devs {
+			width: 100%;
+			padding: 1rem auto;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
-            justify-content: center;
-            
+			justify-content: center;
 		}
 	}
 
@@ -80,15 +91,4 @@ export const Container = styled.div`
 			transform: translateY(-15px);
 		}
 	}
-`
-
-export const DevCard = styled.div`
-	width: 14rem;
-	height: 20rem;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-radius: 5px;
-	border: 1px solid var(--light-gray);
-`
+`;
