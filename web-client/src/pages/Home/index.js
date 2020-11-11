@@ -34,10 +34,10 @@ export default function Home() {
 				</Link>
 	
 
-				<a href="/logout">
+				<Link className="navItem" to="/logout">
 					<FiLogOut size={"1.8rem"}/>
 					Sair
-				</a>
+				</Link>
 				
 
 			</SideBar>
