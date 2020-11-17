@@ -1,36 +1,45 @@
 version: '3'
 
-services: 
-    db:
-        restart: unless-stopped
-        # command: npm run migrate 
-        container_name: db
+services: #containers
+    mysqlsrv:
         image: mysql:5.7
-        command: --init-file ./src/database/init.sql
-        environment: 
-            - MYSQL_ROOT_PASSWORD=senha
-            - MYSQL_DATABASE=trampae_db
-        ports: 
-            - 33061:3306
-        volumes: 
-            - dbdata:/data/db    
+        volumes:
+            - ./containers/mysql/create_db.sql:/docker-entrypoint-initdb.d/01.sql
+
+            #copiando script para executar arquivos mysql, que estarão dentro de '/docker-entrypoint-initdb.d/'
+            - ./containers/mysql/db_entrypoint.sh:/iniciar_sql
+
+            #mysql data volume - persistindo dados
+            - dbdata:/var/lib/mysql
+
+        command: "--init-file /docker-entrypoint-initdb.d/01.sql"
+            # - ./iniciar_sql
             
-    # administrador mysql
-    adminer:
-        image: phpmyadmin/phpmyadmin        
-        restart: always
-        ports: 
-            - 8080:80
+            
+        environment:
+            MYSQL_ROOT_PASSWORD: teste
+            MYSQL_DATABASE: testedb
+        ports:
+            - "3306:3306"
         networks:
             - mysql-compose-network
-        environment:
-            - PMA_ARBITRARY=1
-            - PMA_HOST=root
-            - PMA_PORT=3306
-            - MYSQL_ROOT_PASSWORD=senha
-            - PMA_PASSWORD=pass
-        links:
-            - db
+        restart: unless-stopped
+    # administrador mysql
+    adminer:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
+        networks:
+            - mysql-compose-network 
+        environment: 
+            PMA_ARBITRARY: 1
+            PMA_HOST: mysqlsrv
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_ROOT_PASSWORD: teste
+            PMA_PORT: 3306
+
+    
     # nodejs:
     #     command: npm run migrate && npm run seed 
     #     build: 
@@ -45,6 +54,7 @@ services:
 
 volumes: 
     dbdata:
+        driver: local    
 
 networks: 
     mysql-compose-network:

@@ -7,10 +7,10 @@ WORKDIR /usr/src/app
 #Install dependencies
 COPY package*.json ./
 
-RUN npm install
-
 #Bundle app source
 COPY . .
+
+RUN npm install
 
 #Port
 EXPOSE 3333
