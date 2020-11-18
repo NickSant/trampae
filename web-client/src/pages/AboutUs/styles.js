@@ -18,8 +18,6 @@ export const Container = styled.div`
             flex-direction: column; 
         }
 
-
-    
     .logoDiv {
         display:block;
         img {
@@ -130,16 +128,21 @@ export const IconsContainer = styled.div`
 //------FOOTER-----//
 export const Footer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--black);
     margin-top: 20px;
     width: 100%;
-    height: auto;
+
+    .button{
+        width: 60%;
+        margin-bottom: 2rem;
+    }
+
 
     > h1 {  
         color: var(--white);
-        margin-left: 100px;
         margin-bottom: 30px;
         text-align: center;
         
@@ -160,19 +163,6 @@ export const Footer = styled.div`
                 font-size: 15px;
                 margin-right: 9rem;
         }
-    }
-
-
-    //RESPONSIVIDADE DO FOOTER//
-    @media(max-width: 1024px) {
-            display: grid;
-            width: 100%;
-            flex-direction: column; 
-        }
-
-        @media(max-width: 500px) {
-                display: flex;
-                width: 120%; 
     }
 `;
 //------FINAL FOOTER------//
