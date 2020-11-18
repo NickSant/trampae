@@ -58,8 +58,7 @@ export const Container = styled.div`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center; 
-		
+		justify-content: center;
 
 		h1 {
 			font-size: 3rem;
@@ -91,4 +90,32 @@ export const Container = styled.div`
 			transform: translateY(-15px);
 		}
 	}
-`;
+
+	@media (max-width: 599px) {
+		.landing {
+			height: 100vh;
+			flex-direction: column;
+			text-align: center;
+
+			.indicator {
+				margin-top: 5rem;
+				width: 3rem;
+				height: 3.5rem;
+				top: 0;
+				right: 0;
+			}
+		}
+
+		.devsInfos {
+			margin-bottom: 3rem;
+			.devs {
+				width: 80%;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr 1fr;
+				row-gap: 10px;
+				column-gap: 10px;
+			}
+		}
+	}
+`
