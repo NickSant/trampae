@@ -7,7 +7,9 @@ import Input from '../../components/Input'
 
 import validate from '../../helpers/validators'
 
-import {toast, ToastContainer} from 'react-toastify'
+import { toast } from 'react-toastify';
+import { FiArrowDown } from 'react-icons/fi';
+
 
 import {
 	Container,
@@ -84,7 +86,11 @@ export default function Logon() {
 							Esqueceu a Senha?
 						</ForgotPassword>
 					</Link>
-				</FormContainer>
+				</FormContainer>	
+
+				<div className="indicator">
+					<FiArrowDown size={'3rem'} />
+				</div>
 			</ActiveSection>
 
 
