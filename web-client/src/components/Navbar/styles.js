@@ -15,28 +15,47 @@ export const Container = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 3px 20px;
+	padding: 3px 0;
+
+	div {
+		height: 100%;
+		right: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		button {
+			display: none;
+
+			@media (max-width: 599px) {
+				display: flex;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+
+	.button{
+		width: 20%;
+		height: 90%;
+		font-size: 1.2rem;
+		margin-right: 1rem;
+
+		@media (max-width: 599px){
+			display: none;
+		}
+
+	}
 
 	img {
 		width: 4.5rem;
-		margin-left: -15px;
-	}
-
-	button {
-		display: none;
-
-		@media (max-width: 599px) {
-			display: flex;
-			height: 100%;
-			align-items: center;
-			justify-content: center;
-		}
 	}
 `
 
 export const DropDown = styled.div`
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	top: 4rem;
 	z-index: 10;
 	display: ${props => (props.active ? 'flex' : 'none')};
