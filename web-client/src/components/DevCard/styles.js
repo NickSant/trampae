@@ -46,7 +46,7 @@ export const Container = styled.div`
 			flex-direction: column;
 			align-items: center;
 			margin-top: -1.6rem;
-			margin-bottom: 1.5rem;
+			margin-bottom: 1.8rem;
 
 			strong {
 				font-size: 1rem;
