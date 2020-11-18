@@ -9,6 +9,11 @@ export const Container = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	background: var(--white);
+
+	@media (max-width: 599px) {
+		flex-direction: column-reverse;
+		height: 200vh;
+	}
 `
 
 export const DisabledSection = styled.div`
@@ -39,6 +44,11 @@ export const DisabledSection = styled.div`
 		margin-bottom: 2rem;
 		text-align: center;
 	}
+
+	@media (max-width: 599px) {
+		width: 100%;
+		height: 100%;
+	}
 `
 
 export const ActiveSection = styled.div`
@@ -47,6 +57,49 @@ export const ActiveSection = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: var(--white);
+
+	.indicator {
+		position: relative;
+		bottom: 2rem; 
+		background: var(--primary);
+		color: #fff;
+		border-radius: 30px;
+
+		height: 5rem;
+		width: 3.8rem;
+
+		display: none;
+		align-items: center;
+		justify-content: center;
+
+		animation: ease 3s infinite bounce;
+	}
+
+	@keyframes bounce {
+		0%,
+		20%,
+		50%,
+		80%,
+		100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-25px);
+		}
+		60% {
+			transform: translateY(-15px);
+		}
+	}
+
+	@media (max-width: 599px) {
+		width: 90%;
+		align-items: center;
+		justify-content: center;
+
+		.indicator {
+			display: flex;
+		}
+	}
 `
 
 export const Header = styled.header`
@@ -77,7 +130,30 @@ export const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: var(--white);
-	padding: 0 5%;
+	padding: 0 5% 2rem 5%;
+
+	overflow: scroll;
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+		width: 0.5em;
+		height: 90%;
+	}
+
+	&::-webkit-scrollbar-track {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: var(--primary);
+		outline: none;
+	}
+
+	::-webkit-scrollbar-corner {
+		border-radius: 5px;
+	}
+
 
 	form {
 		width: 100%;
@@ -91,11 +167,23 @@ export const FormContainer = styled.div`
 		margin-top: 1rem;
 
 		.select:first-child {
-			margin-right:5px;
+			margin-right: 5px;
 		}
 	}
 
-	.button{
+	.button {
 		margin-top: 1rem;
+	}
+
+	@media (max-width: 599px) {
+		align-items: center;
+		justify-content: center;
+
+		form {
+			height: 70%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
 	}
 `

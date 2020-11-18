@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import logoImg from '../../assets/logo.png'
 import Input from '../../components/Input'
 import Select from '../../components/Select'
+import Textarea from '../../components/Textarea';
 
 import api from '../../services/api'
 import ibge from '../../services/ibge'
@@ -15,6 +16,8 @@ import {
 	FormContainer,  
 	DisabledSection 
 	} from './styles'
+
+import { FiArrowDown } from 'react-icons/fi';
 
 //---Começo da API---//
 require('dotenv/config')
@@ -108,7 +111,8 @@ export default function Register() {
 						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
 
 						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
-					
+						<Textarea type="text" name="Bio"/>
+
 						<div className="location">
 							<Select
 								className="select"
@@ -146,6 +150,11 @@ export default function Register() {
 						</button> 
 					</form>
 				</FormContainer>
+
+				<div className="indicator">
+					<FiArrowDown size={'3rem'} />
+				</div>
+				
 			</ActiveSection>
 		</Container>
 	)
