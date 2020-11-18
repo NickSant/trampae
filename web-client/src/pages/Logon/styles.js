@@ -22,11 +22,50 @@ export const ActiveSection = styled.div`
 	display: flex;
 	flex-direction: column;
 
+	.indicator {
+		position: relative;
+		bottom: 2rem;
+		background: var(--primary);
+		color: #fff;
+		border-radius: 30px;
+
+		height: 5rem;
+		width: 3.8rem;
+
+		display: none;
+		align-items: center;
+		justify-content: center;
+
+		animation: ease 3s infinite bounce;
+	}
+
 	@media (max-width: 599px) {
 		width: 90%;
+		align-items: center;
+		
 
 		h1 {
 			margin-top: -10rem;
+		}
+
+		.indicator{
+			display: flex;
+		}
+	}
+
+	@keyframes bounce {
+		0%,
+		20%,
+		50%,
+		80%,
+		100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-25px);
+		}
+		60% {
+			transform: translateY(-15px);
 		}
 	}
 `

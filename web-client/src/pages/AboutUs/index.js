@@ -1,17 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { 
     Container,
-    // ContainerAboutUs, 
-    // ContainerOurReasons, 
-    // ContainerOurObjectives,  
     ContainerPost,
     IconsContainer,
     Footer,
-    IconsFooter,
-    IconInstagram,
-    IconFacebook,
-    IconGitHub,
-    IconTwitter
     } from './styles';
 
 import { FiUsers, FiClipboard, FiCheckCircle } from 'react-icons/fi';
@@ -65,28 +59,10 @@ export default function AboutUs() {
 
             {/* FOOTER */}
             <Footer>
-                <h1>Nos Siga também em nossas redes sociais!</h1>
-
-                <IconsFooter>
-                <IconInstagram size={30}/>
-                <a href="">@Trampae</a>
-                </IconsFooter>
-
-                <IconsFooter>
-                <IconFacebook size={30}/>
-                <a href="">Trampaê</a>
-                </IconsFooter>
-
-                <IconsFooter>
-                <IconGitHub size={30}/>
-                <a href="https://github.com/NickSant/trampae">TrampaeGitHub</a>
-                </IconsFooter>
-                
-                <IconsFooter>
-                <IconTwitter size={30}/>
-                <a href="">TrampaêTwitter</a>
-                </IconsFooter>
-                
+                <h1>Quer saber mais? Tem alguma dúvida ou sugestão? Fale com a gente...</h1>
+                <Link to="/talkwithus" className='button secondary'>
+                    Fale conosco
+                </Link>
             </Footer>
         </Container>
     );

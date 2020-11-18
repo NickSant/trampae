@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { FiTrash } from 'react-icons/fi'; 
 
 export const Container = styled.div`
     width: 100vw;
@@ -7,6 +6,7 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 1rem;
 
     background: #f5f5f5;
 `;
@@ -74,9 +74,10 @@ export const SideBar = styled.div`
 export const MainContent = styled.div`
     width: 35vw;
     height: calc(100vh - 4rem);
-    position: fixed;
-    top: 4rem;
+    position: relative;
+    top: ${props => props.filterActive? "25rem" : "4rem"};
     padding: 10px 0;
+
 
     display: flex;
     flex-direction: column;
@@ -104,6 +105,7 @@ export const FilterContainer = styled.div`
 
     width: 28vw;
 
+    background: var(--white);
     border: 0.5px solid var(--light-gray);
     border-radius: 10px;
     padding: 10px;
@@ -132,11 +134,23 @@ export const FilterContainer = styled.div`
         margin-top: 1rem;
         font-size: 1.2rem;
         height: 3.5rem;
-
     }
 
     @media (max-width: 599px){
-        display: none;
+        display: ${props => (props.filterActive ? 'flex' : 'none')};
+        flex-direction: column;
+        position: absolute;
+        top: 4rem;
+        width: 100%;
+        height: 20rem;
+        padding: 2rem 1.5rem 0 1.5rem;
+        margin: 0;
+        border: none;
+
+        header{
+            margin-bottom: 2rem;
+        }
+        
     }
     
 

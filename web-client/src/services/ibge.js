@@ -9,7 +9,7 @@ export default {
 				return { id: estado.id, value: estado.sigla, title: estado.nome }
 			})
 		}).catch(e => {})
-		console.log(siglas)
+		
 		return siglas
 	},
 
@@ -33,7 +33,7 @@ export default {
 				console.log(err)
 			})
 
-		console.log(cities)
+		
 
 		return cities
 	},

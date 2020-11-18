@@ -6,12 +6,11 @@ import trampaeIcon from '../../assets/icon.png'
 import ProfileImg from '../../assets/profile.png'
 import profilePic from '../../assets/ZecaUrubu.png'
 
-import { FiSearch, FiHome, FiUsers, FiSettings, FiPhoneCall, FiUserPlus, FiLogOut, FiTrash } from 'react-icons/fi'
+import { FiUsers, FiSettings, FiPhoneCall, FiLogOut } from 'react-icons/fi'
 import { FiMenu } from 'react-icons/fi'
 
-export default function Navbar() {
-
-	const [active, setActive] = useState(false);
+export default function Navbar({ children }) {
+	const [active, setActive] = useState(false)
 
 	return (
 		<>
@@ -20,9 +19,15 @@ export default function Navbar() {
 					<img src={trampaeIcon} alt="Logo" />
 				</a>
 
-				<button onClick={() => setActive(!active)} className="hamburguer-buttom">
-					<FiMenu />
-				</button>
+				<div>
+					{children}
+					<button onClick={() => setActive(!active)} className="hamburguer-buttom">
+						<FiMenu />
+					</button>
+				</div>
+
+				
+				<Link to="/new-service" className="button secondary">Novo Serviço</Link>
 			</Container>
 			<DropDown active={active}>
 				<Link to="/profile" className="navItem">

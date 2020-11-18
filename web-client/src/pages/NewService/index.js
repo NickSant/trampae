@@ -82,6 +82,11 @@ export default function NewService() {
 			<ActiveSection>
 				<img src={logoImg} alt="logo" className="Logo" />
 
+				<div className="mobile">
+					<h1 className="title"> Publique seu bico </h1>
+					<p> Ache a pessoa certa pra te ajudar no que for preciso! </p>
+				</div>
+
 				<FormGroup>
 					<Input name="Título" />
 					<Select name="Categoria" />
@@ -91,6 +96,12 @@ export default function NewService() {
 
 					<button className="button">Publicar</button>
 				</FormGroup>
+
+				<Link to="/home" className="mobile">
+					<span>
+						<FiArrowLeft size={'1.8rem'} /> Ou volte para o início{' '}
+					</span>
+				</Link>
 			</ActiveSection>
 		</Container>
 	)
