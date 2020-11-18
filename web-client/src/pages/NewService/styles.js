@@ -14,6 +14,11 @@ export const Container = styled.div`
 		padding: 5px 0;
 		border-bottom: 0.2rem solid var(--primary);
 	}
+
+	@media (max-width: 599px) {
+		flex-direction: column-reverse;
+		position: fixed;
+	}
 `
 
 export const DisabledSection = styled.div`
@@ -54,6 +59,10 @@ export const DisabledSection = styled.div`
 			filter: brightness(90%);
 		}
 	}
+
+	@media (max-width: 599px) {
+		display: none;
+	}
 `
 
 export const ActiveSection = styled.div`
@@ -61,27 +70,59 @@ export const ActiveSection = styled.div`
 	height: 100%;
 
 	display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+	flex-direction: column;
+	justify-content: flex-end;
 	align-items: center;
 
 	padding: 10px 20px;
 
 	.Logo {
 		width: 8rem;
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
-    margin-top: -1.5rem;
+		position: absolute;
+		top: 0.5rem;
+		right: 1rem;
+		margin-top: -1.5rem;
+	}
+
+	.mobile{
+		display: none;
+	}
+
+	@media(max-width: 599px){
+		width: 90%;
+		justify-content: center;
+
+		.mobile{
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			margin-bottom: 4rem; 
+
+			p{
+				padding: 1rem 0;
+			}
+
+			span{
+				color: var(--primary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
 	}
 `
 
-export const FormGroup = styled.form`  
-  height: 80%;
+export const FormGroup = styled.form`
+	height: 80%;
+	width: 100%;
 
-  input, select, textarea {
-    margin-bottom: 5px;
-  } 
+	input,
+	select,
+	textarea {
+		margin-bottom: 5px;
+	}
 
-  
+	@media(max-width: 599px){
+		height: 40%;
+	}
 `
