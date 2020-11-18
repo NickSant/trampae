@@ -6,7 +6,13 @@ export const Container = styled.div`
 
 	margin-top: 4rem;
 	display: flex;
-	justify-content: center;
+	justify-content: center; 
+
+	@media (max-width: 599px){
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
 `
 
 export const ProfileInfo = styled.div`
@@ -80,6 +86,12 @@ export const ProfileInfo = styled.div`
 				background: #c1c1c1;
 			}
 		}
+	}
+
+	@media(max-width: 599px){
+		width: 90%;
+		height: fit-content;
+		margin: 1rem 0;
 	}
 `
 
@@ -226,4 +238,8 @@ export const ProfileStats = styled.div`
 			border-radius: 5px;
 		}
 	}
-`
+
+	@media(max-width: 599px){
+		width: 90%;
+	}
+`;
