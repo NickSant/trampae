@@ -1,9 +1,12 @@
-import express from 'express';//microframework - controla rotas da aplicação
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
+import express from 'express';
 import cors from 'cors'
 import routes from './routes';
 import path from 'path';
 
-import connection, {tryMysqlConnection} from './database/connection';
+import {tryMysqlConnection} from './database/connection';
 
 require('dotenv').config();
 
@@ -11,7 +14,6 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 const app = express();
-
 
 app.use(express.json());
 app.use(cors());

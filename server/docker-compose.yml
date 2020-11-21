@@ -1,0 +1,61 @@
+version: '3'
+
+services: #containers
+    mysqlsrv:
+        image: mysql:5.7
+        volumes:
+            - ./containers/mysql/create_db.sql:/docker-entrypoint-initdb.d/01.sql
+
+            #copiando script para executar arquivos mysql, que estarão dentro de '/docker-entrypoint-initdb.d/'
+            - ./containers/mysql/db_entrypoint.sh:/iniciar_sql
+
+            #mysql data volume - persistindo dados
+            - dbdata:/var/lib/mysql
+
+        command: "--init-file /docker-entrypoint-initdb.d/01.sql"
+            # - ./iniciar_sql
+            
+            
+        environment:
+            MYSQL_ROOT_PASSWORD: teste
+            MYSQL_DATABASE: testedb
+        ports:
+            - "3306:3306"
+        networks:
+            - mysql-compose-network
+        restart: unless-stopped
+    # administrador mysql
+    adminer:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
+        networks:
+            - mysql-compose-network 
+        environment: 
+            PMA_ARBITRARY: 1
+            PMA_HOST: mysqlsrv
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_ROOT_PASSWORD: teste
+            PMA_PORT: 3306
+
+    
+    # nodejs:
+    #     command: npm run migrate && npm run seed 
+    #     build: 
+    #         context: ./src
+    #         dockerfile: Dockerfile
+    #     image: nodejs
+    #     container_name: api_node
+    #     restart: unless-stopped
+    #     env_file: .env
+
+    
+
+volumes: 
+    dbdata:
+        driver: local    
+
+networks: 
+    mysql-compose-network:
+        driver: bridge

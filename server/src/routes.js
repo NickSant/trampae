@@ -27,10 +27,10 @@ routes.post('/forgot', ProfileController.forgotPass)
 routes.post('/verfiy-url-hash', mailerAuth)
 routes.put('/forgot', mailerAuth, ProfileController.changePass)
 
-// GoogleOAuth
-routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
+// // GoogleOAuth
+// routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
 
-routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
+// routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
 
 //listar usuários - development - 
 routes.get('/user', UserController.index)

@@ -106,9 +106,12 @@ export default {
 
 			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
 
-			console.log('decodificou buffer', await verify(pass_bd, password))
+			
+			const verified = await verify(pass_bd, password);
 
-			if (!(await verify(pass_bd, password))) return handleError(res, 401, 'Senha Incorreta')
+			console.log('decodificou buffer', verified)
+
+			if (!(verified)) return handleError(res, 401, 'Senha Incorreta')
 
 			const token = await jwt.generateToken({ user_id: result.id })
 
