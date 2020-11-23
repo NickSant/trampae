@@ -9,7 +9,7 @@
     "prod": "node dist/server.js",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
-    "db:down":"knex migrate:rollback --all"
+    "db:down": "knex migrate:rollback --all"
   },
   "keywords": [],
   "author": "",
