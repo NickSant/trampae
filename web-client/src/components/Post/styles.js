@@ -42,7 +42,7 @@ export const Container = styled.div`
 				line-height: 1.2rem;
 
 				strong {
-					font-size: 0.9rem;
+					font-size: 1.1rem;
 				}
 
 				span {
