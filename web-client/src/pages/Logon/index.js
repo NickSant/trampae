@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useAuth } from '../../contexts/authContext'
-import api from '../../services/api'
 import logoImg from '../../assets/logo.png'
 import Input from '../../components/Input'
 
@@ -24,23 +23,16 @@ import {
 
 
 import 'dotenv/config'
-import { useCallback } from 'react'
 import Util from '../../helpers/Util'
 
 
 export default function Logon() {
 	const history = useHistory()
-
-
+	
 	const [mail, setMail] = useState('')
 	const [pass, setPass] = useState('')
 
-
-	const [user, setUser] = useState({})
-
 	useEffect(() => localStorage.clear(), [])
-
- 
 
 	const { signIn } = useAuth()
 
@@ -60,7 +52,7 @@ export default function Logon() {
 	}
 	function goToHome() {
 		const user = Util.getUser()
-		toast.success(`Boa ${user.name}`)
+		toast.success(`Isso aí ${user.name}, espera só um pouquinho..`)
 		setInterval(() => history.push('/home') , 3000)
 	}
 
