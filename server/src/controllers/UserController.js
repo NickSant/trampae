@@ -1,4 +1,4 @@
-import connection from '../database/connection'
+import {connection} from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
@@ -22,9 +22,6 @@ export default {
 	async index(req, res) {
 		const { page = 1 } = req.query
 
-		// const { id:user_id } = req.auth; //DEVELOPMENT
-		// if(!user_id || user_id === undefined || user_id === '') handleError(res, 401, 'Unathorized')
-
 		const user = await connection('users')
 			.select('*')
 			.limit(12)
@@ -41,7 +38,7 @@ export default {
 	//create user
 	async create(req, res) {
 		console.log('criando user...')
-		const { name, email, whatsapp, image_url, city, uf, password } = req.value.body
+		const { name, email, whatsapp, image_url, city, uf, password, bio } = req.value.body
 		const hashed_pass = await argon2.hash(password)
 
 		const data = req.value.body
@@ -60,6 +57,7 @@ export default {
 				image_url,
 				city,
 				uf,
+				bio,
 				password: hashed_pass,
 			})
 			console.log(data)
@@ -106,9 +104,12 @@ export default {
 
 			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
 
-			console.log('decodificou buffer', await verify(pass_bd, password))
+			
+			const verified = await verify(pass_bd, password);
 
-			if (!(await verify(pass_bd, password))) return handleError(res, 401, 'Senha Incorreta')
+			console.log('decodificou buffer', verified)
+
+			if (!(verified)) return handleError(res, 401, 'Senha Incorreta')
 
 			const token = await jwt.generateToken({ user_id: result.id })
 

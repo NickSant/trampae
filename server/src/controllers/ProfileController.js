@@ -1,4 +1,4 @@
-import connection from '../database/connection'
+import {connection} from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
@@ -167,7 +167,7 @@ export default {
 			})
 	},
 	async changePass(req, res) {
-		const { newPass } = req.body //vem em BASE64!!
+		const { newPass } = req.body //não vem em BASE64!!
 		const { url_hash } = req.headers
 	
 		// const pass = Buffer.from(newPass, 'base64').toString()
@@ -192,8 +192,6 @@ export default {
 		const hashed_pass = await hash(newPass)
 	
 		const updatedUser = await u.update({id: user.id}, {password: hashed_pass})
-
-		// await u.update({id:user.id}, {password: hashed_pass})
 
 		if (!updatedUser === 1) return handleError(res, 400, 'Não foi possível atualizar a senha\nTente novamente mais tarde')
 

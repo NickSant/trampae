@@ -27,10 +27,10 @@ routes.post('/forgot', ProfileController.forgotPass)
 routes.post('/verfiy-url-hash', mailerAuth)
 routes.put('/forgot', mailerAuth, ProfileController.changePass)
 
-// GoogleOAuth
-routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
+// // GoogleOAuth
+// routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
 
-routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
+// routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
 
 //listar usuários - development - 
 routes.get('/user', UserController.index)
@@ -62,8 +62,8 @@ routes.post('/upload-image', authMiddleware, multer.single('img_perfil'), Profil
 routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
-routes.get('/search/services', authMiddleware, SearchController.SearchServices)
-routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
+routes.get('/search/services', SearchController.SearchServices)
+routes.get('/search/users', SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)

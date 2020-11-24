@@ -12,10 +12,12 @@
     "db:down": "knex migrate:rollback --all"
   },
   "keywords": [],
-  "author": "",
+  "author": "@viniolimpio3 / @NickSant",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "argon2": "^0.26.2",
+    "core-js": "^3.7.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -31,11 +33,18 @@
     "passport": "^0.4.1",
     "passport-facebook-token": "^4.0.0",
     "passport-google-plus-token": "^2.1.0",
+    "regenerator-runtime": "^0.13.7",
     "sha1": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "nodemon": "^2.0.4"
   }
 }

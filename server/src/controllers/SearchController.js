@@ -1,55 +1,50 @@
-import connection from "../database/connection";
-import Util from '../helpers/Util';
-import Model from "../models/Model";
-const {handleError} = new Util;
+import { connection } from '../database/connection'
+import { servicesJoinUsers } from './ServiceController'
+import Util from '../helpers/Util'
+import Model from '../models/Model'
+
+const { handleError } = new Util()
 const u = new Model('users')
+const db = connection
+
+
+function whereBuilder(ctx, obj, alias) {
+	//função topzera!! rs
+	Object.keys(obj).forEach(function (index) {
+		const value = obj[index]
+		if (value) ctx.where(`${alias}.${index}`, '=', `${value}`)
+	})
+}
 
 export default {
-  async SearchServices(request, response) {
+	async SearchServices(request, response) {
+		const { page = 1 } = request.query
+		const { uf, city, category_id, id } = request.query //campos que são permitidos (pela lógica) na query
 
-    const { page = 1 } = request.query;
+		const services = await db(db.ref('services').as('s'))
+			.select(servicesJoinUsers)
+			.where(function () {
+				whereBuilder(this, { uf, city, category_id, id }, 's')
+			})
+			.limit(12)
+			.offset((page - 1) * 12)
+			.innerJoin(db.ref('users').as('u'), 'u.id', '=', 's.user_id')
 
-    const { uf, city, cat_id, id } = request.query;
+		return response.json({ services })
+	},
+	async SearchUsers(request, response) {
+		const { id = false, name = false, email = false, city = false, uf = false } = request.query
+		try {
+			const users = await u.get(function () {
+				whereBuilder(this, { id, name, email, city, uf }, 'users')
+			})
+			users.map(user => delete user.password)
+			if (!users || users.length <= 0) return response.json({ message: `Usuário não encontrado!` })
 
-    const searchData = {}
-
-    if(uf) searchData.uf = uf
-    if(city) searchData.city = city
-    if(cat_id) searchData.category_id = cat_id
-    if(id) searchData.id = id
-    
-
-    const services = await connection("services")
-      .where(searchData)
-      .select("*")
-      .limit(12)
-      .offset( (page -1) * 12 );
-
-    return response.json({services});
-  },
-  async SearchUsers(request, response) {    
-    const { id=false, name=false, email=false, city=false, uf=false } = request.query
-    const dataSearch = {}
-
-    try{
-      if(id) dataSearch.id = id
-      if(name) dataSearch.name = name
-      if(email) dataSearch.email = email
-      if(city) dataSearch.city = city
-      if(uf) dataSearch.uf = uf
-
-      const users = await u.get(dataSearch)
-      users.map(user => delete user.password )
-      if(!users || users.length <= 0) return response.json({message:`Usuário não encontrado!`})
-
-      return response.json({users});
-
-    }catch(e){
-      console.log(e)
-      return handleError(response, 400, 'Database Error')
-    }
-    
-  },
-
-  
-};
+			return response.json({ users })
+		} catch (e) {
+			console.log(e)
+			return handleError(response, 400, 'Database Error')
+		}
+	},
+}

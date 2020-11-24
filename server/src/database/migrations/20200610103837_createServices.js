@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.unique('id')
         table.decimal('price').notNullable()
         table.string('title').notNullable()
-        table.string('description').notNullable()
+        table.text('description').notNullable()
         table.string('city').notNullable()
         table.string('uf', 2).notNullable()
 
