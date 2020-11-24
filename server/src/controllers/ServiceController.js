@@ -1,4 +1,4 @@
-import connection from '../database/connection'
+import {connection} from '../database/connection'
 import crypto from 'crypto'
 
 import * as jwt from '../setup/jwt'

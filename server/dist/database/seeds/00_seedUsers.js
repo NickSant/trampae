@@ -27,7 +27,7 @@ exports.seed = function () {
                             password: _context.t1
                         };
                         _context.next = 7;
-                        return hash('senha_admin_trampae');
+                        return hash('senha2');
 
                     case 7:
                         _context.t3 = _context.sent;

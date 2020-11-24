@@ -8,8 +8,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _connection = require('../database/connection');
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _jwt = require('../setup/jwt');
 
 var jwt = _interopRequireWildcard(_jwt);
@@ -44,9 +42,9 @@ var _Model = require('../models/Model');
 
 var _Model2 = _interopRequireDefault(_Model);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -346,7 +344,7 @@ exports.default = {
 				while (1) {
 					switch (_context5.prev = _context5.next) {
 						case 0:
-							newPass = req.body.newPass; //vem em BASE64!!
+							newPass = req.body.newPass; //não vem em BASE64!!
 
 							url_hash = req.headers.url_hash;
 

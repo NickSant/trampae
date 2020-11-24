@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _connection = require("../database/connection");
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _Util = require("../helpers/Util");
 
 var _Util2 = _interopRequireDefault(_Util);
@@ -45,7 +43,7 @@ exports.default = {
               if (id) searchData.id = id;
 
               _context.next = 9;
-              return (0, _connection2.default)("services").where(searchData).select("*").limit(12).offset((page - 1) * 12);
+              return (0, _connection.connection)("services").where(searchData).select("*").limit(12).offset((page - 1) * 12);
 
             case 9:
               services = _context.sent;

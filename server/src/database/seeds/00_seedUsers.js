@@ -18,7 +18,7 @@ exports.seed = async function seed(knex){
             whatsapp:'+5511941002333',
             city:'São Bernardo do Campo',
             uf:'SP',
-            password: await hash('senha1')
+            password: await hash('senha2')
         }   
     ])
 }

@@ -8,8 +8,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _connection = require('../database/connection');
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _jwt = require('../setup/jwt');
 
 var jwt = _interopRequireWildcard(_jwt);
@@ -38,9 +36,9 @@ var _AdminController = require('./AdminController');
 
 var _AdminController2 = _interopRequireDefault(_AdminController);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //algoritmo de hash
 
@@ -74,7 +72,7 @@ exports.default = {
 							// if(!user_id || user_id === undefined || user_id === '') handleError(res, 401, 'Unathorized')
 
 							_context.next = 3;
-							return (0, _connection2.default)('users').select('*').limit(12).offset((page - 1) * 12);
+							return (0, _connection.connection)('users').select('*').limit(12).offset((page - 1) * 12);
 
 						case 3:
 							user = _context.sent;
@@ -132,7 +130,7 @@ exports.default = {
 							token = _context2.sent;
 							_context2.prev = 13;
 							_context2.next = 16;
-							return (0, _connection2.default)('users').insert({
+							return (0, _connection.connection)('users').insert({
 								id: id,
 								name: name,
 								email: email,
@@ -223,7 +221,7 @@ exports.default = {
 	}(),
 	login: function () {
 		var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
-			var _req$headers$authoriz, _req$headers$authoriz2, hashTyp, hash, _Buffer$from$toString, _Buffer$from$toString2, email, password, result, pass_bd, token, user;
+			var _req$headers$authoriz, _req$headers$authoriz2, hashTyp, hash, _Buffer$from$toString, _Buffer$from$toString2, email, password, result, pass_bd, verified, token, user;
 
 			return regeneratorRuntime.wrap(function _callee4$(_context4) {
 				while (1) {
@@ -280,31 +278,27 @@ exports.default = {
 
 						case 18:
 							pass_bd = _context4.sent;
-							_context4.t0 = console;
-							_context4.next = 22;
+							_context4.next = 21;
 							return (0, _argon.verify)(pass_bd, password);
 
-						case 22:
-							_context4.t1 = _context4.sent;
+						case 21:
+							verified = _context4.sent;
 
-							_context4.t0.log.call(_context4.t0, 'decodificou buffer', _context4.t1);
 
-							_context4.next = 26;
-							return (0, _argon.verify)(pass_bd, password);
+							console.log('decodificou buffer', verified);
 
-						case 26:
-							if (_context4.sent) {
-								_context4.next = 28;
+							if (verified) {
+								_context4.next = 25;
 								break;
 							}
 
 							return _context4.abrupt('return', handleError(res, 401, 'Senha Incorreta'));
 
-						case 28:
-							_context4.next = 30;
+						case 25:
+							_context4.next = 27;
 							return jwt.generateToken({ user_id: result.id });
 
-						case 30:
+						case 27:
 							token = _context4.sent;
 
 
@@ -319,20 +313,20 @@ exports.default = {
 							};
 
 							res.json({ user: user, token: token });
-							_context4.next = 39;
+							_context4.next = 36;
 							break;
 
-						case 36:
-							_context4.prev = 36;
-							_context4.t2 = _context4['catch'](8);
-							return _context4.abrupt('return', handleError(res, 400, _context4.t2));
+						case 33:
+							_context4.prev = 33;
+							_context4.t0 = _context4['catch'](8);
+							return _context4.abrupt('return', handleError(res, 400, _context4.t0));
 
-						case 39:
+						case 36:
 						case 'end':
 							return _context4.stop();
 					}
 				}
-			}, _callee4, this, [[8, 36]]);
+			}, _callee4, this, [[8, 33]]);
 		}));
 
 		function login(_x7, _x8) {

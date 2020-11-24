@@ -1,5 +1,5 @@
 #Docker Image
-FROM node:12
+FROM node:alpine
 
 #Relative Path WorkDir
 WORKDIR /usr/src/app
@@ -10,9 +10,9 @@ COPY package*.json ./
 #Bundle app source
 COPY . .
 
-RUN npm install
+RUN  npm install
 
 #Port
 EXPOSE 3333
 
-CMD ["node", "dist/server.js"]
+CMD yarn server

@@ -8,8 +8,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _connection = require('../database/connection');
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _Util = require('../helpers/Util');
 
 var _Util2 = _interopRequireDefault(_Util);
@@ -19,6 +17,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var db = _connection.connection;
 
 var Model = function () {
     function Model(table) {
@@ -46,7 +46,7 @@ var Model = function () {
                             case 2:
                                 _context.prev = 2;
                                 _context.next = 5;
-                                return (0, _connection2.default)(this.table).select('*');
+                                return db(this.table).select('*');
 
                             case 5:
                                 data = _context.sent;
@@ -107,7 +107,7 @@ var Model = function () {
                                 }
 
                                 _context2.next = 7;
-                                return (0, _connection2.default)(this.table).select('*').where(filterItems).first();
+                                return db(this.table).select('*').where(filterItems).first();
 
                             case 7:
                                 data = _context2.sent;
@@ -116,7 +116,7 @@ var Model = function () {
 
                             case 10:
                                 _context2.next = 12;
-                                return (0, _connection2.default)(this.table).select('*').where(filterItems);
+                                return db(this.table).select('*').where(filterItems);
 
                             case 12:
                                 data = _context2.sent;
@@ -179,7 +179,7 @@ var Model = function () {
 
                             case 5:
                                 _context3.next = 7;
-                                return (0, _connection2.default)(this.table).insert(data);
+                                return db(this.table).insert(data);
 
                             case 7:
                                 inserted = _context3.sent;
@@ -232,7 +232,7 @@ var Model = function () {
                             case 2:
                                 _context4.prev = 2;
                                 _context4.next = 5;
-                                return (0, _connection2.default)(this.table).where(filterItems).delete();
+                                return db(this.table).where(filterItems).delete();
 
                             case 5:
                                 deleted = _context4.sent;
@@ -286,7 +286,7 @@ var Model = function () {
                             case 2:
                                 _context5.prev = 2;
                                 _context5.next = 5;
-                                return (0, _connection2.default)(this.table).update(data).where(filterItems);
+                                return db(this.table).update(data).where(filterItems);
 
                             case 5:
                                 updated = _context5.sent;

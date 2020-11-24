@@ -1,14 +1,10 @@
 const path = require('path')
+const { dbConnection } = require('./src/database/connection')
 require('dotenv').config()
 module.exports = {
 	development: {
 		client: 'mysql',
-		connection: {
-			host: process.env.HOST,
-			user: process.env.USER_DB,
-			password: process.env.PASS_DB,
-			database: process.env.DATABASE,		
-		},
+		connection: dbConnection,
 		migrations: {
 			directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
 		},
@@ -18,12 +14,7 @@ module.exports = {
 	},
 	production: {
 		client: 'mysql',
-		connection: {
-			host: process.env.HOST,
-			user: process.env.USER_DB,
-			password: process.env.PASS_DB,
-			database: process.env.DATABASE,		
-		},
+		connection: dbConnection,
 		migrations: {
 			directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
 		},

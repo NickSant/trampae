@@ -27,6 +27,7 @@ app.use(routes);
 
 //verificando conexão com banco
 app.listen(port,  async function() {  
-    tryMysqlConnection()
-    console.log(`Running server at http://${host}:${port}`)
+    tryMysqlConnection().then(function(){
+        console.log(`Running serve at http://${host}:${port}`)
+    }).catch(e => console.log(e))
 });

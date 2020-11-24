@@ -8,8 +8,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _connection = require('../database/connection');
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _jwt = require('../setup/jwt');
 
 var jwt = _interopRequireWildcard(_jwt);
@@ -32,9 +30,9 @@ var _Model2 = _interopRequireDefault(_Model);
 
 var _fs = require('fs');
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //algoritmo de hash
 

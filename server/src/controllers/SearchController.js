@@ -1,4 +1,4 @@
-import connection from "../database/connection";
+import {connection} from "../database/connection";
 import Util from '../helpers/Util';
 import Model from "../models/Model";
 const {handleError} = new Util;

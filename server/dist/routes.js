@@ -66,10 +66,10 @@ routes.post('/forgot', _ProfileController2.default.forgotPass);
 routes.post('/verfiy-url-hash', _mailer_auth2.default);
 routes.put('/forgot', _mailer_auth2.default, _ProfileController2.default.changePass);
 
-// GoogleOAuth
-routes.post('/oauth/google', _passport2.default.authenticate('googleToken', { session: false }), _UserController2.default.OAuth);
+// // GoogleOAuth
+// routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
 
-routes.post('/oauth/facebook', _passport2.default.authenticate('facebookToken', { session: false }), _UserController2.default.OAuth);
+// routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
 
 //listar usuários - development - 
 routes.get('/user', _UserController2.default.index);
