@@ -17,9 +17,9 @@ const servicesJoinUsers = Array(
 	'u.city as user_city',
 	'u.uf as user_uf',
 	'u.whatsapp as user_whatsapp',
-	's.*' 
+	's.*',
+	'c.title as category_title'
 )
-
 
 export default {
 	async index(request, response) {
@@ -34,6 +34,7 @@ export default {
 			const services = await db( db.ref('services').as('s') ).select(servicesJoinUsers)
 			.limit(12).offset((page - 1) * 12)
 			.innerJoin(db.ref('users').as('u'), 'u.id', '=', 's.user_id')
+			.innerJoin(db.ref('categories').as('c'), 'c.id', '=', 's.category_id')
 
 			return response.json(services)
 		} catch (e) {
