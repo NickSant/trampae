@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `trampae_db`.`users` (
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `image_url` VARCHAR(255) NULL DEFAULT 'uploads/default.png',
+  `bio` TEXT DEFAULT NULL,
   `password` VARBINARY(16535) NULL DEFAULT NULL,
   `city` VARCHAR(255) NULL DEFAULT NULL,
   `uf` VARCHAR(2) NULL DEFAULT NULL,
@@ -73,30 +74,30 @@ CREATE UNIQUE INDEX `change_pass_occurrences_id_unique` ON `trampae_db`.`change_
 CREATE UNIQUE INDEX `change_pass_occurrences_hash_url_unique` ON `trampae_db`.`change_pass_occurrences` (`hash_url` ASC);
 
 
--- -----------------------------------------------------
--- Table `trampae_db`.`knex_migrations`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NULL DEFAULT NULL,
-  `batch` INT(11) NULL DEFAULT NULL,
-  `migration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 9
-DEFAULT CHARACTER SET = utf8mb4;
+-- -- -----------------------------------------------------
+-- -- Table `trampae_db`.`knex_migrations`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations` (
+--   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+--   `name` VARCHAR(255) NULL DEFAULT NULL,
+--   `batch` INT(11) NULL DEFAULT NULL,
+--   `migration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--   PRIMARY KEY (`id`))
+-- ENGINE = InnoDB
+-- AUTO_INCREMENT = 9
+-- DEFAULT CHARACTER SET = utf8mb4;
 
 
--- -----------------------------------------------------
--- Table `trampae_db`.`knex_migrations_lock`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations_lock` (
-  `index` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `is_locked` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`index`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8mb4;
+-- -- -----------------------------------------------------
+-- -- Table `trampae_db`.`knex_migrations_lock`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations_lock` (
+--   `index` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+--   `is_locked` INT(11) NULL DEFAULT NULL,
+--   PRIMARY KEY (`index`))
+-- ENGINE = InnoDB
+-- AUTO_INCREMENT = 2
+-- DEFAULT CHARACTER SET = utf8mb4;
 
 
 -- -----------------------------------------------------

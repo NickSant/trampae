@@ -1,6 +1,6 @@
 import {connection} from '../database/connection'
 import crypto from 'crypto'
-
+const db = connection
 import * as jwt from '../setup/jwt'
 
 import Util from '../helpers/Util'
@@ -10,6 +10,15 @@ const { handleError } = new Util()
 
 const sv = new Model('services')
 
+const servicesJoinUsers = Array(
+	'u.id as user_id',
+	'u.name as user_name',
+	'u.image_url as user_image',
+	'u.city as user_city',
+	'u.uf as user_uf',
+	'u.whatsapp as user_whatsapp',
+	's.*' 
+)
 
 
 export default {
@@ -18,14 +27,13 @@ export default {
 		const { page = 1 } = request.query
 
 		try {
-			const [count] = await connection('services').count() //retorna um array com a quantidade de services
+			const [count] = await db('services').count() //retorna um array com a quantidade de services
 
 			console.log(`Total de services cadastrados: ${count['count(*)']}`)
-
-			const services = await connection('services')
-				.select('*')
-				.limit(12)
-				.offset((page - 1) * 12) //pula as páginas retornadas, em função da query
+			
+			const services = await db( db.ref('services').as('s') ).select(servicesJoinUsers)
+			.limit(12).offset((page - 1) * 12)
+			.innerJoin(db.ref('users').as('u'), 'u.id', '=', 's.user_id')
 
 			return response.json(services)
 		} catch (e) {
@@ -46,7 +54,7 @@ export default {
 		if (service.user_id !== user_id) return handleError(response, 401, 'unauthorized_to_delete_service')
 
 		try {
-			await connection('services')
+			await db('services')
 				.where({
 					id: id,
 					user_id: user_id,
@@ -103,4 +111,8 @@ export default {
 			return handleError(res, 400, error)
 		}
 	}
+}
+
+export {
+	servicesJoinUsers
 }

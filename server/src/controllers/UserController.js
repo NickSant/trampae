@@ -22,9 +22,6 @@ export default {
 	async index(req, res) {
 		const { page = 1 } = req.query
 
-		// const { id:user_id } = req.auth; //DEVELOPMENT
-		// if(!user_id || user_id === undefined || user_id === '') handleError(res, 401, 'Unathorized')
-
 		const user = await connection('users')
 			.select('*')
 			.limit(12)
@@ -41,7 +38,7 @@ export default {
 	//create user
 	async create(req, res) {
 		console.log('criando user...')
-		const { name, email, whatsapp, image_url, city, uf, password } = req.value.body
+		const { name, email, whatsapp, image_url, city, uf, password, bio } = req.value.body
 		const hashed_pass = await argon2.hash(password)
 
 		const data = req.value.body
@@ -60,6 +57,7 @@ export default {
 				image_url,
 				city,
 				uf,
+				bio,
 				password: hashed_pass,
 			})
 			console.log(data)

@@ -42,7 +42,6 @@ services: #containers
     nodejs:
         depends_on: 
             - mysqlsrv
-        # entrypoint: npm run migrate
         networks:
             - mysql-compose-network 
         env_file: .env  
