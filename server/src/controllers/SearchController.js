@@ -29,6 +29,7 @@ export default {
 			.limit(12)
 			.offset((page - 1) * 12)
 			.innerJoin(db.ref('users').as('u'), 'u.id', '=', 's.user_id')
+			.innerJoin(db.ref('categories').as('c'), 'c.id', '=', 's.category_id')
 
 		return response.json({ services })
 	},
