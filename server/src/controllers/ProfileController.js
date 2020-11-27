@@ -10,6 +10,8 @@ import sha1 from 'sha1'
 import 'dotenv/config'
 import Model from '../models/Model'
 
+const db = connection
+
 
 const userDefault = ['id', 'name', 'email', 'whatsapp', 'city', 'uf', 'password', 'total_trampos', 'third_party_id', 'image_url', 'hash_url_to_change_pass', 'req_change_pass_time']
 
@@ -26,12 +28,15 @@ export default {
 		const { id } = req.params
 		const { id: req_id } = req.auth //id do user autenticado e logado
 
-		
 		const exists = await u.get({id},true)
-
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
-
 		delete exists.password
+
+		const doneServices = await db(db.ref('completed_services').as('cp')).select('s.*')
+		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
+		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+
+		console.log(doneServices, 'downe orks')
 
 		if (id === req_id) {
 			//ĺógica para a possibilidade de editar os dados!!
@@ -43,7 +48,7 @@ export default {
 			exists.changePermission = false
 		}
 
-		return res.json(exists)
+		return res.json({exists, doneServices})
 	},
 	async uploadImage(req, res) {
 		try {
