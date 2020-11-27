@@ -17,10 +17,10 @@ const connection = knex({
 
 
 async function tryMysqlConnection(){
-    console.log(dbConnection, 'dbConnection')
     const con = mysql.createConnection(dbConnection)
     con.connect(function(err){
         if(err) throw err
+        console.log('Connected with database!')
     })
 }
 

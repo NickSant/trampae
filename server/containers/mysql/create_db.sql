@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS `trampae_db`.`categories` (
   `title` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 38
 DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE UNIQUE INDEX `categories_id_unique` ON `trampae_db`.`categories` (`id` ASC);
-
+CREATE UNIQUE INDEX `categories_id_unique` ON `trampae_db`.`categories` (`id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table `trampae_db`.`users`
@@ -37,23 +37,23 @@ CREATE TABLE IF NOT EXISTS `trampae_db`.`users` (
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `image_url` VARCHAR(255) NULL DEFAULT 'uploads/default.png',
-  `bio` TEXT DEFAULT NULL,
+  `bio` TEXT NULL DEFAULT NULL,
   `password` VARBINARY(16535) NULL DEFAULT NULL,
   `city` VARCHAR(255) NULL DEFAULT NULL,
   `uf` VARCHAR(2) NULL DEFAULT NULL,
   `whatsapp` VARCHAR(255) NULL DEFAULT NULL,
-  `is_verified_mail` TINYINT(1) NOT NULL DEFAULT '0',
+  `is_verified_mail` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE UNIQUE INDEX `users_id_unique` ON `trampae_db`.`users` (`id` ASC);
+CREATE UNIQUE INDEX `users_id_unique` ON `trampae_db`.`users` (`id` ASC) ;
 
-CREATE UNIQUE INDEX `users_email_unique` ON `trampae_db`.`users` (`email` ASC);
+CREATE UNIQUE INDEX `users_email_unique` ON `trampae_db`.`users` (`email` ASC) ;
 
-CREATE UNIQUE INDEX `users_third_party_id_unique` ON `trampae_db`.`users` (`third_party_id` ASC);
+CREATE UNIQUE INDEX `users_third_party_id_unique` ON `trampae_db`.`users` (`third_party_id` ASC) ;
 
-CREATE UNIQUE INDEX `users_whatsapp_unique` ON `trampae_db`.`users` (`whatsapp` ASC);
+CREATE UNIQUE INDEX `users_whatsapp_unique` ON `trampae_db`.`users` (`whatsapp` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -63,70 +63,17 @@ CREATE TABLE IF NOT EXISTS `trampae_db`.`change_pass_occurrences` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(255) NOT NULL,
   `hash_url` VARCHAR(255) NULL DEFAULT NULL,
-  `status` TINYINT(1) NULL DEFAULT '0',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` TINYINT(1) NULL DEFAULT 0,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE UNIQUE INDEX `change_pass_occurrences_id_unique` ON `trampae_db`.`change_pass_occurrences` (`id` ASC);
+CREATE UNIQUE INDEX `change_pass_occurrences_id_unique` ON `trampae_db`.`change_pass_occurrences` (`id` ASC) ;
 
-CREATE UNIQUE INDEX `change_pass_occurrences_hash_url_unique` ON `trampae_db`.`change_pass_occurrences` (`hash_url` ASC);
+CREATE UNIQUE INDEX `change_pass_occurrences_hash_url_unique` ON `trampae_db`.`change_pass_occurrences` (`hash_url` ASC) ;
 
-
--- -- -----------------------------------------------------
--- -- Table `trampae_db`.`knex_migrations`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations` (
---   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
---   `name` VARCHAR(255) NULL DEFAULT NULL,
---   `batch` INT(11) NULL DEFAULT NULL,
---   `migration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`))
--- ENGINE = InnoDB
--- AUTO_INCREMENT = 9
--- DEFAULT CHARACTER SET = utf8mb4;
-
-
--- -- -----------------------------------------------------
--- -- Table `trampae_db`.`knex_migrations_lock`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `trampae_db`.`knex_migrations_lock` (
---   `index` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
---   `is_locked` INT(11) NULL DEFAULT NULL,
---   PRIMARY KEY (`index`))
--- ENGINE = InnoDB
--- AUTO_INCREMENT = 2
--- DEFAULT CHARACTER SET = utf8mb4;
-
-
--- -----------------------------------------------------
--- Table `trampae_db`.`service_providers`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`service_providers` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` VARCHAR(255) NOT NULL,
-  `finished_works` INT(11) NULL DEFAULT '0',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
-
-CREATE UNIQUE INDEX `service_providers_id_unique` ON `trampae_db`.`service_providers` (`id` ASC);
-
-
--- -----------------------------------------------------
--- Table `trampae_db`.`service_provider_categories`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`service_provider_categories` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `service_provider_id` INT(10) UNSIGNED NOT NULL,
-  `category_id` INT(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
-
-CREATE UNIQUE INDEX `service_provider_categories_id_unique` ON `trampae_db`.`service_provider_categories` (`id` ASC);
-
+CREATE INDEX `change_pass_occurrences_user_id_foreign` ON `trampae_db`.`change_pass_occurrences` (`user_id` ASC) ;
 
 -- -----------------------------------------------------
 -- Table `trampae_db`.`services`
@@ -147,34 +94,48 @@ DEFAULT CHARACTER SET = utf8mb4;
 
 CREATE UNIQUE INDEX `services_id_unique` ON `trampae_db`.`services` (`id` ASC);
 
-
 -- -----------------------------------------------------
--- Table `trampae_db`.`user_pf`
+-- Table `trampae_db`.`services`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`user_pf` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `trampae_db`.`services` (
+  `id` VARCHAR(255) NOT NULL,
+  `price` DECIMAL(8,2) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `description` TEXT NOT NULL,
+  `city` VARCHAR(255) NOT NULL,
+  `uf` VARCHAR(2) NOT NULL,
+  `status` TINYINT(1) NULL DEFAULT 0,
   `user_id` VARCHAR(255) NOT NULL,
-  `cpf` VARCHAR(15) NOT NULL,
+  `category_id` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE UNIQUE INDEX `user_pf_id_unique` ON `trampae_db`.`user_pf` (`id` ASC);
+CREATE UNIQUE INDEX `services_id_unique` ON `trampae_db`.`services` (`id` );
 
+CREATE INDEX `services_user_id_foreign` ON `trampae_db`.`services` (`user_id` );
+
+CREATE INDEX `services_category_id_foreign` ON `trampae_db`.`services` (`category_id` );
 
 -- -----------------------------------------------------
--- Table `trampae_db`.`user_pj`
+-- Table `trampae_db`.`completed_services`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampae_db`.`user_pj` (
+CREATE TABLE IF NOT EXISTS `trampae_db`.`completed_services` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` VARCHAR(255) NOT NULL,
-  `cpnj` VARCHAR(20) NOT NULL,
+  `user_assigned_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que postou',
+  `user_requested_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que prestou',
+  `service_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE UNIQUE INDEX `user_pj_id_unique` ON `trampae_db`.`user_pj` (`id` ASC);
+CREATE UNIQUE INDEX `completed_services_id_unique` ON `trampae_db`.`completed_services` (`id` ASC);
 
+CREATE INDEX `completed_services_user_assigned_id_foreign` ON `trampae_db`.`completed_services` (`user_assigned_id` ASC);
+
+CREATE INDEX `completed_services_user_requested_id_foreign` ON `trampae_db`.`completed_services` (`user_requested_id` ASC);
+
+CREATE INDEX `completed_services_service_id_foreign` ON `trampae_db`.`completed_services` (`service_id` ASC);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -5,11 +5,13 @@ import * as jwt from '../setup/jwt'
 
 import Util from '../helpers/Util'
 import Model from '../models/Model'
+import Knex from 'knex'
 
 const { handleError } = new Util()
 
 const sv = new Model('services')
-
+const u = new Model('users')
+const cp = new Model('completed_services')
 const servicesJoinUsers = Array(
 	'u.id as user_id',
 	'u.name as user_name',
@@ -27,7 +29,7 @@ export default {
 		const { page = 1 } = request.query
 
 		try {
-			const [count] = await db('services').count() //retorna um array com a quantidade de services
+			const [count] = await db('services').count().where({status: 0}) //retorna um array com a quantidade de services
 
 			console.log(`Total de services cadastrados: ${count['count(*)']}`)
 			
@@ -50,6 +52,7 @@ export default {
 		const service = await sv.get({id}, true)
 
 		if(service.length <= 0) handleError(response, 400, 'Serviço não encontrado')
+
 		
 
 		if (service.user_id !== user_id) return handleError(response, 401, 'unauthorized_to_delete_service')
@@ -110,6 +113,34 @@ export default {
 			
 		} catch (error) {
 			return handleError(res, 400, error)
+		}
+	},
+	async completeService(req, res){
+		const { id: user_requested_id } = req.auth
+		const { user_assigned_id, service_id } = req.body
+
+		if(!user_assigned_id || !service_id) return handleError(res, 400, `Dados não suficientes para progredir com a ação.`)
+
+		try {
+			
+			const service = await sv.get({id: service_id}, true)
+			if(!service) return handleError(res, 400, `service ID doesn't exists!`)
+
+			const user_assigned = await u.get({id:user_assigned_id}, true)
+			if(!user_assigned) return handleError(res, 400, `user ID doesn't exists!`)
+
+			console.log(service)
+			if(service.user_id !== user_requested_id) return handleError(res, 401, 'unauthorized_to_perform_this_action')
+
+			await cp.insert({ user_assigned_id, user_requested_id, service_id })
+
+			sv.update({id: service_id},{ status: true })
+
+			res.json({status: true}).status(201)
+			
+		} catch (error) {
+			console.log(error)
+			return handleError(res, 400, `Não foi possível terminar a ação!`)
 		}
 	}
 }
