@@ -24,7 +24,7 @@ export default function Routes() {
                 <Route path="/new-service" exact={true} component={NewService} />
                 <Route path="/aboutus" exact={true} component={AboutUs} />
                 <Route path="/forget" exact={true} component={Forget} />
-                <Route path="/profile" exact={true} component={Profile} />
+                <Route path="/profile/:id" exact={true} component={Profile} />
                 <Route path="/talkwithus" exact={true} component={TalkWithUs} />
 
                 <PrivateRoute exact={true} component={Home} path="/home" />

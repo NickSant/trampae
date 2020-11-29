@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container = styled.div`
 	width: 100%;
-	padding: 5px 10px 0;
+	padding: 0 1rem;
 
 	border-radius: 5px;
 	background: var(--white);
@@ -87,12 +87,15 @@ export const Container = styled.div`
 		justify-content: space-between;
 
 		div,
-		button {
+		button,
+		a {
 			width: 50%;
 			height: 100;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			color: black;
+			fill: black;
 
 			strong {
 				font-size: 0.75rem;
@@ -114,7 +117,8 @@ export const Container = styled.div`
 			transition: ease 0.5s;
 		}
 
-		button:hover {
+		button:hover,
+		a:hover {
 			color: var(--green);
 			strong {
 				color: var(--green);

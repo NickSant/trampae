@@ -27,9 +27,10 @@ export default function Register() {
 	const [email, changeMail] = useState('')
 	const [whats, changeWhats] = useState('')
 	const [password, changePass] = useState('')
-
+	const [bio, changeBio] = useState('');
 	const [selectedUf, setSelectedUf] = useState('')
 	const [selectedCity, setSelectedcity] = useState('')
+
 
 	const [ufs, setUfs] = useState([])
 	const [cities, setCities] = useState([])
@@ -66,6 +67,7 @@ export default function Register() {
 			email: email,
 			whatsapp: whats,
 			password: password,
+			bio: bio,
 			city: selectedCity,
 			uf: selectedUf,
 		})
@@ -111,7 +113,7 @@ export default function Register() {
 						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
 
 						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
-						<Textarea type="text" name="Bio"/>
+						<Textarea type="text" name="Bio" onChange={e => changeBio(e.target.value)} />
 
 						<div className="location">
 							<Select

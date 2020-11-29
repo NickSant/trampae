@@ -2,13 +2,11 @@ import React from 'react'
 
 import { Container } from './styles'
 import userImg from '../../assets/user.png'
-import WhatsAppIcon from '../../assets/whatsapp.svg'
-import { useHistory } from 'react-router-dom'
 
 import { AiOutlineWhatsApp } from 'react-icons/ai'
 
-function Post({ user, title, description, price, id }) {
-	const hist = useHistory()
+function Post({ user, title, description, price, localization, category }) {
+	
 	return (
 		<Container>
 			<header>
@@ -17,11 +15,11 @@ function Post({ user, title, description, price, id }) {
 					<div>
 						<strong> {user.name} </strong>
 						<span>
-							{user.city} - {user.uf}
+							{localization.city} - {localization.uf}
 						</span>
 					</div>
 				</div>
-				<strong> Trabalho Doméstico </strong>
+				<strong> {category} </strong>
 			</header>
 
 			<div className="content">
@@ -38,9 +36,9 @@ function Post({ user, title, description, price, id }) {
 					<strong> Ver detalhes </strong>
 				</button>
 
-				<button>
+				<a href={`https://api.whatsapp.com/send?phone=${user.whatsapp}&text=Olá%20${user.name}!`} target="_blank">
 					<strong>Whatsapp</strong> <AiOutlineWhatsApp size={'1.5rem'} />
-				</button>
+				</a>
 			</footer>
 		</Container>
 	)

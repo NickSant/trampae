@@ -42,7 +42,7 @@ export default function Navbar({ children }) {
 					Sobre nós
 					<FiUsers size={'1.8rem'} />
 				</Link>
-				<Link className="navItem">
+				<Link to="/home" className="navItem">
 					Configurações
 					<FiSettings size={'1.8rem'} />
 				</Link>

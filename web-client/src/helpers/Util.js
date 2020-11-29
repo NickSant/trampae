@@ -25,9 +25,6 @@ class Util{
         const localUser = JSON.parse( localStorage.getItem('@Trampae:user') )
 
         if(!localUser || localUser === '' || typeof localUser !== 'object' || !localUser.id || !localUser.email) return false
-        
-        const api_response = await me(token);
-        if(api_response) return console.log('me api', api_response.data)
 
         return true
     }

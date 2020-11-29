@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { Link } from "react-router-dom"
 
 import { useAuth } from "../../contexts/authContext"
@@ -26,6 +27,8 @@ import profilePic from "../../assets/ZecaUrubu.png"
 export default function Home() {
 	const { user } = useAuth()
 	const [isFilterActive, setFilterActive] = useState(false)
+	const [areFilteredServices, setAreFilteredServices] = useState(false)
+	const [servicePage, setServicePage] = useState(2)
 	const [services, setServices] = useState([])
 
 	const [ufs, setUfs] = useState([])
@@ -36,53 +39,35 @@ export default function Home() {
 
 	function clearFilters() {
 		getServicesData()
+		setServicePage(2)
 		setSelectedUf("")
 		setSelectedCity("")
 	}
 
-	async function concatData(service) {
-		const userData = await getUserData(service.user_id)
-		return { ...service, userData }
+	async function getUfs() {
+		const ufs = await ibge.getUfs()
+
+		setUfs(ufs)
 	}
 
-	async function getUserData(userId) {
-		const apiResponse = await api.get("/search/users", {
-			params: {
-				id: userId,
-			},
-		})
-		return apiResponse.data.users[0]
+	async function getCities() {
+		const cities = await ibge.getCities(selectedUf)
+
+		setCities(cities)
 	}
 
 	async function getServicesData() {
-		const apiResponse = await api.get("services")
-		const data = apiResponse.data
-
-		const concatedData = await Promise.all(
-			data.map(service => {
-				return concatData(service)
-			})
-		)
-		setServices(concatedData)
+		const apiResponse = await api.get("search/services")
+		setServices(apiResponse.data.services)
 	}
 
 	useEffect(() => {
 		getServicesData()
 
-		async function getUfs() {
-			const ufs = await ibge.getUfs()
-
-			setUfs(ufs)
-		}
 		getUfs()
 	}, [])
 
 	useEffect(() => {
-		async function getCities() {
-			const cities = await ibge.getCities(selectedUf)
-
-			setCities(cities)
-		}
 		getCities()
 	}, [selectedUf])
 
@@ -97,13 +82,42 @@ export default function Home() {
 		})
 
 		const data = response.data
-		const concatedData = await Promise.all(
-			data.services.map(service => {
-				return concatData(service)
+		setServices(data.services)
+		setAreFilteredServices(true)
+	}
+
+	async function getMorePages() {
+		setServicePage(servicePage + 1)
+		console.log("paginaaa", servicePage);
+		if (areFilteredServices) {
+
+			const response = await api.get("/search/services", {
+				params: {
+					uf: selectedUf,
+					city: selectedCity,
+					page: servicePage,
+				},
 			})
-		)
-		setServices(concatedData)
-		console.log(services)
+
+			if (response.data.services.length >= 1) {
+				setServices([...services, ...response.data.services])
+			} else {
+				toast.warning("Não tem mais nada por aqui!")
+			}
+		} else {
+			const response = await api.get("/search/services", {
+				params: {
+					page: servicePage,
+				},
+			})
+
+			console.log("tamanho", response.data.services)
+			if (response.data.services.length < 1) {
+				toast.warning("Não tem mais nada por aqui!")
+			} else {
+				setServices([...services, ...response.data.services])
+			}
+		}
 	}
 
 	return (
@@ -120,7 +134,7 @@ export default function Home() {
 					</button>
 				</Navbar>
 				<SideBar>
-					<Link to="/profile" className="navItem">
+					<Link to={`/profile/${user.id}`} className="navItem">
 						<img src={profilePic} alt="user" className="profilePic" />
 						{user.name}
 					</Link>
@@ -132,7 +146,7 @@ export default function Home() {
 						<FiUsers size={"1.8rem"} />
 						Sobre nós
 					</Link>
-					<Link className="navItem">
+					<Link to="/talkwithus" className="navItem">
 						<FiSettings size={"1.8rem"} />
 						Configurações
 					</Link>
@@ -144,18 +158,37 @@ export default function Home() {
 				</SideBar>
 
 				<MainContent filterActive={isFilterActive}>
-					{services.map(service => {
-						return (
-							<Post
-								key={service.id}
-								id={service.id}
-								user={service.userData}
-								title={service.title}
-								price={service.price}
-								description={service.description}
-							/>
-						)
-					})}
+					{services.length >= 1 ? (
+						services.map(service => {
+							return (
+								<Post
+									key={service.id}
+									id={service.id}
+									user={{
+										name: service.user_name,
+										id: service.user_id,
+										image: service.user_image,
+										whatsapp: service.user_whatsapp,
+									}}
+									title={service.title}
+									price={service.price}
+									category={service.category_title}
+									description={service.description}
+									localization={{ uf: service.uf, city: service.city }}
+								/>
+							)
+						})
+					) : (
+
+						<p>Não há nada por aqui! =(</p>
+					)}
+
+					{services.length >= 12 ? (
+						<button onClick={getMorePages} className="button secondary">
+							{" "}
+							Ver mais serviços{" "}
+						</button>
+					) : null}
 				</MainContent>
 			</Container>
 

@@ -47,7 +47,6 @@ export default function NewService() {
 			title: title,
 			description: description,
 			price: price,
-			number_participants: 1, //hardcoded
 			id_category: 1, //hardcoded
 			uf: selectedUf,
 			city: selectedCity,
@@ -57,7 +56,6 @@ export default function NewService() {
 			.post("/services", body, {})
 			.then(() => {
 				toast.success("Serviço cadastrado com sucesso")
-				alert("boa zé")
 				window.location = "/home"
 			})
 			.catch(err => {
@@ -90,8 +88,8 @@ export default function NewService() {
 
 				<FormGroup>
 					<Input name="Título" type="text" onChange={e => setTitle(e.target.value)} />
-					<Select name="Categoria" />
-					<Input name="Pagamento" type="text" onChange={e => setPrice(e.target.value)} />
+					
+					<Input name="Pagamento" type="number" onChange={e => setPrice(e.target.value)} />
 					<div className="location">
 						<Select
 							className="select"
