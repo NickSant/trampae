@@ -1,9 +1,5 @@
 import * as jwt from '../jwt';
-<<<<<<< HEAD
-import { connection } from '../../database/connection';
-=======
 import {connection} from '../../database/connection';
->>>>>>> 7281df12d45ea542f9c02945e2f354cbbcc6e770
 import Util from '../../helpers/Util';
 const {handleError} = new Util();
 module.exports = async function authMiddleware(req, res, next){
