@@ -8,12 +8,12 @@ exports.up = function(knex) {
         table.string('city').notNullable()
         table.string('uf', 2).notNullable()
 
+        table.boolean('status').defaultTo(false)
+
         table.string('user_id').notNullable().references('id').inTable('users')
 
         table.integer('category_id',10).unsigned()
         .notNullable().references('id').inTable('categories')
-
-        table.integer('service_provider_id').unsigned().references('id').inTable('service_providers').defaultTo(null)
   })
 }
 

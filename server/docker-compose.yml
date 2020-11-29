@@ -58,8 +58,7 @@ services: #containers
         restart: unless-stopped
 
 volumes: 
-    dbdata:
-        driver: local    
+    dbdata: 
 
 networks: 
     mysql-compose-network:

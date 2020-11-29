@@ -19,12 +19,12 @@ function whereBuilder(ctx, obj, alias) {
 export default {
 	async SearchServices(request, response) {
 		const { page = 1 } = request.query
-		const { uf, city, category_id, id, user_id } = request.query //campos que são permitidos (pela lógica) na query
+		const { uf, city, category_id, id, status, user_id } = request.query //campos que são permitidos (pela lógica) na query
 
 		const services = await db(db.ref('services').as('s'))
 			.select(servicesJoinUsers)
 			.where(function () {
-				whereBuilder(this, { uf, city, category_id, id, user_id }, 's')
+				whereBuilder(this, { uf, city, category_id, id, status, user_id }, 's')
 			})
 			.limit(12)
 			.offset((page - 1) * 12)
