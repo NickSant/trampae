@@ -33,9 +33,7 @@ function Post({ user, title, description, price, localization, category }) {
 					<span>R$ {price}</span>
 				</div>
 
-				<button>
-					<strong> Ver detalhes </strong>
-				</button>
+				
 
 				<a href={`https://api.whatsapp.com/send?phone=${user.whatsapp}&text=Olá%20${user.name}!`} target="_blank">
 					<strong>Whatsapp</strong> <AiOutlineWhatsApp size={'1.5rem'} />

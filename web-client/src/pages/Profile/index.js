@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import api from "../../services/api"
-import { Container, ProfileInfo, ProfileStats } from "./styles"
+
 import NavBar from "../../components/Navbar"
+
+import { Container, ProfileInfo, ProfileStats } from "./styles"
+
 import ProfileImg from "../../assets/user.png"
 import CoverBG from "../../assets/cover.jpg"
+import loading from "../../assets/loading.gif"
 
-import { AiOutlineWhatsApp, AiOutlineMail, AiFillStar } from "react-icons/ai"
+import { AiOutlineWhatsApp, AiOutlineMail } from "react-icons/ai"
 import { BsFillBriefcaseFill } from "react-icons/bs"
 import { FaRegHandshake } from "react-icons/fa"
 import { useAuth } from "../../contexts/authContext"
-import { FiPenTool, FiTrash } from "react-icons/fi"
+import { FiCheck, FiTrash } from "react-icons/fi"
 
 //---Começo do Front-end---//
 function Profile() {
@@ -35,7 +39,7 @@ function Profile() {
 	async function getUserPostedServices() {
 		const apiResponse = await api.get("search/services", {
 			params: {
-				user_id: userInfo.id ? userInfo.id : null,
+				user_id: id,
 			},
 		})
 		setUserServices(apiResponse.data.services)
@@ -45,7 +49,7 @@ function Profile() {
 	async function getUserParticipatedServices() {
 		const apiResponse = await api.get("search/services", {
 			params: {
-				user_id: userInfo.id,
+				user_id: id,
 				status: 1,
 			},
 		})
@@ -59,6 +63,11 @@ function Profile() {
 		} else {
 			setIsCurrentUserProfile(false)
 		}
+	}
+
+	async function deleteService(serviceId) {
+		await api.delete(`services/${serviceId}`)
+		getUserPostedServices()
 	}
 
 	useEffect(() => {
@@ -131,7 +140,7 @@ function Profile() {
 							<h4> Serviços postados </h4>
 							<hr />
 							{userServices ? (
-								userServices.length == 0 ? (
+								userServices.length === 0 ? (
 									<span className="span-response">Não há nada aqui ainda</span>
 								) : (
 									userServices.map(service => {
@@ -152,7 +161,8 @@ function Profile() {
 													<strong> {service.category_title}</strong>
 													{isCurrentUserProfile ? (
 														<div className="options">
-															<FiTrash size={"1.2rem"} />
+															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
+															<FiCheck size={"1.2rem"} />
 														</div>
 													) : null}
 												</div>
@@ -169,7 +179,7 @@ function Profile() {
 							<h4> Serviços prestados </h4>
 							<hr />
 							{userCompleteServices ? (
-								userCompleteServices.length == 0 ? (
+								userCompleteServices.length === 0 ? (
 									<span className="span-response">Não há nada aqui ainda</span>
 								) : (
 									userCompleteServices.map(service => {
@@ -190,7 +200,7 @@ function Profile() {
 													<strong> {service.category_title}</strong>
 													{isCurrentUserProfile ? (
 														<div className="options">
-															<FiTrash size={"1.2rem"} />
+															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
 														</div>
 													) : null}
 												</div>
@@ -205,7 +215,7 @@ function Profile() {
 					</ProfileStats>
 				</Container>
 			) : (
-				<h1> Carregando </h1>
+				<img src={loading} type="gif" />
 			)}
 		</>
 	)
