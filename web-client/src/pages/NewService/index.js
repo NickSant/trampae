@@ -31,7 +31,8 @@ export default function NewService() {
 			setUfs(ufs)
 		}
 		getUfs()
-	})
+	},[])
+	
 	useEffect(() => {
 		async function getCities() {
 			const cities = await ibge.getCities(selectedUf)
@@ -96,7 +97,7 @@ export default function NewService() {
 							onChange={e => setSelectedUf(e.target.value)}
 							name="UF"
 							children={ufs.map(uf => (
-								<option key={uf.id} value={uf.value} title={uf.title}>
+								<option key={uf.id} value={uf.name} title={uf.title}>
 									{uf.value}
 								</option>
 							))}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../contexts/authContext'
+
 import { Container, DropDown } from './styles'
 
 import trampaeIcon from '../../assets/icon.png'
@@ -11,6 +13,7 @@ import { FiMenu } from 'react-icons/fi'
 
 export default function Navbar({ children }) {
 	const [active, setActive] = useState(false)
+	const { user } = useAuth();
 
 	return (
 		<>
@@ -30,10 +33,10 @@ export default function Navbar({ children }) {
 				<Link to="/new-service" className="button secondary">Novo Serviço</Link>
 			</Container>
 			<DropDown active={active}>
-				<Link to="/profile" className="navItem">
-					Flavinho do Pneu
+				<a href={`profile/${user.id}`} className="navItem">
+					{user.name}
 					<img src={profilePic} alt="user" className="profilePic" />
-				</Link>
+				</a>
 				<Link to="/talkwithus" className="navItem">
 					Fale conosco
 					<FiPhoneCall size={'1.8rem'} />

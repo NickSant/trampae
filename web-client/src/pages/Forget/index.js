@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import "./styles.js"
 import { 
   Container, 
@@ -9,9 +9,9 @@ import {
 
 import LogoImg from "../../assets/logo.png"
 
-import { Link, useHistory } from "react-router-dom"
-import axios from "axios"
+import { useHistory } from "react-router-dom"
 import api from "../../services/api"
+import { toast } from "react-toastify"
 
 
 
@@ -27,8 +27,8 @@ export default function Forget() {
   function submit(e) {
     e.preventDefault()
 
-    if(mail === undefined || mail === '') return alert('Você deve preencher o campo para prosseguir!')
-    else if(!mail.includes('@') && !mail.includes('.')) return alert('E-mail inválido!')
+    if(mail === undefined || mail === '') return toast.alert('Você deve preencher o campo para prosseguir!')
+    else if(!mail.includes('@') && !mail.includes('.')) return toast.alert('E-mail inválido!')
 
     const body = {mail: mail}
 
@@ -40,9 +40,7 @@ export default function Forget() {
 
       const mail_auth_token = res.data.auth_token
 
-      setTimeout(() => { 
-        alert(res.data.message) //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
-      
+      setTimeout(() => {       
         goToLogin()
       }, 3000)
 

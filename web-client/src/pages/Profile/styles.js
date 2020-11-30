@@ -176,12 +176,12 @@ export const ProfileStats = styled.div`
 					padding: 0 5px;
 
 					strong {
-						font-size: 0.9rem;
-						line-height: 1.1rem;
+						font-size: 0.7rem;
+						line-height: 0.9rem;
 					}
 
 					span {
-						font-size: 0.7rem;
+						font-size: 0.6rem;
 						color: var(--gray);
 					}
 				}
@@ -200,24 +200,15 @@ export const ProfileStats = styled.div`
 				justify-content: space-between;
 
 				strong {
-					font-size: 0.8rem;
-					line-height: 1.2rem;
+					font-size: 0.7rem;
+					line-height: 0.8rem;
 					width: 15%;
-				}
-
-				span {
-					font-size: 1.3rem;
-					color: var(--yellow);
-					fill: var(--yellow);
-					display: flex;
-					align-items: center;
-					justify-content: center;
 				}
 			}
 		}
 	}
 	.span-response {
-		color: var(--lightgray);
+		color: var(--gray);
 		font-size: 0.8rem;
 	}
 
