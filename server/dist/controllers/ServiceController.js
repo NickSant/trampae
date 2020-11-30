@@ -8,8 +8,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _connection = require('../database/connection');
 
-var _connection2 = _interopRequireDefault(_connection);
-
 var _crypto = require('crypto');
 
 var _crypto2 = _interopRequireDefault(_crypto);
@@ -52,7 +50,7 @@ exports.default = {
 							_request$query$page = request.query.page, page = _request$query$page === undefined ? 1 : _request$query$page;
 							_context.prev = 1;
 							_context.next = 4;
-							return (0, _connection2.default)('services').count();
+							return (0, _connection.connection)('services').count();
 
 						case 4:
 							_ref3 = _context.sent;
@@ -63,7 +61,7 @@ exports.default = {
 							console.log('Total de services cadastrados: ' + count['count(*)']);
 
 							_context.next = 10;
-							return (0, _connection2.default)('services').select('*').limit(12).offset((page - 1) * 12);
+							return (0, _connection.connection)('services').select('*').limit(12).offset((page - 1) * 12);
 
 						case 10:
 							services = _context.sent;
@@ -118,7 +116,7 @@ exports.default = {
 						case 8:
 							_context2.prev = 8;
 							_context2.next = 11;
-							return (0, _connection2.default)('services').where({
+							return (0, _connection.connection)('services').where({
 								id: id,
 								user_id: user_id
 							}).delete();

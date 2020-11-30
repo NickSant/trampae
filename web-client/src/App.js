@@ -10,6 +10,7 @@ function App() {
 		<AuthProvider>
 			<ToastContainer
 				position="top-right"
+				toastStyle={{fontSize: '2rem'}}
 				autoClose={5000}
 				hideProgressBar={false}
 				newestOnTop={false}

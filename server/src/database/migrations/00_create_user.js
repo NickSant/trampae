@@ -12,6 +12,7 @@ exports.up = function(knex) {
         table.string('email').notNullable()
         table.unique('email')
         table.string('image_url').defaultTo('uploads/default.png')
+        table.text('bio').defaultTo(null)
         table.binary('password', 16535)
         table.string('city')
         table.string('uf',2)

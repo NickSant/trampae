@@ -115,11 +115,43 @@ export const ActiveSection = styled.div`
 export const FormGroup = styled.form`
 	height: 80%;
 	width: 100%;
+	padding: 0 1rem;
 
 	input,
 	select,
 	textarea {
 		margin-bottom: 5px;
+	}
+
+	overflow: scroll;
+	overflow-x: hidden;
+
+	.location {
+		display: flex;
+		width: 100%;
+	
+		.select:first-child {
+			margin-right: 5px;
+		}
+	}
+
+	&::-webkit-scrollbar {
+		width: 0.5em;
+		height: 90%;
+	}
+
+	&::-webkit-scrollbar-track {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: var(--primary);
+		outline: none;
+	}
+
+	::-webkit-scrollbar-corner {
+		border-radius: 5px;
 	}
 
 	@media(max-width: 599px){

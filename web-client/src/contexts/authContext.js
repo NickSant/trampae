@@ -26,7 +26,7 @@ function AuthProvider({children}) {
 		if (token && user) {
 			api.defaults.headers.authorization = `Bearer ${token}`
 
-			return { token, user }
+			return { token, user: JSON.parse(user) }
 		}
 
 		return {}

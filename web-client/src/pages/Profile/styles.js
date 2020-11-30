@@ -1,14 +1,15 @@
-import styled from 'styled-components'
-import { FiStar, FiMapPin, FiBriefcase } from 'react-icons/fi'
+import styled from "styled-components"
+import { FiStar, FiMapPin, FiBriefcase } from "react-icons/fi"
 
 export const Container = styled.div`
 	width: 100vw;
 
 	margin-top: 4rem;
+	margin-bottom: 3rem;
 	display: flex;
-	justify-content: center; 
+	justify-content: center;
 
-	@media (max-width: 599px){
+	@media (max-width: 599px) {
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
@@ -17,7 +18,7 @@ export const Container = styled.div`
 
 export const ProfileInfo = styled.div`
 	width: 25vw;
-	height: 80vh;
+	height: 100%;
 
 	margin: 1rem 1rem 0 0;
 	border-radius: 10px;
@@ -88,7 +89,7 @@ export const ProfileInfo = styled.div`
 		}
 	}
 
-	@media(max-width: 599px){
+	@media (max-width: 599px) {
 		width: 90%;
 		height: fit-content;
 		margin: 1rem 0;
@@ -96,7 +97,7 @@ export const ProfileInfo = styled.div`
 `
 
 export const ProfileStats = styled.div`
-	width: 50vw;
+	width: 60vw;
 	height: 100%;
 
 	.split-section {
@@ -125,6 +126,7 @@ export const ProfileStats = styled.div`
 			width: 100%;
 			padding: 5px 0;
 
+			a,
 			div {
 				display: flex;
 				flex-direction: row;
@@ -136,6 +138,7 @@ export const ProfileStats = styled.div`
 				cursor: pointer;
 				transition: ease 0.5s;
 				border-radius: 5px;
+				color: black;
 
 				span {
 					font-size: 0.9rem;
@@ -197,8 +200,9 @@ export const ProfileStats = styled.div`
 				justify-content: space-between;
 
 				strong {
-					font-size: 0.9rem;
+					font-size: 0.8rem;
 					line-height: 1.2rem;
+					width: 15%;
 				}
 
 				span {
@@ -212,9 +216,13 @@ export const ProfileStats = styled.div`
 			}
 		}
 	}
+	.span-response {
+		color: var(--lightgray);
+		font-size: 0.8rem;
+	}
 
 	.scrollable {
-		height: 12.5rem;
+		max-height: 20rem;
 
 		overflow: scroll;
 		overflow-x: hidden;
@@ -234,12 +242,12 @@ export const ProfileStats = styled.div`
 			outline: none;
 		}
 
-		::-webkit-scrollbar-corner{
+		::-webkit-scrollbar-corner {
 			border-radius: 5px;
 		}
 	}
 
-	@media(max-width: 599px){
+	@media (max-width: 599px) {
 		width: 90%;
 	}
-`;
+`

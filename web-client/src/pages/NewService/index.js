@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 
-import { Container, DisabledSection, ActiveSection, FormGroup } from './styles'
+import { Container, DisabledSection, ActiveSection, FormGroup } from "./styles"
 
-import { Link } from 'react-router-dom'
-import Input from '../../components/Input'
-import Textarea from '../../components/Textarea'
-import Select from '../../components/Select'
+import Input from "../../components/Input"
+import Textarea from "../../components/Textarea"
+import Select from "../../components/Select"
 
-import { FiArrowLeft } from 'react-icons/fi'
+import { FiArrowLeft } from "react-icons/fi"
 
-import ibge from '../../services/ibge'
-import api from '../../services/api'
+import ibge from "../../services/ibge"
+import api from "../../services/api"
 
-import logoImg from '../../assets/logo.png'
+import logoImg from "../../assets/logo.png"
 
 export default function NewService() {
-	const [title, setTitle] = useState()
-	const [description, setDescription] = useState()
-	const [price, setPrice] = useState()
-	const [selectedUf, setSelectedUf] = useState()
-	const [selectedCity, setSelectedCity] = useState()
+	const [title, setTitle] = useState('')
+	const [description, setDescription] = useState('')
+	const [price, setPrice] = useState('')
+	const [selectedUf, setSelectedUf] = useState('')
+	const [selectedCity, setSelectedCity] = useState('')
 
 	const [ufs, setUfs] = useState([])
 	const [cities, setCities] = useState([])
@@ -46,21 +47,19 @@ export default function NewService() {
 			title: title,
 			description: description,
 			price: price,
-			number_participants: 1, //hardcoded
 			id_category: 1, //hardcoded
 			uf: selectedUf,
 			city: selectedCity,
 		}
 
 		api
-			.post('services', body, {})
+			.post("/services", body, {})
 			.then(() => {
-				alert('Serviço cadastrado com sucesso')
-
-				window.location = '/home'
+				toast.success("Serviço cadastrado com sucesso")
+				window.location = "/home"
 			})
 			.catch(err => {
-				alert(err)
+				toast.error(err)
 			})
 	}
 
@@ -74,7 +73,7 @@ export default function NewService() {
 
 				<Link to="/home">
 					<span>
-						<FiArrowLeft size={'1.8rem'} /> Ou volte para o início{' '}
+						<FiArrowLeft size={"1.8rem"} /> Ou volte para o início{" "}
 					</span>
 				</Link>
 			</DisabledSection>
@@ -88,18 +87,43 @@ export default function NewService() {
 				</div>
 
 				<FormGroup>
-					<Input name="Título" />
-					<Select name="Categoria" />
-					<Textarea name="Descrição" />
+					<Input name="Título" type="text" onChange={e => setTitle(e.target.value)} />
+					
+					<Input name="Pagamento" type="number" onChange={e => setPrice(e.target.value)} />
+					<div className="location">
+						<Select
+							className="select"
+							onChange={e => setSelectedUf(e.target.value)}
+							name="UF"
+							children={ufs.map(uf => (
+								<option key={uf.id} value={uf.value} title={uf.title}>
+									{uf.value}
+								</option>
+							))}
+						></Select>
+
+						<Select
+							className="select"
+							onChange={e => setSelectedCity(e.target.value)}
+							name="cidade"
+							children={cities.map(city => (
+								<option key={city.id} value={city.name} title={city.name}>
+									{city.name}
+								</option>
+							))}
+						></Select>
+					</div>
+
+					<Textarea name="Descrição" onChange={e => setDescription(e.target.value)}/>
 
 					<br />
 
-					<button className="button">Publicar</button>
+					<button onClick={handleSubmit} className="button">Publicar</button>
 				</FormGroup>
 
 				<Link to="/home" className="mobile">
 					<span>
-						<FiArrowLeft size={'1.8rem'} /> Ou volte para o início{' '}
+						<FiArrowLeft size={"1.8rem"} /> Ou volte para o início{" "}
 					</span>
 				</Link>
 			</ActiveSection>

@@ -1,7 +1,8 @@
 import 'dotenv/config'
 import sha1 from 'sha1'
 
-import db from '../database/connection'
+import { connection } from '../database/connection'
+const db = connection
 
 class Util {
     constructor(){

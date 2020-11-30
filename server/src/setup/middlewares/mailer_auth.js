@@ -1,5 +1,5 @@
 import * as jwt from '../jwt';
-import connection from '../../database/connection';
+import {connection} from '../../database/connection';
 import Util from '../../helpers/Util';
 
 

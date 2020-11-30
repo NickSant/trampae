@@ -15,7 +15,7 @@ class Util{
         return `${process.env.REACT_APP_HOST_API}:${process.env.REACT_APP_PORT_API}`
     }
 
-    static isAuthenticated(){        
+    static async isAuthenticated(){        
         if(localStorage.length === 0 ) return false 
         
         const token = localStorage.getItem('@Trampae:token')
@@ -25,7 +25,7 @@ class Util{
         const localUser = JSON.parse( localStorage.getItem('@Trampae:user') )
 
         if(!localUser || localUser === '' || typeof localUser !== 'object' || !localUser.id || !localUser.email) return false
-        
+
         return true
     }
     static async verifyMailHash(urlHash){

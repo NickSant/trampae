@@ -1,6 +1,6 @@
-import db from '../database/connection'
+import { connection } from '../database/connection'
 import Util from '../helpers/Util'
-
+const db = connection
 class Model{
     constructor(table){
         this.table = table

@@ -49,10 +49,13 @@ app.listen(port, _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(functio
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
-                    (0, _connection.tryMysqlConnection)();
-                    console.log('Running server at http://' + host + ':' + port);
+                    (0, _connection.tryMysqlConnection)().then(function () {
+                        console.log('Running serve at http://' + host + ':' + port);
+                    }).catch(function (e) {
+                        return console.log(e);
+                    });
 
-                case 2:
+                case 1:
                 case 'end':
                     return _context.stop();
             }

@@ -25,7 +25,8 @@ module.exports = {
         password: Joi.string().min(6).required(),
         whatsapp: phoneValidator.phone().mobile().required(),
         city: Joi.string().required(),
-        uf: Joi.string().length(2).required()
+        uf: Joi.string().length(2).required(),
+        bio: Joi.string()
       }),
       serviceSchema: Joi.object().keys({
         title: Joi.string().max(20).required(),

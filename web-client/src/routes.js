@@ -18,19 +18,17 @@ export default function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact render={() =>{
-                    return( Util.isAuthenticated() ? <Home /> : <Logon /> )
-                }}/>
+                <Route path="/" exact component={Logon}/>
                 <Route path="/logout" exact component={Logout} />
                 <Route path="/register" exact={true} component={Register} />
                 <Route path="/new-service" exact={true} component={NewService} />
                 <Route path="/aboutus" exact={true} component={AboutUs} />
                 <Route path="/forget" exact={true} component={Forget} />
-                <Route path="/profile" exact={true} component={Profile} />
+                <Route path="/profile/:id" exact={true} component={Profile} />
                 <Route path="/talkwithus" exact={true} component={TalkWithUs} />
 
-                <Route exact={true} component={Home} path="/home" />
-                <Route exact={true} component={Profile} path="/profile" />
+                <PrivateRoute exact={true} component={Home} path="/home" />
+                <PrivateRoute exact={true} component={Profile} path="/profile" />
 
                 <Route exact={true} component={Recover} path="/recover/:url_hash"/>
 

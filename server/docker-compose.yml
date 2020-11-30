@@ -13,12 +13,11 @@ services: #containers
             - dbdata:/var/lib/mysql
 
         command: "--init-file /docker-entrypoint-initdb.d/01.sql"
-            # - ./iniciar_sql
-            
-            
+            # - ./iniciar_sql # esse seria o volume que criei acima - com o script db_entrypoint.sh
+
         environment:
-            MYSQL_ROOT_PASSWORD: teste
-            MYSQL_DATABASE: testedb
+            MYSQL_ROOT_PASSWORD: ${PASS_DB}
+            MYSQL_DATABASE: ${DATABASE}
         ports:
             - "3306:3306"
         networks:
@@ -35,26 +34,31 @@ services: #containers
             PMA_ARBITRARY: 1
             PMA_HOST: mysqlsrv
             MYSQL_USER: user
-            MYSQL_PASSWORD: pass
-            MYSQL_ROOT_PASSWORD: teste
+            MYSQL_ROOT_PASSWORD: ${PASS_DB}
             PMA_PORT: 3306
-
+        depends_on: 
+            - mysqlsrv
     
-    # nodejs:
-    #     command: npm run migrate && npm run seed 
-    #     build: 
-    #         context: ./src
-    #         dockerfile: Dockerfile
-    #     image: nodejs
-    #     container_name: api_node
-    #     restart: unless-stopped
-    #     env_file: .env
-
-    
+    nodejs:
+        depends_on: 
+            - mysqlsrv
+        networks:
+            - mysql-compose-network 
+        env_file: .env  
+        environment: 
+            DB_HOST: mysqlsrv
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        image: nodejs
+        ports: 
+            - 3331:3333
+        container_name: nodejs
+        
+        restart: unless-stopped
 
 volumes: 
-    dbdata:
-        driver: local    
+    dbdata: 
 
 networks: 
     mysql-compose-network:
