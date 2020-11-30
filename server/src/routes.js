@@ -64,6 +64,7 @@ routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
 routes.get('/search/services', /*authMiddleware,*/ SearchController.SearchServices)
+routes.get('/search/done-services', /*authMiddleware,*/ SearchController.SearchCompletedServices)
 routes.get('/search/users', /*authMiddleware,*/ SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
