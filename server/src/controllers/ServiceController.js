@@ -146,5 +146,5 @@ export default {
 }
 
 export {
-	servicesJoinUsers
+	servicesJoinUsers, sv
 }

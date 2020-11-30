@@ -1,14 +1,15 @@
-import styled from 'styled-components'
-import { FiStar, FiMapPin, FiBriefcase } from 'react-icons/fi'
+import styled from "styled-components"
+import { FiStar, FiMapPin, FiBriefcase } from "react-icons/fi"
 
 export const Container = styled.div`
 	width: 100vw;
 
 	margin-top: 4rem;
+	margin-bottom: 3rem;
 	display: flex;
-	justify-content: center; 
+	justify-content: center;
 
-	@media (max-width: 599px){
+	@media (max-width: 599px) {
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
@@ -88,7 +89,7 @@ export const ProfileInfo = styled.div`
 		}
 	}
 
-	@media(max-width: 599px){
+	@media (max-width: 599px) {
 		width: 90%;
 		height: fit-content;
 		margin: 1rem 0;
@@ -125,7 +126,8 @@ export const ProfileStats = styled.div`
 			width: 100%;
 			padding: 5px 0;
 
-			a,div {
+			a,
+			div {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
@@ -214,9 +216,13 @@ export const ProfileStats = styled.div`
 			}
 		}
 	}
+	.span-response {
+		color: var(--lightgray);
+		font-size: 0.8rem;
+	}
 
 	.scrollable {
-		max-height: 25rem;
+		max-height: 20rem;
 
 		overflow: scroll;
 		overflow-x: hidden;
@@ -236,12 +242,12 @@ export const ProfileStats = styled.div`
 			outline: none;
 		}
 
-		::-webkit-scrollbar-corner{
+		::-webkit-scrollbar-corner {
 			border-radius: 5px;
 		}
 	}
 
-	@media(max-width: 599px){
+	@media (max-width: 599px) {
 		width: 90%;
 	}
-`;
+`

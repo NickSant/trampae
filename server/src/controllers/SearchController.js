@@ -1,12 +1,11 @@
 import { connection } from '../database/connection'
-import { servicesJoinUsers } from './ServiceController'
+import { servicesJoinUsers, sv } from './ServiceController'
 import Util from '../helpers/Util'
 import Model from '../models/Model'
 
 const { handleError } = new Util()
 const u = new Model('users')
 const db = connection
-
 
 function whereBuilder(ctx, obj, alias) {
 	//função topzera!! rs
@@ -32,6 +31,22 @@ export default {
 			.innerJoin(db.ref('categories').as('c'), 'c.id', '=', 's.category_id')
 
 		return response.json({ services })
+	},
+	async SearchCompletedServices(request, response) {
+		const { id, user_assigned_id, user_requested_id, service_id } = request.query
+		try {
+			const completedServices = await db(db.ref('completed_services').as('cs'))
+			.select('cs.id', 's.*')
+			.where(function () {
+				whereBuilder(this, { id, user_assigned_id, user_requested_id, service_id }, 'cs')
+			})
+			.innerJoin(db.ref('services').as('s'), 's.id', '=', 'cs.id')
+
+			return response.json({ completedServices })
+		} catch (e) {
+			console.log(e)
+			return handleError(response, 400, 'Database Error')
+		}
 	},
 	async SearchUsers(request, response) {
 		const { id = false, name = false, email = false, city = false, uf = false } = request.query

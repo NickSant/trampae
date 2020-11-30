@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import { Container } from './styles'
 import userImg from '../../assets/user.png'
@@ -10,7 +11,7 @@ function Post({ user, title, description, price, localization, category }) {
 	return (
 		<Container>
 			<header>
-				<div className="userInfo">
+				<Link to={`/profile/${user.id}`} className="userInfo">
 					<img src={userImg} alt="User" />
 					<div>
 						<strong> {user.name} </strong>
@@ -18,7 +19,7 @@ function Post({ user, title, description, price, localization, category }) {
 							{localization.city} - {localization.uf}
 						</span>
 					</div>
-				</div>
+				</Link>
 				<strong> {category} </strong>
 			</header>
 

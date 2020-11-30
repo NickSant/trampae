@@ -134,10 +134,10 @@ export default function Home() {
 					</button>
 				</Navbar>
 				<SideBar>
-					<Link to={`/profile/${user.id}`} className="navItem">
+					<a href={`/profile/${user.id}`} className="navItem">
 						<img src={profilePic} alt="user" className="profilePic" />
 						{user.name}
-					</Link>
+					</a>
 					<Link to="/talkwithus" className="navItem">
 						<FiPhoneCall size={"1.8rem"} />
 						Fale conosco

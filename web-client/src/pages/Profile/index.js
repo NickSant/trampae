@@ -17,6 +17,8 @@ function Profile() {
 	const { id } = useParams()
 	const [userInfo, setUserInfo] = useState()
 	const [userServices, setUserServices] = useState()
+	const [userCompleteServices, setUserCompleteServices] = useState()
+	const [isCurrentUserProfile, setIsCurrentUserProfile] = useState()
 	const { user } = useAuth()
 
 	async function getUserData() {
@@ -26,10 +28,11 @@ function Profile() {
 			},
 		})
 
+		console.log(apiResponse.data.users[0])
 		setUserInfo(apiResponse.data.users[0])
 	}
 
-	async function getUserServices() {
+	async function getUserPostedServices() {
 		const apiResponse = await api.get("search/services", {
 			params: {
 				user_id: userInfo.id ? userInfo.id : null,
@@ -39,12 +42,33 @@ function Profile() {
 		console.log(apiResponse.data)
 	}
 
+	async function getUserParticipatedServices() {
+		const apiResponse = await api.get("search/services", {
+			params: {
+				user_id: userInfo.id,
+				status: 1,
+			},
+		})
+		console.log("serviços completos", apiResponse.data)
+		setUserCompleteServices(apiResponse.data.services)
+	}
+
+	function checkCurrentUser() {
+		if (user.id == id) {
+			setIsCurrentUserProfile(true)
+		} else {
+			setIsCurrentUserProfile(false)
+		}
+	}
+
 	useEffect(() => {
 		getUserData()
+		checkCurrentUser()
 	}, [id])
 
 	useEffect(() => {
-		getUserServices()
+		getUserPostedServices()
+		getUserParticipatedServices()
 	}, [userInfo])
 
 	return (
@@ -90,13 +114,15 @@ function Profile() {
 								<div>
 									<BsFillBriefcaseFill size={"2rem"} />
 									<span>
-										serviços oferecidos: <strong> 12 </strong>
+										serviços oferecidos:{" "}
+										<strong>{userServices ? userServices.length : "..."}</strong>
 									</span>
 								</div>
 								<div>
 									<FaRegHandshake size={"2rem"} />
 									<span>
-										serviços prestados: <strong> 17 </strong>
+										serviços prestados:{" "}
+										<strong>{userCompleteServices ? userCompleteServices.length : "..."}</strong>
 									</span>
 								</div>
 							</div>
@@ -105,31 +131,75 @@ function Profile() {
 							<h4> Serviços postados </h4>
 							<hr />
 							{userServices ? (
-								userServices.map(service => {
-									return (
-										<div key={service.id} className="service-item">
-											<div className="votingPerson">
-												<img src={ProfileImg} alt="profilePic" className="profilePic" />
-												<div>
-													<strong> {service.user_name} </strong>
-													<span>
-														{service.city} - {service.uf}
-													</span>
+								userServices.length == 0 ? (
+									<span className="span-response">Não há nada aqui ainda</span>
+								) : (
+									userServices.map(service => {
+										return (
+											<div key={service.id} className="service-item">
+												<div className="votingPerson">
+													<img src={ProfileImg} alt="profilePic" className="profilePic" />
+													<div>
+														<strong> {service.user_name} </strong>
+														<span>
+															{service.city} - {service.uf}
+														</span>
+													</div>
 												</div>
-											</div>
 
-											<div className="service-info">
-												<strong> {service.title} </strong>
-												<strong> {service.category_title}</strong>
-												<div className="options">
-													<FiTrash size={"1.2rem"} />
+												<div className="service-info">
+													<strong> {service.title} </strong>
+													<strong> {service.category_title}</strong>
+													{isCurrentUserProfile ? (
+														<div className="options">
+															<FiTrash size={"1.2rem"} />
+														</div>
+													) : null}
 												</div>
 											</div>
-										</div>
-									)
-								})
+										)
+									})
+								)
 							) : (
 								<p>carregando</p>
+							)}
+						</div>
+
+						<div className="split-section scrollable">
+							<h4> Serviços prestados </h4>
+							<hr />
+							{userCompleteServices ? (
+								userCompleteServices.length == 0 ? (
+									<span className="span-response">Não há nada aqui ainda</span>
+								) : (
+									userCompleteServices.map(service => {
+										return (
+											<div key={service.id} className="service-item">
+												<div className="votingPerson">
+													<img src={ProfileImg} alt="profilePic" className="profilePic" />
+													<div>
+														<strong> {service.user_name} </strong>
+														<span>
+															{service.city} - {service.uf}
+														</span>
+													</div>
+												</div>
+
+												<div className="service-info">
+													<strong> {service.title} </strong>
+													<strong> {service.category_title}</strong>
+													{isCurrentUserProfile ? (
+														<div className="options">
+															<FiTrash size={"1.2rem"} />
+														</div>
+													) : null}
+												</div>
+											</div>
+										)
+									})
+								)
+							) : (
+								<p> carregando...</p>
 							)}
 						</div>
 					</ProfileStats>
