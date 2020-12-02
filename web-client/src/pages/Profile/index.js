@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import api from "../../services/api"
 
 import NavBar from "../../components/Navbar"
+import CompleteServiceModal from "../../components/finishServiceModal"
 
 import { Container, ProfileInfo, ProfileStats } from "./styles"
 
@@ -15,14 +16,20 @@ import { BsFillBriefcaseFill } from "react-icons/bs"
 import { FaRegHandshake } from "react-icons/fa"
 import { useAuth } from "../../contexts/authContext"
 import { FiCheck, FiTrash } from "react-icons/fi"
+import { toast } from "react-toastify"
 
 //---Começo do Front-end---//
 function Profile() {
 	const { id } = useParams()
 	const [userInfo, setUserInfo] = useState()
 	const [userServices, setUserServices] = useState()
+	const [chosenServiceId, setChosenServiceId] = useState()
 	const [userCompleteServices, setUserCompleteServices] = useState()
 	const [isCurrentUserProfile, setIsCurrentUserProfile] = useState()
+	const [finishServiceModal, setFinishServiceModal] = useState(false)
+	const [chosenUser, setChosenUser] = useState()
+
+	
 	const { user } = useAuth()
 
 	async function getUserData() {
@@ -70,6 +77,27 @@ function Profile() {
 		getUserPostedServices()
 	}
 
+	function openFinishServiceModal(serviceId) {
+		setChosenServiceId(serviceId)
+		setFinishServiceModal(true)
+	}
+
+	function chooseUser(id){
+		setFinishServiceModal(false)
+		console.log("id escolhido:", id)
+		setChosenUser(id)
+	}
+
+	async function finishService(){
+		await api.post("/done-service", {
+			user_assigned_id: chosenUser,
+			service_id: chosenServiceId
+		})
+
+		getUserPostedServices()
+		toast.success("O serviço foi concluído e atribuído ao prestador!")
+	}
+
 	useEffect(() => {
 		getUserData()
 		checkCurrentUser()
@@ -79,6 +107,12 @@ function Profile() {
 		getUserPostedServices()
 		getUserParticipatedServices()
 	}, [userInfo])
+
+	useEffect(() => {
+		finishService()
+	}, [chosenUser])
+
+	
 
 	return (
 		<>
@@ -159,10 +193,13 @@ function Profile() {
 												<div className="service-info">
 													<strong> {service.title} </strong>
 													<strong> {service.category_title}</strong>
-													{isCurrentUserProfile ? (
+													{isCurrentUserProfile && service.status == 0 ?(
 														<div className="options">
 															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
-															<FiCheck size={"1.2rem"} />
+															<FiCheck
+																size={"1.2rem"}
+																onClick={() => openFinishServiceModal(service.id)}
+															/>
 														</div>
 													) : null}
 												</div>
@@ -198,11 +235,6 @@ function Profile() {
 												<div className="service-info">
 													<strong> {service.title} </strong>
 													<strong> {service.category_title}</strong>
-													{isCurrentUserProfile ? (
-														<div className="options">
-															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
-														</div>
-													) : null}
 												</div>
 											</div>
 										)
@@ -217,6 +249,12 @@ function Profile() {
 			) : (
 				<img src={loading} type="gif" />
 			)}
+
+			{finishServiceModal ? (
+				<CompleteServiceModal serviceId={chosenServiceId} chooseUser={chooseUser}>
+					
+				</CompleteServiceModal>
+			) : null}
 		</>
 	)
 }

@@ -3,7 +3,8 @@ require('dotenv/config');
 
 class Mailer{
     constructor(){
-    
+	console.log(process.env.MAIL_HOST)
+	console.log(this.transporter)
         this.transporter = nodemailer.createTransport({
             host: process.env.MAIL_HOST,
             port: process.env.MAIL_PORT,
@@ -13,7 +14,8 @@ class Mailer{
                 pass: process.env.MAIL_PASS,
             },
         });
-        
+
+
 
         this.configs = '';
     }
