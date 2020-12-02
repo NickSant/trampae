@@ -9,6 +9,7 @@ import api from '../../services/api'
 
 import Input from '../../components/Input'
 import auth from '../../helpers/Util'
+import { toast } from 'react-toastify'
 
 require('dotenv/config')
 
@@ -31,8 +32,8 @@ export default function Recover() {
 	function submit(e) {
 		e.preventDefault()
 
-		if (pass !== confPass) return alert('As senhas precisam ser iguais')
-		if (confPass.length < 6) return alert('A senha deve ter no mínimo 6 caracteres!')
+		if (pass !== confPass) return toast.error('As senhas precisam ser iguais')
+		if (confPass.length < 6) return toast.error('A senha deve ter no mínimo 6 caracteres!')
 
 		const body = { newPass: confPass, urlHash:url_hash }
 		const configs = {
@@ -44,19 +45,16 @@ export default function Recover() {
 			.then(res => {
 				console.log('res', res)
 
-				if (res.Error) return alert(res.Error)
+				if (res.data.Error) return toast.error(res.data.Error)
 				const user = res.data.currentUser
 
-				console.log('user', user)
-
-				alert(`${user.name}, Sua senha foi alterada com sucesso`) //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
+				toast.success(`${user.name}, Sua senha foi alterada com sucesso`) //alert temporário - PELO AMOR DE DEUS, NÃO ESQUECER DE TIRAR!!!!!
 				setTimeout(function () {
 					goToLogin()
-				}, 2000)
+				}, 4000)
 			})
 			.catch(e => {
-				alert(e)
-				console.log(e)
+				toast.error('Não foi possível completar a ação. Tente novamente mais tarde!')
 			})
 	}
 

@@ -122,6 +122,7 @@ export default {
 		if(!user_assigned_id || !service_id) return handleError(res, 400, `Dados não suficientes para progredir com a ação.`)
 
 		try {
+			if(user_assigned_id === user_requested_id) return handleError(res, 400, 'Você não pode atribuí-lo à si próprio!')
 			
 			const service = await sv.get({id: service_id}, true)
 			if(!service) return handleError(res, 400, `service ID doesn't exists!`)
