@@ -52,7 +52,7 @@ services: #containers
             dockerfile: Dockerfile
         image: nodejs
         ports: 
-            - 3331:3333
+            - 3333:3333
         container_name: nodejs
         
         restart: unless-stopped

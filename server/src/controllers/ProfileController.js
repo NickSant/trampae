@@ -32,11 +32,16 @@ export default {
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
 		delete exists.password
 
-		const doneServices = await db(db.ref('completed_services').as('cp')).select('s.*')
+		const assignedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 
-		console.log(doneServices, 'downe orks')
+		console.log(assignedServices, 'downe orks')
+
+		
+		const requestedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
+		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
+		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 
 		if (id === req_id) {
 			//ĺógica para a possibilidade de editar os dados!!
@@ -48,7 +53,11 @@ export default {
 			exists.changePermission = false
 		}
 
-		return res.json({exists, doneServices})
+		return res.json({
+			exists, //usuário
+			assignedServices, // serviços feitos 
+			requestedServices // serviços postados
+		})
 	},
 	async uploadImage(req, res) {
 		try {
@@ -158,7 +167,6 @@ export default {
 						if (!send) return handleError(res, 400, 'Não foi possível enviar o email\nTente novamente mais tarde')
 						return res.json({
 							message: 'Email enviado com sucesso',
-							link: link,
 						}).status(200).end()
 					})
 				} )

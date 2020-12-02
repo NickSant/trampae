@@ -27,29 +27,24 @@ export default function Forget() {
   function submit(e) {
     e.preventDefault()
 
-    if(mail === undefined || mail === '') return toast.alert('Você deve preencher o campo para prosseguir!')
-    else if(!mail.includes('@') && !mail.includes('.')) return toast.alert('E-mail inválido!')
+    if(mail === undefined || mail === '') return toast.warning('Você deve preencher o campo para prosseguir!')
+    else if(!mail.includes('@') && !mail.includes('.')) return toast.warning('E-mail inválido!')
 
     const body = {mail: mail}
 
     api.post('/forgot', body).then((res) => {
 
-      if(res.Error) console.log(`Erro: ${res}`)
+      if(res.data.Error) toast.error(`Erro: ${res}`)
       
-      localStorage.clear()
+      toast.success('Email enviado com sucesso!')
 
-      const mail_auth_token = res.data.auth_token
-
-      setTimeout(() => {       
+      setTimeout(() => {
         goToLogin()
-      }, 3000)
+      }, 5000)
 
     }).catch((e) => {
       localStorage.clear()
-      console.log(e)
-
-      alert(e)
-
+      toast.error('Não foi possível prosseguir com a ação')
     })
   }
 
