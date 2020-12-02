@@ -2,6 +2,7 @@ node_modules
 yarn.lock
 package-lock.json
 mobile/node_modules
+web-client/build
 
 .env
 *.pem
