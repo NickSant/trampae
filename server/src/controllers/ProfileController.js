@@ -42,6 +42,7 @@ export default {
 		const requestedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+		
 
 		if (id === req_id) {
 			//ĺógica para a possibilidade de editar os dados!!
@@ -56,7 +57,7 @@ export default {
 		return res.json({
 			exists, //usuário
 			assignedServices, // serviços feitos 
-			requestedServices // serviços postados
+			requestedServices // serviços postados,
 		})
 	},
 	async uploadImage(req, res) {

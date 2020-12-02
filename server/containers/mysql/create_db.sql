@@ -1,5 +1,3 @@
--- MySQL Workbench Forward Engineering
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -85,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `trampae_db`.`services` (
   `description` VARCHAR(255) NOT NULL,
   `city` VARCHAR(255) NOT NULL,
   `uf` VARCHAR(2) NOT NULL,
+  `status` TINYINT(1) DEFAULT 0,
   `user_id` VARCHAR(255) NOT NULL,
   `category_id` INT(10) UNSIGNED NOT NULL,
   `service_provider_id` INT(10) UNSIGNED NULL DEFAULT NULL,
@@ -122,8 +121,8 @@ CREATE INDEX `services_category_id_foreign` ON `trampae_db`.`services` (`categor
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trampae_db`.`completed_services` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_assigned_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que postou',
-  `user_requested_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que prestou',
+  `user_assigned_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que prestou',
+  `user_requested_id` VARCHAR(255) NOT NULL COMMENT 'Usuário que postou',
   `service_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
