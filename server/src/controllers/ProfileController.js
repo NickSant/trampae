@@ -35,13 +35,12 @@ export default {
 		const assignedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
-
-		console.log(assignedServices, 'downe orks')
-
+		.where('cp.user_assigned_id', '=', id)
 		
 		const requestedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+		.where('cp.user_requested_id', '=', id)
 		
 
 		if (id === req_id) {
