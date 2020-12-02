@@ -63,8 +63,8 @@ routes.post('/upload-image', authMiddleware, multer.single('img_perfil'), Profil
 routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
-routes.get('/search/services', /*authMiddleware,*/ SearchController.SearchServices)
-routes.get('/search/users', /*authMiddleware,*/ SearchController.SearchUsers)
+routes.get('/search/services', authMiddleware, SearchController.SearchServices)
+routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
@@ -72,7 +72,7 @@ routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 routes.put('/services/:id', authMiddleware, ServiceController.edit)
 
 //rotas categorias
-routes.get('/categories', /*authMiddleware,*/ CategoriesController.index)
+routes.get('/categories', authMiddleware, CategoriesController.index)
 
 //rota concuir serviço
 routes.post('/done-service', authMiddleware, ServiceController.completeService)
