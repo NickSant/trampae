@@ -25,6 +25,7 @@ require('dotenv/config')
 export default function Register() {
 	const [name, changeName] = useState('')
 	const [email, changeMail] = useState('')
+	const [imageUrl, changeImageUrl] = useState('')
 	const [whats, changeWhats] = useState('')
 	const [password, changePass] = useState('')
 	const [bio, changeBio] = useState('');
@@ -66,6 +67,7 @@ export default function Register() {
 			name: name,
 			email: email,
 			whatsapp: whats,
+			image_url: imageUrl,
 			password: password,
 			bio: bio,
 			city: selectedCity,
@@ -112,6 +114,7 @@ export default function Register() {
 						<Input type="Email" name="E-mail" onChange={e => changeMail(e.target.value)} />
 						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
 
+						<Input type="text" name="Link da imagem" onChange={e => changeImageUrl(e.target.value)} />
 						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
 						<Textarea type="text" name="Bio" onChange={e => changeBio(e.target.value)} />
 
