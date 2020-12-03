@@ -18,6 +18,7 @@ import {
 	} from './styles'
 
 import { FiArrowDown } from 'react-icons/fi';
+import { toast } from 'react-toastify'
 
 //---Começo da API---//
 require('dotenv/config')
@@ -60,7 +61,7 @@ export default function Register() {
 
 	async function submitRegister(e) {
 		e.preventDefault()
-		if(password.length < 6) return alert('A senha deve conter no mínimo 6 dígitos!')
+		if(password.length < 6) return toast.error('A senha deve conter no mínimo 6 dígitos!')
 
 		api.post('/signup', {
 			name: name,
@@ -85,7 +86,7 @@ export default function Register() {
 			localStorage.removeItem('@Trampae:token')
 
 			console.log(e)
-			alert(e)
+			toast.error('Erro..')
 		})
 	}
 	function goToLogin() {

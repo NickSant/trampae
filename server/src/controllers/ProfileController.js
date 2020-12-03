@@ -30,9 +30,9 @@ export default {
 
 		const exists = await u.get({id},true)
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
-		delete exists.password
+		delete exists.password	
 
-		const assignedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
+		const assignedServices = await db(db.ref('completed_services').as('cp')).select('cp.*')
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 		.where('cp.user_assigned_id', '=', id)
@@ -100,37 +100,20 @@ export default {
 	},
 	async updateData(req, res) {
 		const { id: user_id } = req.auth
-		const { newValue } = req.body
-		const { type } = req.params
+		const { name, email, whatsapp, image_url, city, uf, bio  } = req.body
 
-		let typeExists = false
+		try {
+			await u.update({id:user_id}, { name, email, whatsapp, image_url, city, uf, bio })
 
-		if (newValue === undefined || newValue === null || newValue === '') return handleError(res, 400, `Você precisa declarar um Novo valor para ${type}`)
+			const updatedUser = await u.get({id: user_id}, true)
+			delete updatedUser.password
+			console.log('Succefully Update!')
+			res.status(200)
+			return res.json(updatedUser).end()
+		
 
-		userDefault.filter(field => {
-			if (field === type) return (typeExists = true)
-		})
-		console.log(typeExists)
-
-		if (typeExists) {
-			try {
-				
-				const result = await u.update({id:user_id}, { [type]: [newValue] })
-				console.log(result, 'result')
-				if (result !== undefined && result !== '') {
-					
-					const newUser = await u.get({id}, true)
-
-					delete newUser.password
-					console.log('Succefully Update!')
-					res.status(200)
-					return res.json(newUser).end()
-				}
-			} catch (e) {
-				return handleError(res, 400, e)
-			}
-		} else {
-			return handleError(res, 400, `Type "${type}" doesn't exists`)
+		} catch (e) {
+			return handleError(res, 400, e)
 		}
 	},
 

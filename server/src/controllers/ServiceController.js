@@ -97,17 +97,13 @@ export default {
 		const { id } = req.params
 
 		const { id:user_id } = req.auth
-		const { field, newValue } = req.body
-
-		try {
-			
-			if(!field || !newValue) return handleError(res, 400, 'Campo ou novo valor não passado!')
-	
+		const { title, description, price, id_category, city, uf  } = req.body
+		
+		try {	
 			const service = await sv.get({id, user_id}, true)
-
 			if(!service || service.length <= 0 || !service.id ) return handleError(res, 400, `Não foi possível editar o serviço.`)
 
-			sv.update({ id: service.id }, { [field]: newValue })
+			sv.update({ id: service.id }, { title, description, price, city, uf, category_id: id_category })
 
 			return res.json({message: 'Serviço atualizado com sucesso!'}).end()
 			
