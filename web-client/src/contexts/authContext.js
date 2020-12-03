@@ -62,7 +62,23 @@ function AuthProvider({children}) {
 		}
 	}, [])
 
-	return <AuthContext.Provider value={{ user: data.user, signIn }}>{children}</AuthContext.Provider>
+	const refreshUser = useCallback(async () => {
+		const user = JSON.parse(localStorage.getItem('@Trampae:user'))
+
+		try{
+			const apiResponse = await api.get(`/user/${user.id}`)
+
+			localStorage.setItem('@Trampae:user', JSON.stringify(apiResponse.data.exists));
+			setData({ user: apiResponse.data.exists })
+		}catch(e){
+			console.log("context error", e);
+		}
+		
+
+
+	}, [])
+
+	return <AuthContext.Provider value={{ user: data.user, signIn, refreshUser }}>{children}</AuthContext.Provider>
 }
 
 function useAuth() {

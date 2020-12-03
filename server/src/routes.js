@@ -28,11 +28,6 @@ routes.post('/forgot', ProfileController.forgotPass)
 routes.post('/verfiy-url-hash', mailerAuth)
 routes.put('/forgot', mailerAuth, ProfileController.changePass)
 
-// // GoogleOAuth
-// routes.post('/oauth/google', passport.authenticate('googleToken', { session: false }), UserController.OAuth)
-
-// routes.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), UserController.OAuth)
-
 //listar usuários - development - 
 routes.get('/user', UserController.index)
 //Listar serviços - development 
@@ -51,7 +46,8 @@ routes.get('/me', authMiddleware, (req, res) => res.send(req.auth))
 //esse parâmetro é setado em auth.js
 
 
-routes.put('/update/:type', authMiddleware, ProfileController.updateData)
+routes.put('/user/update', authMiddleware, ProfileController.updateData)
+
 
 //UPLOAD DE IMAGENS - Perfil
 //setando middleware multer.js
@@ -63,17 +59,16 @@ routes.post('/upload-image', authMiddleware, multer.single('img_perfil'), Profil
 routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
-routes.get('/search/services', /*authMiddleware,*/ SearchController.SearchServices)
-routes.get('/search/done-services', /*authMiddleware,*/ SearchController.SearchCompletedServices)
-routes.get('/search/users', /*authMiddleware,*/ SearchController.SearchUsers)
+routes.get('/search/services', authMiddleware, SearchController.SearchServices)
+routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
 
-routes.put('/services/:id', authMiddleware, ServiceController.edit)
+routes.put('/service/update/:id', authMiddleware, ServiceController.edit)
 
 //rotas categorias
-routes.get('/categories', /*authMiddleware,*/ CategoriesController.index)
+routes.get('/categories', authMiddleware, CategoriesController.index)
 
 //rota concuir serviço
 routes.post('/done-service', authMiddleware, ServiceController.completeService)

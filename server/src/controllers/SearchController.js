@@ -32,30 +32,15 @@ export default {
 
 		return response.json({ services })
 	},
-	async SearchCompletedServices(request, response) {
-		const { id, user_assigned_id, user_requested_id, service_id } = request.query
-		try {
-			const completedServices = await db(db.ref('completed_services').as('cs'))
-			.select('cs.id', 's.*')
-			.where(function () {
-				whereBuilder(this, { id, user_assigned_id, user_requested_id, service_id }, 'cs')
-			})
-			.innerJoin(db.ref('services').as('s'), 's.id', '=', 'cs.id')
-
-			return response.json({ completedServices })
-		} catch (e) {
-			console.log(e)
-			return handleError(response, 400, 'Database Error')
-		}
-	},
 	async SearchUsers(request, response) {
 		const { id = false, name = false, email = false, city = false, uf = false } = request.query
 		try {
 			const users = await u.get(function () {
 				whereBuilder(this, { id, name, email, city, uf }, 'users')
 			})
-			users.map(user => delete user.password)
+
 			if (!users || users.length <= 0) return response.json({ message: `Usuário não encontrado!` })
+			users.map(user => delete user.password)
 
 			return response.json({ users })
 		} catch (e) {

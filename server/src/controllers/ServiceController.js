@@ -15,12 +15,12 @@ const cp = new Model('completed_services')
 const servicesJoinUsers = Array(
 	'u.id as user_id',
 	'u.name as user_name',
-	'u.image_url as user_image',
+	db.raw('CASE WHEN u.image_url="" THEN NULL ELSE u.image_url END as image_url'),
 	'u.city as user_city',
 	'u.uf as user_uf',
 	'u.whatsapp as user_whatsapp',
 	's.*',
-	'c.title as category_title'
+	'c.title as category_title',
 )
 
 export default {
@@ -97,17 +97,14 @@ export default {
 		const { id } = req.params
 
 		const { id:user_id } = req.auth
-		const { field, newValue } = req.body
+		const { title, description, price, id_category, city, uf  } = req.body
 
-		try {
-			
-			if(!field || !newValue) return handleError(res, 400, 'Campo ou novo valor não passado!')
-	
+		try {	
 			const service = await sv.get({id, user_id}, true)
+			console.log(service)
+			if(!service || !service.id ) return handleError(res, 400, `ID inválido. Ou não permitido à editar!`)
 
-			if(!service || service.length <= 0 || !service.id ) return handleError(res, 400, `Não foi possível editar o serviço.`)
-
-			sv.update({ id: service.id }, { [field]: newValue })
+			sv.update({ id: service.id }, { title, description, price, city, uf, category_id: id_category })
 
 			return res.json({message: 'Serviço atualizado com sucesso!'}).end()
 			
@@ -122,6 +119,7 @@ export default {
 		if(!user_assigned_id || !service_id) return handleError(res, 400, `Dados não suficientes para progredir com a ação.`)
 
 		try {
+			if(user_assigned_id === user_requested_id) return handleError(res, 400, 'Você não pode atribuí-lo à si próprio!')
 			
 			const service = await sv.get({id: service_id}, true)
 			if(!service) return handleError(res, 400, `service ID doesn't exists!`)
