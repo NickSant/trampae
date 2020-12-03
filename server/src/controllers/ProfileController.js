@@ -45,7 +45,7 @@ export default {
 		delete exists.password
 
 		const assignedServices = await db(db.ref('completed_services').as('cp'))
-			.select(['s.*', 'u.name as username', 'u.id as userId', 'u.image_url','cat.title as cat_title'])
+			.select(['s.*', 'u.name as username', 'u.id as userId', db.raw('CASE WHEN u.image_url ="" THEN NULL ELSE u.image_url END as image_url'),'cat.title as cat_title'])
 			.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
 			.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id')
 			.join(db.ref('categories').as('cat'), 'cat.id', '=', 's.category_id')

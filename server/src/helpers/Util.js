@@ -3,7 +3,6 @@ import sha1 from 'sha1'
 
 import { connection } from '../database/connection'
 const db = connection
-
 class Util {
     constructor(){
        
@@ -55,6 +54,10 @@ class Util {
 
     isAdminID(id){
         return (id === process.env.ADMIN_ID_PAYLOAD_JWT) ? true : false
+    }
+
+    validImage(url){
+        return url == '' ? null : url
     }
 
     mysqlNowFormat(){
