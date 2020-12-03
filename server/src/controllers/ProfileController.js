@@ -30,16 +30,16 @@ export default {
 
 		const exists = await u.get({id},true)
 		if (!exists || exists === undefined || exists === '') return handleError(res, 401, `User ${id} not exists`)
-		delete exists.password	
+		delete exists.password
 
-		const assignedServices = await db(db.ref('completed_services').as('cp')).select('cp.*')
+		const assignedServices = await db(db.ref('completed_services').as('cp')).select(['cp.*', 's.*'])
 		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
 		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 		.where('cp.user_assigned_id', '=', id)
 		
-		const requestedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
-		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
-		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+		const requestedServices = await db(db.ref('services').as('s')).select('s.*')
+		.join(db.ref('users').as('u'), 'u.id', '=', 's.user_id')
+		.join(db.ref('completed_services').as('cp'), 's.id', '=', 'cp.service_id' )
 		.where('cp.user_requested_id', '=', id)
 		
 

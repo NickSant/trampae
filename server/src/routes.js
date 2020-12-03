@@ -59,8 +59,8 @@ routes.post('/upload-image', authMiddleware, multer.single('img_perfil'), Profil
 routes.get('/user/:id', authMiddleware, ProfileController.profile)
 
 //searches
-routes.get('/search/services', /*authMiddleware,*/ SearchController.SearchServices)
-routes.get('/search/users', /*authMiddleware,*/ SearchController.SearchUsers)
+routes.get('/search/services', authMiddleware, SearchController.SearchServices)
+routes.get('/search/users', authMiddleware, SearchController.SearchUsers)
 
 routes.post('/services', authMiddleware, validateBody(schemas.serviceSchema), ServiceController.create)
 routes.delete('/services/:id', authMiddleware, ServiceController.delete)
