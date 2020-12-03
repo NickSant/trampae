@@ -16,7 +16,8 @@ import loading from "../../assets/loading.gif"
 import { AiOutlineWhatsApp, AiOutlineMail } from "react-icons/ai"
 import { BsFillBriefcaseFill } from "react-icons/bs"
 import { FaRegHandshake } from "react-icons/fa"
-import { FiCheck, FiTrash } from "react-icons/fi"
+import { FiCheck, FiEdit, FiTrash } from "react-icons/fi"
+import EditServiceModal from "../../components/editServiceModal"
 
 //---Começo do Front-end---//
 function Profile() {
@@ -27,9 +28,9 @@ function Profile() {
 	const [userCompleteServices, setUserCompleteServices] = useState()
 	const [isCurrentUserProfile, setIsCurrentUserProfile] = useState()
 	const [finishServiceModal, setFinishServiceModal] = useState(false)
+	const [editServiceModal, setEditServiceModal] = useState(false)
 	const [chosenUser, setChosenUser] = useState()
 
-	
 	const { user } = useAuth()
 
 	async function getUserData() {
@@ -40,7 +41,6 @@ function Profile() {
 		setUserServices(apiResponse.data.requestedServices)
 		setUserCompleteServices(apiResponse.data.assignedServices)
 	}
-
 
 	function checkCurrentUser() {
 		if (user.id == id) {
@@ -60,19 +60,24 @@ function Profile() {
 		setFinishServiceModal(true)
 	}
 
-	function chooseUser(id){
+	function openEditServiceModal(service) {
+		setChosenServiceId(service)
+		setEditServiceModal(true)
+	}
+
+	function chooseUser(id) {
 		setFinishServiceModal(false)
 		console.log("id escolhido:", id)
 		setChosenUser(id)
 		finishService()
 	}
 
-	async function finishService(){
+	async function finishService() {
 		await api.post("/done-service", {
 			user_assigned_id: chosenUser,
-			service_id: chosenServiceId
+			service_id: chosenServiceId,
 		})
-
+		setChosenServiceId("")
 		getUserData()
 		toast.success("O serviço foi concluído e atribuído ao prestador!")
 	}
@@ -89,7 +94,11 @@ function Profile() {
 					<NavBar />
 					<ProfileInfo>
 						<img src={CoverBG} alt="bg" className="background" />
-						<img src={userInfo.image_url ? userInfo.image_url : ProfileImg} alt="" className="profilePic" />
+						<img
+							src={userInfo.image_url ? userInfo.image_url : ProfileImg}
+							alt=""
+							className="profilePic"
+						/>
 
 						<div className="profileInfo">
 							<strong> {userInfo.name} </strong>
@@ -149,7 +158,11 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={userInfo.image_url ? userInfo.image_url : ProfileImg} alt="profilePic" className="profilePic" />
+													<img
+														src={userInfo.image_url ? userInfo.image_url : ProfileImg}
+														alt="profilePic"
+														className="profilePic"
+													/>
 													<div>
 														<strong> {userInfo.name} </strong>
 														<span>
@@ -161,9 +174,13 @@ function Profile() {
 												<div className="service-info">
 													<strong> {service.title} </strong>
 													<strong> {service.cat_title}</strong>
-													{isCurrentUserProfile && service.status == 0 ?(
+													{isCurrentUserProfile && service.status == 0 ? (
 														<div className="options">
 															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
+															<FiEdit
+																size={"1.2rem"}
+																onClick={() => openEditServiceModal(service)}
+															/>
 															<FiCheck
 																size={"1.2rem"}
 																onClick={() => openFinishServiceModal(service.id)}
@@ -191,7 +208,11 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={service.image_url ? service.image_url : ProfileImg } alt="profilePic" className="profilePic" />
+													<img
+														src={service.image_url ? service.image_url : ProfileImg}
+														alt="profilePic"
+														className="profilePic"
+													/>
 													<div>
 														<strong> {service.username} </strong>
 														<span>
@@ -219,9 +240,18 @@ function Profile() {
 			)}
 
 			{finishServiceModal ? (
-				<CompleteServiceModal serviceId={chosenServiceId} chooseUser={chooseUser} close={() => setFinishServiceModal(false)}>
-					
-				</CompleteServiceModal>
+				<CompleteServiceModal
+					serviceId={chosenServiceId}
+					chooseUser={chooseUser}
+					close={() => setFinishServiceModal(false)}
+				></CompleteServiceModal>
+			) : null}
+
+			{editServiceModal ? (
+				<EditServiceModal
+					service={chosenServiceId}
+					close={() => {setEditServiceModal(false); getUserData()}}
+				></EditServiceModal>
 			) : null}
 		</>
 	)
