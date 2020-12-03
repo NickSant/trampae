@@ -14,7 +14,7 @@ import { FiX } from "react-icons/fi"
 import { toast } from "react-toastify"
 
 function EditProfileModal({ close }) {
-	const { user } = useAuth()
+	const { user, refreshUser } = useAuth()
 
 	const [name, changeName] = useState(user.name)
 	const [email, changeMail] = useState(user.email)
@@ -56,9 +56,9 @@ function EditProfileModal({ close }) {
 				uf: selectedUf,
 			})
 			.then(res => {
-                close()
-                console.log(res)
-				toast.success(res)
+				close()
+				refreshUser()
+				toast.success("informações alteradas com sucesso!")
 			})
 			.catch(e => toast.error(e))
 	}

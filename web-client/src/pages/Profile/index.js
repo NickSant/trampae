@@ -26,7 +26,7 @@ function Profile() {
 	const [chosenServiceId, setChosenServiceId] = useState()
 	const [userCompleteServices, setUserCompleteServices] = useState()
 	const [isCurrentUserProfile, setIsCurrentUserProfile] = useState()
-	const [finishServiceModal, setFinishServiceModal] = useState(true)
+	const [finishServiceModal, setFinishServiceModal] = useState(false)
 	const [chosenUser, setChosenUser] = useState()
 
 	
@@ -89,7 +89,7 @@ function Profile() {
 					<NavBar />
 					<ProfileInfo>
 						<img src={CoverBG} alt="bg" className="background" />
-						<img src={user.image_url ? user.image_url : ProfileImg} alt="" className="profilePic" />
+						<img src={userInfo.image_url ? userInfo.image_url : ProfileImg} alt="" className="profilePic" />
 
 						<div className="profileInfo">
 							<strong> {userInfo.name} </strong>
@@ -149,9 +149,9 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={service.user_image_url ? service.user_image_url : ProfileImg} alt="profilePic" className="profilePic" />
+													<img src={userInfo.image_url ? userInfo.image_url : ProfileImg} alt="profilePic" className="profilePic" />
 													<div>
-														<strong> {service.user_name} </strong>
+														<strong> {userInfo.name} </strong>
 														<span>
 															{service.city} - {service.uf}
 														</span>
@@ -160,7 +160,7 @@ function Profile() {
 
 												<div className="service-info">
 													<strong> {service.title} </strong>
-													<strong> {service.category_title}</strong>
+													<strong> {service.cat_title}</strong>
 													{isCurrentUserProfile && service.status == 0 ?(
 														<div className="options">
 															<FiTrash size={"1.2rem"} onClick={() => deleteService(service.id)} />
@@ -191,9 +191,9 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={service.user_image_url} alt="profilePic" className="profilePic" />
+													<img src={service.image_url ? service.image_url : ProfileImg } alt="profilePic" className="profilePic" />
 													<div>
-														<strong> {service.user_name} </strong>
+														<strong> {service.username} </strong>
 														<span>
 															{service.city} - {service.uf}
 														</span>
@@ -202,7 +202,7 @@ function Profile() {
 
 												<div className="service-info">
 													<strong> {service.title} </strong>
-													<strong> {service.category_title}</strong>
+													<strong> {service.cat_title}</strong>
 												</div>
 											</div>
 										)

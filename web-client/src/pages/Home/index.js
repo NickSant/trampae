@@ -38,7 +38,7 @@ export default function Home() {
 	const [selectedUf, setSelectedUf] = useState()
 	const [selectedCity, setSelectedCity] = useState()
 
-	const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(true);
+	const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
 
 	function clearFilters() {
 		getServicesData()
@@ -138,7 +138,7 @@ export default function Home() {
 				</Navbar>
 				<SideBar>
 					<a href={`/profile/${user.id}`} className="navItem">
-						<img src={profilePic} alt="user" className="profilePic" />
+						<img src={user.image_url} alt="user" className="profilePic" />
 						{user.name}
 					</a>
 					<Link to="/talkwithus" className="navItem">
@@ -172,6 +172,7 @@ export default function Home() {
 										id: service.user_id,
 										image: service.user_image,
 										whatsapp: service.user_whatsapp,
+										image_url: service.user_image
 									}}
 									title={service.title}
 									price={service.price}

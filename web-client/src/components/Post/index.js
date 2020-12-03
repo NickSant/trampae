@@ -12,7 +12,7 @@ function Post({ user, title, description, price, localization, category }) {
 		<Container>
 			<header>
 				<Link to={`/profile/${user.id}`} className="userInfo">
-					<img src={userImg} alt="User" />
+					<img src={user.image_url ? user.image_url : userImg} alt="User" />
 					<div>
 						<strong> {user.name} </strong>
 						<span>

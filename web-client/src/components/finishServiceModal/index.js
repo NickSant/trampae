@@ -11,7 +11,7 @@ import { Container, Modal } from "./styles"
 import ProfileImg from "../../assets/profile.png"
 import { FiX } from 'react-icons/fi'
 
-function CompleteServiceModal({ serviceId, close, children, chooseUser }) {
+function CompleteServiceModal({ close, chooseUser }) {
 	const [username, changeName] = useState("")
 	const [usersList, setUsersList] = useState([])
 	const [selectedUf, setSelectedUf] = useState("")
@@ -54,7 +54,7 @@ function CompleteServiceModal({ serviceId, close, children, chooseUser }) {
 	}
 
 	return (
-		<Container onClick={close}>
+		<Container>
 			<Modal>
 				<FiX size={"2rem"} className="close" onClick={close}/>
 				<div className="form-section">

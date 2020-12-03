@@ -32,6 +32,35 @@ export const Modal = styled.div`
 		padding: 5px 0;
 		margin-bottom: 12px;
 	}
+	form {
+		overflow: hidden;
+		overflow: scroll;
+		padding: 1rem 1.5rem;
+
+		&::-webkit-scrollbar {
+			width: 0.5em;
+			height: 90%;
+		}
+
+		&::-webkit-scrollbar-track {
+			display: none;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 3px;
+			background-color: var(--primary);
+			outline: none;
+		}
+
+		::-webkit-scrollbar-corner {
+			border-radius: 5px;
+		}
+	}
+	form input,
+	select,
+	textarea {
+		font-size: 0.9rem;
+	}
 
 	form .location {
 		display: flex;
@@ -46,8 +75,8 @@ export const Modal = styled.div`
 
 	.close {
 		position: fixed;
-		left: 83%;
-		bottom: 90%;
+		left: 82%;
+		bottom: 88%;
 		border-radius: 30px;
 		height: 3rem;
 		width: 3rem;
