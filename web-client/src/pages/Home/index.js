@@ -9,6 +9,7 @@ import ibge from "../../services/ibge"
 import Post from "../../components/Post"
 import Select from "../../components/Select"
 import Navbar from "../../components/Navbar"
+import EditProfileModal from "../../components/editProfileModal"
 
 import { Container, SideBar, MainContent, FilterContainer } from "./styles.js"
 
@@ -36,6 +37,8 @@ export default function Home() {
 
 	const [selectedUf, setSelectedUf] = useState()
 	const [selectedCity, setSelectedCity] = useState()
+
+	const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(true);
 
 	function clearFilters() {
 		getServicesData()
@@ -146,10 +149,10 @@ export default function Home() {
 						<FiUsers size={"1.8rem"} />
 						Sobre nós
 					</Link>
-					<Link to="/talkwithus" className="navItem">
+					<button onClick={() => setIsEditProfileModalOpen(true)} className="navItem">
 						<FiSettings size={"1.8rem"} />
 						Configurações
-					</Link>
+					</button>
 
 					<Link className="navItem" to="/logout">
 						<FiLogOut size={"1.8rem"} />
@@ -226,6 +229,8 @@ export default function Home() {
 					Filtrar
 				</button>
 			</FilterContainer>
+
+			{isEditProfileModalOpen ? <EditProfileModal close={() => setIsEditProfileModalOpen(false)}/> : null}
 		</>
 	)
 }

@@ -16,23 +16,31 @@ import api from "../../services/api"
 import logoImg from "../../assets/logo.png"
 
 export default function NewService() {
-	const [title, setTitle] = useState('')
-	const [description, setDescription] = useState('')
-	const [price, setPrice] = useState('')
-	const [selectedUf, setSelectedUf] = useState('')
-	const [selectedCity, setSelectedCity] = useState('')
+	const [title, setTitle] = useState("")
+	const [description, setDescription] = useState("")
+	const [price, setPrice] = useState("")
+	const [selectedUf, setSelectedUf] = useState("")
+	const [selectedCity, setSelectedCity] = useState("")
+	const [selectedCategory, setSelectedCategory] = useState("")
 
 	const [ufs, setUfs] = useState([])
 	const [cities, setCities] = useState([])
+	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
 		async function getUfs() {
 			const ufs = await ibge.getUfs()
 			setUfs(ufs)
 		}
+		async function getCategories() {
+			const apiResponse = await api.get("/categories")
+			console.log(apiResponse.data.categories)
+			setCategories(apiResponse.data.categories)
+		}
 		getUfs()
-	},[])
-	
+		getCategories()
+	}, [])
+
 	useEffect(() => {
 		async function getCities() {
 			const cities = await ibge.getCities(selectedUf)
@@ -48,7 +56,7 @@ export default function NewService() {
 			title: title,
 			description: description,
 			price: price,
-			id_category: 1, //hardcoded
+			id_category: selectedCategory,
 			uf: selectedUf,
 			city: selectedCity,
 		}
@@ -89,8 +97,17 @@ export default function NewService() {
 
 				<FormGroup>
 					<Input name="Título" type="text" onChange={e => setTitle(e.target.value)} />
-					
+
 					<Input name="Pagamento" type="number" onChange={e => setPrice(e.target.value)} />
+					<Select
+						onChange={e => setSelectedCategory(e.target.value)}
+						name="Categoria"
+						children={categories.map(cat => (
+							<option key={cat.id} value={cat.id} title={cat.title}>
+								{cat.title}
+							</option>
+						))}
+					></Select>
 					<div className="location">
 						<Select
 							className="select"
@@ -115,11 +132,13 @@ export default function NewService() {
 						></Select>
 					</div>
 
-					<Textarea name="Descrição" onChange={e => setDescription(e.target.value)}/>
+					<Textarea name="Descrição" onChange={e => setDescription(e.target.value)} />
 
 					<br />
 
-					<button onClick={handleSubmit} className="button">Publicar</button>
+					<button onClick={handleSubmit} className="button">
+						Publicar
+					</button>
 				</FormGroup>
 
 				<Link to="/home" className="mobile">

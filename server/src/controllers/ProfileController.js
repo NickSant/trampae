@@ -33,14 +33,16 @@ export default {
 		delete exists.password
 
 		const assignedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
-		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
-		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 		.where('cp.user_assigned_id', '=', id)
+		.innerJoin(db.ref('users').as('u'), 'u.id', '=', 'cp.user_assigned_id')
+		.innerJoin(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+		
 		
 		const requestedServices = await db(db.ref('completed_services').as('cp')).select('s.*')
-		.join(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
-		.join(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
 		.where('cp.user_requested_id', '=', id)
+		.innerJoin(db.ref('users').as('u'), 'u.id', '=', 'cp.user_requested_id')
+		.innerJoin(db.ref('services').as('s'), 's.id', '=', 'cp.service_id' )
+		
 		
 
 		if (id === req_id) {

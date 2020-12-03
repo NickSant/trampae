@@ -29,6 +29,7 @@ export const Modal = styled.div`
 		width: 50%;
 		height: 100%;
 		padding: 1rem;
+		
 		text-align: center;
 		border-right: 1px solid var(--light-gray);
 
@@ -135,4 +136,16 @@ export const Modal = styled.div`
 			border-radius: 5px;
 		}
 	}
+
+	.close{
+		position: fixed;
+		left: 83%;
+		bottom: 85%;
+		border-radius: 30px;
+		height: 3rem;
+		width: 3rem;
+		background-color: var(--primary);
+		color: white;
+	}
+
 `

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import { useAuth } from "../../contexts/authContext"
 import api from "../../services/api"
+import { toast } from "react-toastify"
 
 import NavBar from "../../components/Navbar"
 import CompleteServiceModal from "../../components/finishServiceModal"
@@ -14,9 +16,7 @@ import loading from "../../assets/loading.gif"
 import { AiOutlineWhatsApp, AiOutlineMail } from "react-icons/ai"
 import { BsFillBriefcaseFill } from "react-icons/bs"
 import { FaRegHandshake } from "react-icons/fa"
-import { useAuth } from "../../contexts/authContext"
 import { FiCheck, FiTrash } from "react-icons/fi"
-import { toast } from "react-toastify"
 
 //---Começo do Front-end---//
 function Profile() {
@@ -26,43 +26,21 @@ function Profile() {
 	const [chosenServiceId, setChosenServiceId] = useState()
 	const [userCompleteServices, setUserCompleteServices] = useState()
 	const [isCurrentUserProfile, setIsCurrentUserProfile] = useState()
-	const [finishServiceModal, setFinishServiceModal] = useState(false)
+	const [finishServiceModal, setFinishServiceModal] = useState(true)
 	const [chosenUser, setChosenUser] = useState()
 
 	
 	const { user } = useAuth()
 
 	async function getUserData() {
-		const apiResponse = await api.get("/search/users", {
-			params: {
-				id,
-			},
-		})
+		const apiResponse = await api.get(`/user/${id}`)
 
-		console.log(apiResponse.data.users[0])
-		setUserInfo(apiResponse.data.users[0])
-	}
-
-	async function getUserPostedServices() {
-		const apiResponse = await api.get("search/services", {
-			params: {
-				user_id: id,
-			},
-		})
-		setUserServices(apiResponse.data.services)
 		console.log(apiResponse.data)
+		setUserInfo(apiResponse.data.exists)
+		setUserServices(apiResponse.data.requestedServices)
+		setUserCompleteServices(apiResponse.data.assignedServices)
 	}
 
-	async function getUserParticipatedServices() {
-		const apiResponse = await api.get("search/services", {
-			params: {
-				user_id: id,
-				status: 1,
-			},
-		})
-		console.log("serviços completos", apiResponse.data)
-		setUserCompleteServices(apiResponse.data.services)
-	}
 
 	function checkCurrentUser() {
 		if (user.id == id) {
@@ -74,7 +52,7 @@ function Profile() {
 
 	async function deleteService(serviceId) {
 		await api.delete(`services/${serviceId}`)
-		getUserPostedServices()
+		getUserData()
 	}
 
 	function openFinishServiceModal(serviceId) {
@@ -86,6 +64,7 @@ function Profile() {
 		setFinishServiceModal(false)
 		console.log("id escolhido:", id)
 		setChosenUser(id)
+		finishService()
 	}
 
 	async function finishService(){
@@ -94,7 +73,7 @@ function Profile() {
 			service_id: chosenServiceId
 		})
 
-		getUserPostedServices()
+		getUserData()
 		toast.success("O serviço foi concluído e atribuído ao prestador!")
 	}
 
@@ -103,17 +82,6 @@ function Profile() {
 		checkCurrentUser()
 	}, [id])
 
-	useEffect(() => {
-		getUserPostedServices()
-		getUserParticipatedServices()
-	}, [userInfo])
-
-	useEffect(() => {
-		finishService()
-	}, [chosenUser])
-
-	
-
 	return (
 		<>
 			{userInfo ? (
@@ -121,7 +89,7 @@ function Profile() {
 					<NavBar />
 					<ProfileInfo>
 						<img src={CoverBG} alt="bg" className="background" />
-						<img src={ProfileImg} alt="" className="profilePic" />
+						<img src={user.image_url ? user.image_url : ProfileImg} alt="" className="profilePic" />
 
 						<div className="profileInfo">
 							<strong> {userInfo.name} </strong>
@@ -181,7 +149,7 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={ProfileImg} alt="profilePic" className="profilePic" />
+													<img src={service.user_image_url ? service.user_image_url : ProfileImg} alt="profilePic" className="profilePic" />
 													<div>
 														<strong> {service.user_name} </strong>
 														<span>
@@ -223,7 +191,7 @@ function Profile() {
 										return (
 											<div key={service.id} className="service-item">
 												<div className="votingPerson">
-													<img src={ProfileImg} alt="profilePic" className="profilePic" />
+													<img src={service.user_image_url} alt="profilePic" className="profilePic" />
 													<div>
 														<strong> {service.user_name} </strong>
 														<span>
@@ -251,7 +219,7 @@ function Profile() {
 			)}
 
 			{finishServiceModal ? (
-				<CompleteServiceModal serviceId={chosenServiceId} chooseUser={chooseUser}>
+				<CompleteServiceModal serviceId={chosenServiceId} chooseUser={chooseUser} close={() => setFinishServiceModal(false)}>
 					
 				</CompleteServiceModal>
 			) : null}

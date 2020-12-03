@@ -9,8 +9,9 @@ import Select from "../../components/Select"
 import { Container, Modal } from "./styles"
 
 import ProfileImg from "../../assets/profile.png"
+import { FiX } from 'react-icons/fi'
 
-function CompleteServiceModal({ serviceId, onClose, children, chooseUser }) {
+function CompleteServiceModal({ serviceId, close, children, chooseUser }) {
 	const [username, changeName] = useState("")
 	const [usersList, setUsersList] = useState([])
 	const [selectedUf, setSelectedUf] = useState("")
@@ -53,8 +54,9 @@ function CompleteServiceModal({ serviceId, onClose, children, chooseUser }) {
 	}
 
 	return (
-		<Container onClick={onClose}>
+		<Container onClick={close}>
 			<Modal>
+				<FiX size={"2rem"} className="close" onClick={close}/>
 				<div className="form-section">
 					<h3>Quem fez esse serviço pra você?</h3>
 					<span>Pesquise pelo usuário</span>
