@@ -98,10 +98,11 @@ export default {
 
 		const { id:user_id } = req.auth
 		const { title, description, price, id_category, city, uf  } = req.body
-		
+
 		try {	
 			const service = await sv.get({id, user_id}, true)
-			if(!service || service.length <= 0 || !service.id ) return handleError(res, 400, `Não foi possível editar o serviço.`)
+			console.log(service)
+			if(!service || !service.id ) return handleError(res, 400, `ID inválido. Ou não permitido à editar!`)
 
 			sv.update({ id: service.id }, { title, description, price, city, uf, category_id: id_category })
 
