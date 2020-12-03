@@ -15,12 +15,12 @@ const cp = new Model('completed_services')
 const servicesJoinUsers = Array(
 	'u.id as user_id',
 	'u.name as user_name',
-	'u.image_url as user_image',
+	db.raw('CASE WHEN u.image_url="" THEN NULL ELSE u.image_url END as image_url'),
 	'u.city as user_city',
 	'u.uf as user_uf',
 	'u.whatsapp as user_whatsapp',
 	's.*',
-	'c.title as category_title'
+	'c.title as category_title',
 )
 
 export default {
