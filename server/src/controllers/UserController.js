@@ -83,7 +83,7 @@ export default {
 	async login(req, res) {
 		console.log('login --------------------------------------------------------------')
 
-		const [hashTyp, hash] = req.headers.authorization.split(' ') //Basic Authenticate. Formato: Basic HASH
+		const [hashType, hash] = req.headers.authorization.split(' ') //Basic Authenticate. Formato: Basic HASH
 		const [email, password] = Buffer.from(hash, 'base64').toString().split(':') //Buffer - descriptografa um hash -> separado por :
 		//Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
 
@@ -103,7 +103,6 @@ export default {
 			if (!result || result === undefined) return handleError(res, 401, 'User not Found')
 
 			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
-
 			
 			const verified = await verify(pass_bd, password);
 
