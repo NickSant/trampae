@@ -1,4 +1,4 @@
-import connection from '../database/connection'
+import {connection} from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'

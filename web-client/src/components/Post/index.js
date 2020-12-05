@@ -1,31 +1,46 @@
-import React from "react";
+import React from 'react'
+import { Link } from 'react-router-dom';
 
-import defaultUserImg from "../../assets/user.png";
-import whatsappIcon from "../../assets/whatsapp.svg";
+import { Container } from './styles'
+import userImg from '../../assets/user.png'
 
+import { AiOutlineWhatsApp } from 'react-icons/ai'
 
+function Post({ user, title, description, price, localization, category }) {
+	
+	return (
+		<Container>
+			<header>
+				<Link to={`/profile/${user.id}`} className="userInfo">
+					<img src={user.image_url ? user.image_url : userImg} alt="User" />
+					<div>
+						<strong> {user.name} </strong>
+						<span>
+							{localization.city} - {localization.uf}
+						</span>
+					</div>
+				</Link>
+				<strong> {category} </strong>
+			</header>
 
-import "./styles.css";
+			<div className="content">
+				<strong> {title} </strong>
+				<p> {description} </p>
+			</div>
 
-const Service = ({ user_name, title, price, city, category, text, image }) => {
-  return (
-    <li className="list">
-      <img className="pUser" src={image.toString().length >= 20 ? image : defaultUserImg} alt="user" />
-      <h3 className="nUser">{user_name}</h3>
-      <h5 className="lUser">{city}</h5>
-      <h3 className="cUser">{category}</h3>
-  <strong className="tUser">{title}</strong>
-      <p className="tUser">{text}</p>
-      <footer>
-        <strong>
-          Pagamento: R$ <span>{price}</span>
-        </strong>
-        <button className="btnWhats">
-          <img src={whatsappIcon} alt="whatsapp"></img>
-        </button>
-      </footer>
-    </li>
-  );
-};
+			<footer>
+				<div>
+					<span>R$ {price}</span>
+				</div>
 
-export default Service;
+				
+
+				<a href={`https://api.whatsapp.com/send?phone=${user.whatsapp}&text=Olá%20${user.name}!`} target="_blank">
+					<strong>Whatsapp</strong> <AiOutlineWhatsApp size={'1.5rem'} />
+				</a>
+			</footer>
+		</Container>
+	)
+}
+
+export default Post

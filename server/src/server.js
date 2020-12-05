@@ -1,10 +1,20 @@
-import express from 'express';//microframework - controla rotas da aplicação
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
+import express from 'express';
 import cors from 'cors'
 import routes from './routes';
 import path from 'path';
+
+import {tryMysqlConnection} from './database/connection';
+
 require('dotenv').config();
 
+const port = process.env.PORT;
+const host = process.env.HOST;
+
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
@@ -15,11 +25,9 @@ app.use('/uploads', express.static(path.resolve(__dirname,'..','uploads')));
 //exemplo: acessar a rota-> http://localhost:3333/uploads/arquivo.extensao - mostra o arquivo
 app.use(routes); 
 
-
-
-
-const port = process.env.PORT;
-const host = process.env.HOST;
-app.listen(port, ()=>{   
-    console.log(`Running server at http://${host}:${port}`);
+//verificando conexão com banco
+app.listen(port,  async function() {  
+    tryMysqlConnection().then(function(){
+        console.log(`Running serve at http://${host}:${port}`)
+    }).catch(e => console.log(e))
 });

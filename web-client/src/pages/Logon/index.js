@@ -1,44 +1,66 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-
 import { useAuth } from '../../contexts/authContext'
-
 import logoImg from '../../assets/logo.png'
-import api from '../../services/api'
-
 import Input from '../../components/Input'
-import Error from '../../components/Error'
 
-import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
+import validate from '../../helpers/validators'
 
-require('dotenv/config')
+import { toast } from 'react-toastify';
+import { FiArrowDown } from 'react-icons/fi';
+
+
+import {
+	Container,
+	ActiveSection,
+	Header,
+	FormContainer,
+	Title,
+	ForgotPassword,
+	DisabledSection,
+} from './styles'
+
+
+
+import 'dotenv/config'
+import Util from '../../helpers/Util'
+
 
 export default function Logon() {
 	const history = useHistory()
-
+	
 	const [mail, setMail] = useState('')
 	const [pass, setPass] = useState('')
 
-	const [user, setUser] = useState({})
-
-	useEffect(()=> localStorage.clear(),[])
+	useEffect(() => localStorage.clear(), [])
 
 	const { signIn } = useAuth()
 
 	async function submit(e) {
-		e.preventDefault();
-		const isValidated = await signIn({ mail, pass });
-		isValidated ? goToHome() : alert("O login falhou, tente novamente");
+		e.preventDefault()
+		
+		validate.login(mail, pass).then( async res => {
+			if(!res || res.errors || res.message) return false
+			
+			const userExists = await signIn({ mail, pass })
+			if(userExists) goToHome()
+			else toast.error('Email e (ou) senha incorreto(s)')
+
+		})
+		.catch((e) => console.log(e))
+
 	}
 	function goToHome() {
-		history.push('/home')
+		const user = Util.getUser()
+		toast.success(`Isso aí ${user.name}, espera só um pouquinho..`)
+		setInterval(() => history.push('/home') , 3000)
 	}
 
 	return (
-		<Box>
+		<Container>
 			<ActiveSection>
 				<Header>
-					<img src={logoImg} width={125} alt="Trampaê"></img>
+					<img src={logoImg} alt="Trampaê"></img>
 				</Header>
 
 				<FormContainer>
@@ -48,23 +70,31 @@ export default function Logon() {
 						<Input onChange={e => setMail(e.target.value)} type="email" name="E-mail" />
 						<Input onChange={e => setPass(e.target.value)} type="password" name="Senha" />
 
-						<button className="back-link" onClick={submit} className="button" type="submit">
-							Entrar
-						</button>
+						<button onClick={submit} type="submit" className="button">Entrar</button>
 					</form>
-					<Link to="/forget" className="title">
-						Esqueceu a Senha?
+
+					<Link to="/forget">
+						<ForgotPassword>
+							Esqueceu a Senha?
+						</ForgotPassword>
 					</Link>
-				</FormContainer>
+				</FormContainer>	
+
+				<div className="indicator">
+					<FiArrowDown size={'3rem'} />
+				</div>
 			</ActiveSection>
 
+
 			<DisabledSection>
-				<h1 className="title"> Ainda não tem Login? </h1>
-				<h3 className="title"> Tá esperando o que?</h3>
-				<Link className="button" to="/register">
-					Registre-se já!
-				</Link>
+				<div>
+					<Title> Ainda não tem Login? </Title>
+					<h2> Tá esperando o que?</h2>
+					<Link className="button secondary" to="/register">
+						Registre-se já!
+					</Link>
+				</div>
 			</DisabledSection>
-		</Box>
+		</Container>
 	)
 }

@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState, useHistory } from 'react'
+import { toast } from 'react-toastify';
 import Util from '../helpers/Util';
 
 import api from '../services/api'
@@ -9,11 +10,9 @@ const AuthContext = createContext();
 
 
 async function me(token){
-	const res = await api.get('/me', {
-		headers:{
-			authorization: `Bearer ${token}`
-		}
-	})
+	const res = await api.get('/me', {headers:{
+		authorization: `Bearer ${token}`
+	}})
 
 	if(res.data) res.data.image_url = Util.api_base_url(res.data.image_url)
 	
@@ -31,12 +30,10 @@ function AuthProvider({children}) {
 		}
 
 		return {}
-    })
-
+	})
+		
 	const signIn = useCallback(async ({ mail, pass }) => {
-		//ONLY DEBUG!!
-        // console.log( mail);
-        // console.log(pass);
+
         const basic = `Basic ${btoa(`${mail}:${pass}`)}`
         
 		try {
@@ -45,34 +42,43 @@ function AuthProvider({children}) {
 					authorization: basic,
 				}
 			})
-            
+
 			const { token } = response.data
 
 			const user = await me(token)
 
-			
-
 			localStorage.setItem('@Trampae:token', token)
 			localStorage.setItem('@Trampae:user', JSON.stringify(user));
 			
-
             api.defaults.headers.authorization = `Bearer ${token}`
             
             setData({ token, user });
 
             return true;
-            
 
 		} catch (error) {
-            localStorage.removeItem('@Trampae:token')
-            localStorage.removeItem('@Trampae:user')
-
-			console.log(error)
-			window.location = '/'
+            localStorage.clear()
+			toast.error(`Erro...`)
 		}
 	}, [])
 
-	return <AuthContext.Provider value={{ user: data.user, signIn }}>{children}</AuthContext.Provider>
+	const refreshUser = useCallback(async () => {
+		const user = JSON.parse(localStorage.getItem('@Trampae:user'))
+
+		try{
+			const apiResponse = await api.get(`/user/${user.id}`)
+
+			localStorage.setItem('@Trampae:user', JSON.stringify(apiResponse.data.exists));
+			setData({ user: apiResponse.data.exists })
+		}catch(e){
+			console.log("context error", e);
+		}
+		
+
+
+	}, [])
+
+	return <AuthContext.Provider value={{ user: data.user, signIn, refreshUser }}>{children}</AuthContext.Provider>
 }
 
 function useAuth() {

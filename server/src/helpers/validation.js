@@ -25,16 +25,19 @@ module.exports = {
         password: Joi.string().min(6).required(),
         whatsapp: phoneValidator.phone().mobile().required(),
         city: Joi.string().required(),
-        uf: Joi.string().length(2).required()
+        uf: Joi.string().length(2).required(),
+        bio: Joi.string(),
+        image_url: Joi.string(),
       }),
       serviceSchema: Joi.object().keys({
-        title: Joi.string().max(20).required(),
+        title: Joi.string().max(50).required(),
         description: Joi.string().max(200),
         price: Joi.number().required(),
         number_participants: Joi.number(),
         id_category: Joi.number(),
         city: Joi.string().required(),
-        uf: Joi.string().length(2).required()
+        uf: Joi.string().length(2).required(),
+        service_provider_id: Joi.string().default(null)
       })
     } 
 }

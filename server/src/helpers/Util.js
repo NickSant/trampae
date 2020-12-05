@@ -1,8 +1,8 @@
 import 'dotenv/config'
 import sha1 from 'sha1'
 
-import db from '../database/connection'
-
+import { connection } from '../database/connection'
+const db = connection
 class Util {
     constructor(){
        
@@ -56,6 +56,10 @@ class Util {
         return (id === process.env.ADMIN_ID_PAYLOAD_JWT) ? true : false
     }
 
+    validImage(url){
+        return url == '' ? null : url
+    }
+
     mysqlNowFormat(){
         let date = new Date();
         date = date.getUTCFullYear() + '-' +
@@ -85,7 +89,6 @@ class Util {
             throw new Error(e)
         }
     }
-
 
 
 }

@@ -1,94 +1,189 @@
-import styled from "styled-components";
+import styled from 'styled-components'
+import patternBG from '../../assets/texture-bg.png'
 
-import patternBG from "../../assets/texture-bg.png";
+export const Container = styled.div`
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 10px;
+	background: var(--white);
 
-export const Box = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 10px;
-  background: #ffff;
-`;
-
-export const ActiveSection = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Header = styled.header`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100px;
-  padding: 20px;
-
-  h1 {
-    margin-left: auto;
-    margin-right: 20px;
-    padding: 10px;
-    border-bottom: 2px solid #14b3b0;
-  }
-`;
-
-export const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 20px 40px;
-
-  form {
-    width: 100%;
-  }
-
-  .location {
-    display: flex;
-    flex-direction: row;
-
-    & select:first-of-type {
-      width: 125px;
-    }
-  }
-`;
-
-export const Title = styled.h1`
-  font-size: 40px;
-  padding: 10px;
-  border-bottom: 5px solid #14b3b0;
-`;
+	@media (max-width: 599px) {
+		flex-direction: column-reverse;
+		height: 200vh;
+	}
+`
 
 export const DisabledSection = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #121429;
-  background-image: url(${patternBG});
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: #ffffff;
+	width: 40%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--secundary);
+	background-image: url(${patternBG});
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: var(--white);
 
-  h1 {
-    margin-bottom: 60px;
-    font-size: 40px;
-    padding: 10px;
-    border-bottom: 5px solid #14b3b0;
-  }
+	padding: 0 2.5rem;
 
-  h3 {
-    font-size: 20px;
-  }
+	h1 {
+		margin-bottom: 3rem;
 
-  .button {
-    width: 60%;
-  }
-`;
+		padding: 5px;
+		border-bottom: 5px solid var(--primary);
+		font-size: 2rem;
+	}
+
+	h3 {
+		font-size: 1.2rem;
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	@media (max-width: 599px) {
+		width: 100%;
+		height: 100%;
+	}
+`
+
+export const ActiveSection = styled.div`
+	width: 60%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background: var(--white);
+
+	.indicator {
+		position: relative;
+		bottom: 2rem; 
+		background: var(--primary);
+		color: #fff;
+		border-radius: 30px;
+
+		height: 5rem;
+		width: 3.8rem;
+
+		display: none;
+		align-items: center;
+		justify-content: center;
+
+		animation: ease 3s infinite bounce;
+	}
+
+	@keyframes bounce {
+		0%,
+		20%,
+		50%,
+		80%,
+		100% {
+			transform: translateY(0);
+		}
+		40% {
+			transform: translateY(-25px);
+		}
+		60% {
+			transform: translateY(-15px);
+		}
+	}
+
+	@media (max-width: 599px) {
+		width: 90%;
+		align-items: center;
+		justify-content: center;
+
+		.indicator {
+			display: flex;
+		}
+	}
+`
+
+export const Header = styled.header`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 5rem;
+	padding: 1rem 2rem;
+
+	h1 {
+		padding: 5px;
+		font-size: 2rem;
+		font-size: 1.4rem;
+		border-bottom: 2px solid var(--primary);
+	}
+
+	img {
+		width: 6rem;
+		height: 6rem;
+	}
+`
+
+export const FormContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background: var(--white);
+	padding: 0 5% 2rem 5%;
+
+	overflow: scroll;
+	overflow-x: hidden;
+
+	&::-webkit-scrollbar {
+		width: 0.5em;
+		height: 90%;
+	}
+
+	&::-webkit-scrollbar-track {
+		display: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background-color: var(--primary);
+		outline: none;
+	}
+
+	::-webkit-scrollbar-corner {
+		border-radius: 5px;
+	}
+
+
+	form {
+		width: 100%;
+		height: 100%;
+	}
+
+	.location {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		margin-top: 1rem;
+
+		.select:first-child {
+			margin-right: 5px;
+		}
+	}
+
+	.button {
+		margin-top: 1rem;
+	}
+
+	@media (max-width: 599px) {
+		align-items: center;
+		justify-content: center;
+
+		form {
+			height: 70%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
+`

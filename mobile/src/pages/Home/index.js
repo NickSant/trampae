@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import estilo from './styles'
+import estilo, {Container} from './styles'
+
 import { View, Text, Image, Button, TouchableOpacity, AsyncStorage, ToastAndroid} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import logoImg from '../../assets/icon.png'
@@ -10,6 +11,8 @@ import { TextInput, ScrollView } from 'react-native-gesture-handler'
 import api from '../../services/api'
 
 export default function Index(){
+
+    
 
     const nav = useNavigation()
 
@@ -50,13 +53,20 @@ export default function Index(){
     },[])
    
     return(
-        <View style={estilo.container}>
-            <Text>
-                Bem vindo, {user.name}
-            </Text>
-            <Text>
-                Email: {user.email}
-            </Text>
-        </View>
+        <>
+            <Container>
+                <Text >HOME</Text>
+                <Text>
+                    Bem vindo, {user.name}
+                </Text>
+                <Text>
+                    Email: {user.email}
+                </Text>
+
+                
+            </Container>
+
+            
+        </>
     )
 }

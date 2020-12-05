@@ -1,16 +1,13 @@
-import connection from '../database/connection'
+import {connection} from '../database/connection'
 import * as jwt from '../setup/jwt'
 import Util from '../helpers/Util'
 import Mailer from '../helpers/mailer'
-import argon2, { hash } from 'argon2' //algoritmo de hash
+import argon2, { hash, verify } from 'argon2' //algoritmo de hash
 import crypto from 'crypto'
 import Model from '../models/Model'
 
-
 require('dotenv/config')
 import AdminController from './AdminController'
-
-
 
 const { handleError, clearString, isAdmin } = new Util()
 
@@ -25,9 +22,6 @@ export default {
 	async index(req, res) {
 		const { page = 1 } = req.query
 
-		// const { id:user_id } = req.auth; //DEVELOPMENT
-		// if(!user_id || user_id === undefined || user_id === '') handleError(res, 401, 'Unathorized')
-
 		const user = await connection('users')
 			.select('*')
 			.limit(12)
@@ -39,13 +33,12 @@ export default {
 			return item
 		})
 
-
 		return res.json(res_user)
 	},
 	//create user
 	async create(req, res) {
 		console.log('criando user...')
-		const { name, email, whatsapp, image_url, city, uf, password } = req.value.body
+		const { name, email, whatsapp, image_url, city, uf, password, bio } = req.value.body
 		const hashed_pass = await argon2.hash(password)
 
 		const data = req.value.body
@@ -64,16 +57,19 @@ export default {
 				image_url,
 				city,
 				uf,
+				bio,
 				password: hashed_pass,
 			})
 			console.log(data)
 		} catch (e) {
-			console.log(e.sqlMessage)
-			if (e.sqlMessage.includes('users_email_unique')) {
-				return handleError(res, 406, 'Duplicated email')
-			} else if (e.sqlMessage.includes('users_whatsapp_unique')) {
-				return handleError(res, 406, 'Duplicated Whatsapp')
+			if (e.sqlMessage) {
+				if (e.sqlMessage.includes('users_email_unique')) {
+					return handleError(res, 406, 'Duplicated email')
+				} else if (e.sqlMessage.includes('users_whatsapp_unique')) {
+					return handleError(res, 406, 'Duplicated Whatsapp')
+				}
 			}
+
 			return handleError(res, 400, `Database Error: ${e}`)
 		}
 
@@ -85,34 +81,34 @@ export default {
 		return res.status(200).json({ token })
 	},
 	async login(req, res) {
-		console.log('início login')
+		console.log('login --------------------------------------------------------------')
 
-		const [hashTyp, hash] = req.headers.authorization.split(' ') //Basic Authenticate. Formato: Basic HASH
+		const [hashType, hash] = req.headers.authorization.split(' ') //Basic Authenticate. Formato: Basic HASH
 		const [email, password] = Buffer.from(hash, 'base64').toString().split(':') //Buffer - descriptografa um hash -> separado por :
 		//Tudo isso vindo dos headers! Pra não deixar exposto (plain-text) no header, os dados que o usuário envia
 
+		console.log(email)
+
 		if (!email.includes('@') || !email.includes('.') || email.includes(' ') || !password || password === '' || password === null) return handleError(res, 401, 'Malformated Elements')
 
-		if( isAdmin(email, password) ) return AdminController.login(req, res)
+		if (isAdmin(email, password)) return AdminController.login(req, res)
 
 		try {
-
 			console.log('passou validação')
 
-			const result = await u.get({email}, true)
-			
+			const result = await u.get({ email }, true)
+
 			console.log(result)
 
 			if (!result || result === undefined) return handleError(res, 401, 'User not Found')
 
 			const pass_bd = await Buffer.from(result.password, 'base64').toString() //DECODIFICANDO HASH DO PRÓPRIO MYSQL!!! - também é do tipo base64!
+			
+			const verified = await verify(pass_bd, password);
 
-			console.log('decodificou buffer')
+			console.log('decodificou buffer', verified)
 
-			//argon2.verify (HASHED_PASS, plainTextPassword)
-			if (!(await argon2.verify(pass_bd, password))) return handleError(res, 401, 'Senha Incorreta')
-
-			if (result === undefined || result === null) return handleError(res, 401, 'Unauthorized')
+			if (!(verified)) return handleError(res, 401, 'Senha Incorreta')
 
 			const token = await jwt.generateToken({ user_id: result.id })
 
@@ -123,7 +119,7 @@ export default {
 				email: result.email,
 				id: result.id,
 				image_url: result.image_url,
-				isAdmin:false
+				isAdmin: false,
 			}
 			res.json({ user: user, token: token })
 		} catch (err) {

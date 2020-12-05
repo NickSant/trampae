@@ -1,23 +1,60 @@
-import React from "react";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../contexts/authContext'
 
-import { Link } from "react-router-dom";
+import { Container, DropDown } from './styles'
 
-import IconImg from "../../assets/icon.png";
+import trampaeIcon from '../../assets/icon.png'
+import ProfileImg from '../../assets/profile.png'
+import profilePic from '../../assets/ZecaUrubu.png'
 
-import "./styles.css";
+import { FiUsers, FiSettings, FiPhoneCall, FiLogOut } from 'react-icons/fi'
+import { FiMenu } from 'react-icons/fi'
 
-export default function Navbar() {
-  return (
-    <header className="header">
-      <nav className="navbar">
-        <a className="home-link" href="/">
-          <img className="logo" src={IconImg} alt="icone" />
-        </a>
+export default function Navbar({ children }) {
+	const [active, setActive] = useState(false)
+	const { user } = useAuth();
 
-        <a href="/new-service" className="btnNewService">
-          Adicionar um novo serviço
-        </a>
-      </nav>
-    </header>
-  );
+	return (
+		<>
+			<Container>
+				<a href="/home">
+					<img src={trampaeIcon} alt="Logo" />
+				</a>
+
+				<div>
+					{children}
+					<button onClick={() => setActive(!active)} className="hamburguer-buttom">
+						<FiMenu />
+					</button>
+				</div>
+
+				
+				<Link to="/new-service" className="button secondary">Novo Serviço</Link>
+			</Container>
+			<DropDown active={active}>
+				<a href={`profile/${user.id}`} className="navItem">
+					{user.name}
+					<img src={profilePic} alt="user" className="profilePic" />
+				</a>
+				<Link to="/talkwithus" className="navItem">
+					Fale conosco
+					<FiPhoneCall size={'1.8rem'} />
+				</Link>
+				<Link to="/aboutus" className="navItem">
+					Sobre nós
+					<FiUsers size={'1.8rem'} />
+				</Link>
+				<Link to="/home" className="navItem">
+					Configurações
+					<FiSettings size={'1.8rem'} />
+				</Link>
+
+				<Link className="navItem" to="/logout">
+					Sair
+					<FiLogOut size={'1.8rem'} />
+				</Link>
+			</DropDown>
+		</>
+	)
 }

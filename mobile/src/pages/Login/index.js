@@ -7,7 +7,7 @@ import { View, Text, Image, Button, TouchableOpacity, ToastAndroid, AsyncStorage
 import { useNavigation } from '@react-navigation/native';
 import logoImg from '../../assets/logo.png';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
-
+import { useAuth } from '../../services/auth'
 
 import api from '../../services/api';
 import baes64 from 'react-native-base64';
@@ -27,43 +27,48 @@ export default function Index(){
     const [pass, setPass] = useState('');
 
 
-    function submit(){
-        ToastAndroid.show('Iniciando Login', ToastAndroid.LONG)
+    const { signIn } = useAuth()
 
-        AsyncStorage.clear();
-        if(mail === undefined || mail === null || mail == '') return ToastAndroid.show('O email é obrigatório!', ToastAndroid.LONG)
-        if(mail === undefined || pass === null || pass == '') return ToastAndroid.show('A senha é obrigatória!', ToastAndroid.LONG)
-        const hash = `Basic ${base64.encode(`${mail}:${pass}`)}`;
 
-        fetch(`${api}/login`,{
-            method:'POST',
-            headers:{
-                "Content-Type": "application/json",
-                'authorization': hash,
-            },
-        }).then(res =>{
-            res.json().then(data =>{
-                console.log(data);
-                if(data.Error)
-                    return ToastAndroid.show('Usuário ou senha incorretos', ToastAndroid.LONG);
+    async function submit(){
 
-                const user = data.user;
-                const token = data.token;
+        const userExists = await signIn({mail, pass})
+        console.log(userExists)
 
-                if(!user || !token)
-                    return ToastAndroid.show('Ocorreu algum erro..\nTente novamente mais tarde', ToastAndroid.LONG);
+        // AsyncStorage.clear();
+        // if(mail === undefined || mail === null || mail == '') return ToastAndroid.show('O email é obrigatório!', ToastAndroid.LONG)
+        // if(pass === undefined || pass === null || pass == '') return ToastAndroid.show('A senha é obrigatória!', ToastAndroid.LONG)
+        // const hash = `Basic ${base64.encode(`${mail}:${pass}`)}`;
 
-                AsyncStorage.setItem('token', token);
+        // fetch(`${api}/login`,{
+        //     method:'POST',
+        //     headers:{
+        //         "Content-Type": "application/json",
+        //         'authorization': hash,
+        //     },
+        // }).then(res =>{
+        //     res.json().then(data =>{
+        //         console.log(data);
+        //         if(data.Error)
+        //             return ToastAndroid.show('Usuário ou senha incorretos', ToastAndroid.LONG);
 
-                ToastAndroid.show(`Bem vindo novamente ${user.name}`, ToastAndroid.LONG);
-                nav.navigate('home');
+        //         const user = data.user;
+        //         const token = data.token;
+
+        //         if(!user || !token)
+        //             return ToastAndroid.show('Ocorreu algum erro..\nTente novamente mais tarde', ToastAndroid.LONG);
+
+        //         AsyncStorage.setItem('@Trampae:token', token);
+
+        //         ToastAndroid.show(`Bem vindo novamente ${user.name}`, ToastAndroid.LONG);
+        //         nav.navigate('home');
                 
-            })
-            .catch(e =>{
-                ToastAndroid.show(`Erro: ${e.Error}`, ToastAndroid.LONG)
-                console.log(e);
-            })
-        })
+        //     })
+        //     .catch(e =>{
+        //         ToastAndroid.show(`Erro: ${e.Error}`, ToastAndroid.LONG)
+        //         console.log(e);
+        //     })
+        // })
     }
 
 

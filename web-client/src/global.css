@@ -1,13 +1,37 @@
-
-
 *{
     margin: 0;
     padding: 0;
     outline: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --primary: #14b3b0;
+    --secundary: #121429;
+    --black: #000;
+    --gray: #333;
+    --light-gray: #cccccc;
+    --white: #fff;
+    --ice: #f5f5f5;
+    --red: #ff0000;
+    --green: #50cc5d;
+    --dark-green: #3bad47;
+    --yellow: #edcb07;
+    --orange: #ed5909;
+    --purple: #5e0ee8;
+    --gmail: #b53527;
+    --blue: #0073b2;
+}
+
+::selection{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+
 html{
-    font-size: 62.5%;
+    font-size: max(1.5vw, 65%);
+
 }
 
 li, a{
@@ -22,57 +46,70 @@ body{
 
 input, button, textarea, select{
     font: 400 1.8rem Ubuntu, sans-serif;
+    font-size: max( 12px, 22px);
+    padding: 24px;
+}
+.select{
+    font-size: max( 12px, 22px);
+    
 }
 
 button{
     cursor: pointer;
+    border: 0;
+    background: none;
 }
 
-form input, select, select option{
+form input, select{
     width: 100%;
-    height: 60px;
+    height: 2.5rem;
     color: #333;
     border: 1px solid #dcdce6;
-    border-radius: 10px;
-    padding: 0 24px;
+
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 1.1rem;
+
     transition: linear; 
     background-color: #FFF;
 }
 
-form input:focus{
-    border-left: 10px solid #14b3b0;
+
+form input:focus, textarea:focus{
+    border-left: 6px solid #14b3b0;
 }
 form textarea{
     width: 100%;
     resize: vertical;
-    min-height: 100px;
-    max-height: 150px;
+    min-height: 8rem;
+    max-height: 10rem;
+    font-size: 1.1rem;
     color: #333;
     border: 1px solid #dcdce6;
     border-radius: 10px;
-    padding: 16px 24px;
+    padding: 5px 15px;
     line-height: 24px;
 }
 
 .button{
     width: 100%;
-    height: 60px;
+    height: 50px;
     background: #14b3b0;
     border: 0;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #FFF;
     font-weight: 700;
-    margin-top: 16px;
-    display: inline-block;
+    display: flex;
     text-align: center;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     font-size: 18px;
-    line-height: 60px;
-    transition: filter 0.5s;
+    transition: ease 0.5s;
 }
 
 .button:hover{
-    filter: brightness(90%);
+    opacity: 0.8;
 }
 
 .secondary{
@@ -118,11 +155,7 @@ form textarea{
 .B-utton:hover{
     filter: brightness(90%);
 }
-.logo{
-    width: 250px;
-    margin-top: 2vh;
-    margin-bottom: 10px;
-}
+
 .back-link{
     display: flex;
     align-items: center;

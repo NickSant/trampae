@@ -1,25 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import logoImg from '../../assets/logo.png'
 
+import logoImg from '../../assets/logo.png'
 import Input from '../../components/Input'
 import Select from '../../components/Select'
+import Textarea from '../../components/Textarea';
 
 import api from '../../services/api'
 import ibge from '../../services/ibge'
 
-import { Box, ActiveSection, Header, FormContainer, Title, DisabledSection } from './styles'
+import { 
+	Container, 
+	ActiveSection, 
+	Header, 
+	FormContainer,  
+	DisabledSection 
+	} from './styles'
 
+import { FiArrowDown } from 'react-icons/fi';
+import { toast } from 'react-toastify'
+
+//---Começo da API---//
 require('dotenv/config')
 
 export default function Register() {
 	const [name, changeName] = useState('')
 	const [email, changeMail] = useState('')
+	const [imageUrl, changeImageUrl] = useState('')
 	const [whats, changeWhats] = useState('')
 	const [password, changePass] = useState('')
-
+	const [bio, changeBio] = useState('');
 	const [selectedUf, setSelectedUf] = useState('')
 	const [selectedCity, setSelectedcity] = useState('')
+
 
 	const [ufs, setUfs] = useState([])
 	const [cities, setCities] = useState([])
@@ -31,6 +44,7 @@ export default function Register() {
 		async function getUfsOnIBGE() {
 			const ufs = await ibge.getUfs()
 			setUfs(ufs)
+			
 		}
 		getUfsOnIBGE()
 	}, [])
@@ -39,6 +53,7 @@ export default function Register() {
 		async function getCitiesOnIBGE() {
 			const cities = await ibge.getCities(selectedUf)
 			setCities(cities)
+			
 		}
 		getCitiesOnIBGE()
 	}, [selectedUf])
@@ -47,13 +62,15 @@ export default function Register() {
 
 	async function submitRegister(e) {
 		e.preventDefault()
-		if(password.length < 6) return alert('A senha deve conter no mínimo 6 dígitos!')
+		if(password.length < 6) return toast.error('A senha deve conter no mínimo 6 dígitos!')
 
 		api.post('/signup', {
 			name: name,
 			email: email,
 			whatsapp: whats,
+			image_url: imageUrl,
 			password: password,
+			bio: bio,
 			city: selectedCity,
 			uf: selectedUf,
 		})
@@ -71,67 +88,80 @@ export default function Register() {
 			localStorage.removeItem('@Trampae:token')
 
 			console.log(e)
-			alert(e)
+			toast.error('Erro..')
 		})
 	}
 	function goToLogin() {
 		window.location = '/'
 	}
 
-	/*Começo da pagina*/
 	return (
-		<Box>
+		<Container>
 			<DisabledSection>
-				<h1>Já tem registro? </h1>
-				<h3>Vem logo, faça login e encontro novos bicos!</h3>
-				<Link className="button" to="/">
-					Login
-				</Link>
+				<h1>Já tem registro?</h1>
+				<h3>Vem logo, faça login e encontre novos bicos!</h3>
+				<Link className="button" to="/">Login</Link>
 			</DisabledSection>
+
 			<ActiveSection>
 				<Header>
 					<img src={logoImg} width={125} alt="Trampaê"></img>
-					<h1 className="title"> Registre-se já! </h1>
+					<h1 className="title"> Registre-se já!</h1>
 				</Header>
+
 				<FormContainer>
 					<form>
 						<Input type="text" name="Nome Completo" onChange={e => changeName(e.target.value)} />
 						<Input type="Email" name="E-mail" onChange={e => changeMail(e.target.value)} />
 						<Input type="password" name="Senha" onChange={e => changePass(e.target.value)} />
 
+						<Input type="text" name="Link da imagem" onChange={e => changeImageUrl(e.target.value)} />
 						<Input type="tel" name="Whatsapp" onChange={e => changeWhats(e.target.value)} />
+						<Textarea type="text" name="Bio" onChange={e => changeBio(e.target.value)} />
+
 						<div className="location">
 							<Select
+								className="select"
 								onChange={e => setSelectedUf(e.target.value)}
 								name="UF"
-								children={ufs.map(uf => {
-									return (
-										<option key={uf} value={uf}>
-											{uf}
-										</option>
-									)
-								})}
-							></Select>
-
+								children={ ufs.map(( uf  ) =>(
+									<option 
+										key={uf.id} 
+										value={uf.value} 
+										title={uf.title}
+									>
+										{uf.value}
+									</option>
+								))}>
+							</Select>
+		
 							<Select
+								className="select"
 								onChange={e => setSelectedcity(e.target.value)}
 								name="cidade"
-								children={cities.map(city => {
-									return (
-										<option key={city.id} value={city.nome}>
-											{city.nome}
-										</option>
-									)
-								})}
-							></Select>
+								children={ cities.map((city) => (
+									<option 
+										key={city.id}
+										value={city.name}
+										title={city.name}
+									>
+										{city.name}
+									</option>
+								)) }>
+							</Select>
 						</div>
 
-						<button type="submit" className="Button" onClick={submitRegister}>
+						<button type="submit" className="button" onClick={submitRegister}>
 							Cadastar
-						</button>
+						</button> 
 					</form>
 				</FormContainer>
+
+				<div className="indicator">
+					<FiArrowDown size={'3rem'} />
+				</div>
+				
 			</ActiveSection>
-		</Box>
+		</Container>
 	)
 }
