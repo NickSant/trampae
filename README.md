@@ -1,5 +1,5 @@
 # Trampaê
-<h1 align="center"> <img src="https://i.imgur.com/3Tsit3O.png" width="500" align="center"> </h1>
+<h1 align="center"> <img src="https://i.imgur.com/3Tsit3O.png" width="300" align="center"> </h1>
 
 
 ## Descrição
@@ -8,28 +8,15 @@ A plataforma **Trampaê** foi criada pensando nas pessoas que precisam de um ser
 
 Para **ajudar** essas pessoas, nossa plataforma terá a função de as ligar com quem oferece estes serviços, podendo ser simples e rápidos como um **bico**, ou até mesmo um **freelance**. 
 
-O projeto foi elaborado para um TCC (trabalho de conclusão de curso), mas pode ser facilmente escalável para realmente exercer sua função de ajudar pessoas.
+O projeto foi elaborado para o TCC (trabalho de conclusão de curso) do curso de Desenvolvimento de Sistemas da ETEC Lauro Gomes, visando juntar e aplicar todo o conhecimento e aprendizado adquirido ao longo de nossos estudos. 
 
-## Progresso
-
-Atualmente, nosso projeto ainda está em desenvolvimento, e como é um projeto de conclusão de curso, será utilizado à princípio para aplicar nossos **conhecimentos** e adquirir novos.
-
-Em temos atualmente as seguintes etapas completas:
- - [x] ~~Back-end~~
- - [x]  Front-end
- - [ ]  Mobile
- 
-
-## Desenvolvimento
+## Tecnologias Utilizadas
 
 ### Backend
-O backend de nossa aplicação foi feito utilizando o **Node.js**, um ambiente de execução JavaScript server-side, além de diversas outras dependências que nos auxiliaram na execução deste projeto, assim como o **Express** para criação de rotas na aplicação,o **Babel** para interpretação do código em ES6, **Knex** para uma fácil criação e manipulação de nosso banco de dados **mySQL** com o uso das *migrations*, entre outras.
+O backend de nossa aplicação é uma **API**  construída com **Node.js**, um ambiente de execução JavaScript server-side, e **Express**, framework para facilitar a construção de APIs e aplicações WEB. Além de diversas outras dependências que nos auxiliaram na execução deste projeto, assim como o **Babel** para interpretação do código em ES6, **Knex** para uma fácil criação e manipulação das queries para o banco de dados **mySQL** com o uso das *migrations*, entre outras.
 
 ### Frontend
-*Em desenvolvimento*
-
-### Mobile
-*Em desenvolvimento*
+O frontend de nossa aplicação foi feito utilizando **ReactJS**, biblioteca JavaScript para a construção de interfaces, além do **Styled Components** para a estilização de nossas páginas e componentes. Toda a aplicação web foi feita com design **totalmente responsivo**, visando atender aos usuários que acessam o site pelo computador e pelo celular.
 
 
 ## Autores
